@@ -25,8 +25,8 @@ const Header = styled.h1`
 
 const SubHeader = styled.div`
   color: var(--sub);
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 25px;
+  margin-bottom: 35px;
   margin-left: 10px;
   font-size: 21px;
   width: 75%;
