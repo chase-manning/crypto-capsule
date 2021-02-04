@@ -22,11 +22,24 @@ const Header = styled.h1`
   color: var(--main);
 `;
 
+const SubHeader = styled.div`
+  color: var(--sub);
+  margin-top: 30px;
+  margin-left: 10px;
+  font-size: 21px;
+  width: 75%;
+  line-height: 1.4;
+`;
+
 const Landing = () => {
   return (
     <StyledLanding>
       <Left>
-        <Header>Crypto Capsule the Blockchain Time Capsule</Header>
+        <Header>Crypto Capsule The Blockchain Time Capsule</Header>
+        <SubHeader>
+          Send crytocurrencies into the future safely and securely using
+          Ethereum smart contracts
+        </SubHeader>
       </Left>
       <div />
     </StyledLanding>
