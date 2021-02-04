@@ -5,9 +5,9 @@ type Props = {
 };
 
 const Button = styled.button`
-  padding: ${(props: Props) => (props.primary ? "15px 27px" : "13px 27px")};
-  font-size: 15px;
-  border-radius: ${(props: Props) => (props.primary ? "24px" : "22px")};
+  padding: ${(props: Props) => (props.primary ? "18px 34px" : "13px 27px")};
+  font-size: ${(props: Props) => (props.primary ? "18px" : "15px")};
+  border-radius: ${(props: Props) => (props.primary ? "29px" : "22px")};
   background-color: ${(props: Props) =>
     props.primary ? "var(--primary)" : "var(--dark)"};
   color: white;
@@ -15,6 +15,8 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  box-shadow: ${(props: Props) =>
+    props.primary ? "5px 5px 40px rgba(22, 97, 244, 0.6)" : "none"};
 `;
 
 export default Button;
