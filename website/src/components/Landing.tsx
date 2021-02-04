@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "../styles/Button";
 
 const StyledLanding = styled.div`
   width: 100%;
@@ -40,6 +41,9 @@ const Landing = () => {
           Send crytocurrencies into the future safely and securely using
           Ethereum smart contracts
         </SubHeader>
+        <div>
+          <Button primary>Create Capsule</Button>
+        </div>
       </Left>
       <div />
     </StyledLanding>
