@@ -54,8 +54,8 @@ const LoginContainer = styled.div`
 
 const LoginButton = styled.button`
   width: 90px;
-  height: 40px;
-  font-size: 14px;
+  height: 42px;
+  font-size: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
