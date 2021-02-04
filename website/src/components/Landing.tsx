@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../styles/Button";
+import CreateCapsule from "./CreateCapsule";
 
 const StyledLanding = styled.div`
   width: 100%;
@@ -34,6 +35,8 @@ const SubHeader = styled.div`
 `;
 
 const Landing = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <StyledLanding>
       <Left>
@@ -43,10 +46,13 @@ const Landing = () => {
           Ethereum smart contracts
         </SubHeader>
         <div>
-          <Button primary>Create Capsule</Button>
+          <Button onClick={() => setOpen(true)} primary>
+            Create Capsule
+          </Button>
         </div>
       </Left>
       <div />
+      <CreateCapsule open={open} close={() => setOpen(false)} />
     </StyledLanding>
   );
 };
