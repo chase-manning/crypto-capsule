@@ -21,20 +21,26 @@ const NavContainer = styled.div`
   display: flex;
 `;
 
-const Nav = styled.button`
-  width: 100px;
-  cursor: pointer;
-`;
-
 type NavProps = {
   active: boolean;
 };
 
+const Nav = styled.button`
+  width: 100px;
+  transition: color 0.3s;
+
+  color: ${(props: NavProps) => (props.active ? "var(--main)" : "var(--sub)")};
+  :hover {
+    color: var(--main);
+  }
+  cursor: pointer;
+`;
+
 const NavText = styled.div`
   width: 100%;
   text-align: center;
-  color: ${(props: NavProps) => (props.active ? "var(--main)" : "var(--sub)")};
   margin-bottom: 35px;
+  font-size: 14px;
 `;
 
 const Selection = styled.div`
@@ -67,21 +73,21 @@ const Header = () => {
     <StyledHeader>
       <Logo>Crypto Capsule</Logo>
       <NavContainer>
-        <Nav>
+        <Nav active={true}>
           <Selection active={true} />
-          <NavText active={true}>Create</NavText>
+          <NavText>Create</NavText>
         </Nav>
-        <Nav>
+        <Nav active={false}>
           <Selection active={false} />
-          <NavText active={false}>Sent</NavText>
+          <NavText>Sent</NavText>
         </Nav>
-        <Nav>
+        <Nav active={false}>
           <Selection active={false} />
-          <NavText active={false}>Received</NavText>
+          <NavText>Received</NavText>
         </Nav>
-        <Nav>
+        <Nav active={false}>
           <Selection active={false} />
-          <NavText active={false}>About</NavText>
+          <NavText>About</NavText>
         </Nav>
       </NavContainer>
       <LoginContainer>
