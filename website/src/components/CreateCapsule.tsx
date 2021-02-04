@@ -14,6 +14,14 @@ const StyledCreateCapsule = styled.div`
   align-items: center;
 `;
 
+const ExitEvent = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+`;
+
 const Container = styled.div`
   width: 600px;
   display: flex;
@@ -33,6 +41,7 @@ const CreateCapsule = (props: Props) => {
 
   return (
     <StyledCreateCapsule>
+      <ExitEvent onClick={() => props.close()} />
       <Container>meow</Container>
     </StyledCreateCapsule>
   );
