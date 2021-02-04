@@ -9,7 +9,7 @@ const StyledHeader = styled.div`
   padding: 0 60px;
 `;
 
-const Logo = styled.div`
+const Logo = styled.button`
   color: var(--main);
   font-size: 18px;
   font-weight: 700;
@@ -20,7 +20,7 @@ const NavContainer = styled.div`
   display: flex;
 `;
 
-const Nav = styled.div`
+const Nav = styled.button`
   width: 100px;
   cursor: pointer;
 `;
@@ -51,7 +51,7 @@ const LoginContainer = styled.div`
   display: flex;
 `;
 
-const LoginButton = styled.div`
+const LoginButton = styled.button`
   width: 90px;
   height: 40px;
   font-size: 14px;
@@ -61,7 +61,7 @@ const LoginButton = styled.div`
   cursor: pointer;
 `;
 
-const SignUpButton = styled.div`
+const SignUpButton = styled.button`
   width: 110px;
   height: 40px;
   font-size: 14px;
