@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Footer from "./Footer";
 import Header from "./Header";
 import Landing from "./Landing";
 
@@ -14,6 +15,7 @@ const App = () => {
     <StyledApp>
       <Header />
       <Landing />
+      <Footer />
     </StyledApp>
   );
 };
