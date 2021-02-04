@@ -20,6 +20,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 30px;
   background-color: white;
+  border-radius: 40px;
 `;
 
 type Props = {
