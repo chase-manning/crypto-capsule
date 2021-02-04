@@ -17,6 +17,12 @@ const Button = styled.button`
   cursor: pointer;
   box-shadow: ${(props: Props) =>
     props.primary ? "5px 5px 40px rgba(22, 97, 244, 0.6)" : "none"};
+  transition: all 0.3s;
+
+  :hover {
+    box-shadow: ${(props: Props) =>
+      props.primary ? "2px 2px 20px rgba(22, 97, 244, 0.6)" : "none"};
+  }
 `;
 
 export default Button;
