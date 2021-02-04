@@ -4,7 +4,7 @@ import Header from "./Header";
 import Landing from "./Landing";
 
 const StyledApp = styled.div`
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 `;
