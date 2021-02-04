@@ -5,9 +5,9 @@ type Props = {
 };
 
 const Button = styled.button`
-  padding: 13px 27px;
-  font-size: 14px;
-  border-radius: 21px;
+  padding: ${(props: Props) => (props.primary ? "15px 27px" : "13px 27px")};
+  font-size: 15px;
+  border-radius: ${(props: Props) => (props.primary ? "24px" : "22px")};
   background-color: ${(props: Props) =>
     props.primary ? "var(--primary)" : "var(--dark)"};
   color: white;
