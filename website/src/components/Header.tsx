@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "../styles/Button";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -61,19 +62,6 @@ const LoginButton = styled.button`
   cursor: pointer;
 `;
 
-const SignUpButton = styled.button`
-  width: 110px;
-  height: 40px;
-  font-size: 14px;
-  border-radius: 20px;
-  background-color: var(--dark);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
-
 const Header = () => {
   return (
     <StyledHeader>
@@ -98,7 +86,7 @@ const Header = () => {
       </NavContainer>
       <LoginContainer>
         <LoginButton>Login</LoginButton>
-        <SignUpButton>Sign Up</SignUpButton>
+        <Button>Sign Up</Button>
       </LoginContainer>
     </StyledHeader>
   );
