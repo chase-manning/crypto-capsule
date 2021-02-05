@@ -1,22 +1,20 @@
 import React from "react";
-import styled from "styled-components";
-import Footer from "./Footer";
-import Header from "./Header";
-import Landing from "./Landing";
-
-const StyledApp = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-`;
+import { Switch, Route } from "react-router-dom";
+import CreatePage from "./CreatePage";
 
 const App = () => {
   return (
-    <StyledApp>
-      <Header />
-      <Landing />
-      <Footer />
-    </StyledApp>
+    <Switch>
+      {/* <Route path="/about">
+        <About />
+      </Route>
+      <Route path="/users">
+        <Users />
+      </Route> */}
+      <Route path="/">
+        <CreatePage />
+      </Route>
+    </Switch>
   );
 };
 
