@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Input from "../styles/Input";
+import Label from "../styles/Label";
 
 const StyledCreateCapsule = styled.div`
   position: fixed;
@@ -44,7 +45,10 @@ const CreateCapsule = (props: Props) => {
     <StyledCreateCapsule>
       <ExitEvent onClick={() => props.close()} />
       <Container>
-        <Input value="meow"></Input>
+        <Label>
+          ETH:
+          <Input value="meow"></Input>
+        </Label>
       </Container>
     </StyledCreateCapsule>
   );
