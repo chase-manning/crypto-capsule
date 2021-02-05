@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../styles/Button";
 
@@ -69,24 +70,26 @@ const LoginButton = styled.button`
 `;
 
 const Header = () => {
+  const location = useLocation();
+
   return (
     <StyledHeader>
       <Logo>Crypto Capsule</Logo>
       <NavContainer>
-        <Nav active={true} href="/">
-          <Selection active={true} />
+        <Nav active={location.pathname === "/"} href="/">
+          <Selection active={location.pathname === "/"} />
           <NavText>Create</NavText>
         </Nav>
-        <Nav active={false} href="/sent">
-          <Selection active={false} />
+        <Nav active={location.pathname === "/sent"} href="/sent">
+          <Selection active={location.pathname === "/sent"} />
           <NavText>Sent</NavText>
         </Nav>
-        <Nav active={false} href="/received">
-          <Selection active={false} />
+        <Nav active={location.pathname === "/received"} href="/received">
+          <Selection active={location.pathname === "/received"} />
           <NavText>Received</NavText>
         </Nav>
-        <Nav active={false} href="about">
-          <Selection active={false} />
+        <Nav active={location.pathname === "/about"} href="/about">
+          <Selection active={location.pathname === "/about"} />
           <NavText>About</NavText>
         </Nav>
       </NavContainer>
