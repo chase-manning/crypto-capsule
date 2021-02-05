@@ -11,7 +11,7 @@ const StyledHeader = styled.div`
   padding: 0 60px;
 `;
 
-const Logo = styled.button`
+const Logo = styled.a`
   color: var(--main);
   font-size: 18px;
   font-weight: 700;
@@ -74,7 +74,7 @@ const Header = () => {
 
   return (
     <StyledHeader>
-      <Logo>Crypto Capsule</Logo>
+      <Logo href="/">Crypto Capsule</Logo>
       <NavContainer>
         <Nav active={location.pathname === "/"} href="/">
           <Selection active={location.pathname === "/"} />
