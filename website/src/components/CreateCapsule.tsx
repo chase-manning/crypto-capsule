@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Input from "../styles/Input";
-import Label from "../styles/Label";
 import TextInput from "./TextInput";
 
 const StyledCreateCapsule = styled.div`
