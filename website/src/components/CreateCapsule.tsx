@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { BooleanLiteral } from "typescript";
 
 const StyledCreateCapsule = styled.div`
   position: fixed;
