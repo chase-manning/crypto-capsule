@@ -44,7 +44,7 @@ const CreateCapsule = (props: Props) => {
     <StyledCreateCapsule>
       <ExitEvent onClick={() => props.close()} />
       <Container>
-        <TextInput label="ETH:" />
+        <TextInput label="ETH" />
       </Container>
     </StyledCreateCapsule>
   );
