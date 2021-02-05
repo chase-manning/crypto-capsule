@@ -6,6 +6,7 @@ const Input = styled.input`
   border-radius: 5px;
   padding: 7px;
   color: var(--main);
+  margin-top: 10px;
 
   :active {
     border: solid 1px var(--primary);
