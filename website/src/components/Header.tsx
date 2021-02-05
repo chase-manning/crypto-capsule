@@ -25,7 +25,7 @@ type NavProps = {
   active: boolean;
 };
 
-const Nav = styled.button`
+const Nav = styled.a`
   width: 100px;
   transition: color 0.3s;
 
@@ -73,19 +73,19 @@ const Header = () => {
     <StyledHeader>
       <Logo>Crypto Capsule</Logo>
       <NavContainer>
-        <Nav active={true}>
+        <Nav active={true} href="/">
           <Selection active={true} />
           <NavText>Create</NavText>
         </Nav>
-        <Nav active={false}>
+        <Nav active={false} href="/sent">
           <Selection active={false} />
           <NavText>Sent</NavText>
         </Nav>
-        <Nav active={false}>
+        <Nav active={false} href="/received">
           <Selection active={false} />
           <NavText>Received</NavText>
         </Nav>
-        <Nav active={false}>
+        <Nav active={false} href="about">
           <Selection active={false} />
           <NavText>About</NavText>
         </Nav>
