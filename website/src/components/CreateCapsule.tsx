@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Input from "../styles/Input";
 
 const StyledCreateCapsule = styled.div`
   position: fixed;
@@ -28,6 +29,7 @@ const Container = styled.div`
   padding: 30px;
   background-color: white;
   border-radius: 40px;
+  z-index: 1;
 `;
 
 type Props = {
@@ -41,7 +43,9 @@ const CreateCapsule = (props: Props) => {
   return (
     <StyledCreateCapsule>
       <ExitEvent onClick={() => props.close()} />
-      <Container>meow</Container>
+      <Container>
+        <Input value="meow"></Input>
+      </Container>
     </StyledCreateCapsule>
   );
 };
