@@ -8,6 +8,7 @@ const Input = styled.input`
   color: var(--main);
   margin-top: 8px;
   font-size: 16px;
+  background-color: rgba(0, 0, 0, 0);
 
   :active {
     border: solid 1px var(--primary);

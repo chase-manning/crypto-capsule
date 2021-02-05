@@ -8,7 +8,7 @@ const StyledCreateCapsule = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,9 +27,24 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 30px;
-  background-color: white;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.2)
+  );
   border-radius: 40px;
   z-index: 1;
+  backdrop-filter: blur(15px);
+  box-shadow: 10px 10px 80px rgba(0, 0, 0, 0.1);
+  border: solid 1px rgba(255, 255, 255, 0.7);
+`;
+
+const Header = styled.div`
+  width: 100%;
+  color: var(--main);
+  font-size: 50px;
+  font-weight: 700;
+  margin-bottom: 40px;
 `;
 
 type Props = {
@@ -44,6 +59,7 @@ const CreateCapsule = (props: Props) => {
     <StyledCreateCapsule>
       <ExitEvent onClick={() => props.close()} />
       <Container>
+        <Header>Create Capsule</Header>
         <TextInput label="ETH" />
       </Container>
     </StyledCreateCapsule>
