@@ -10,6 +10,7 @@ export type CapsuleType = {
 
 const StyledCapsule = styled.div`
   width: 100%;
+  height: 140px;
   padding: 30px;
   display: flex;
   justify-content: space-between;
@@ -18,7 +19,6 @@ const StyledCapsule = styled.div`
 `;
 
 const OpenImage = styled.div`
-  height: 80px;
   width: 120px;
   background-color: pink;
 `;
@@ -31,7 +31,9 @@ const ClosedImage = styled.div`
 
 const CountdownContainer = styled.div`
   flex: 1;
+  height: 100%;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   padding: 0 30px;
 `;
