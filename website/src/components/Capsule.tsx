@@ -7,6 +7,7 @@ export type CapsuleType = {
   address: string;
   eth: number;
   dollars: number;
+  opened: boolean;
 };
 
 const StyledCapsule = styled.div`
