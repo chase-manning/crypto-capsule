@@ -68,7 +68,9 @@ const GetCapsules = (capsuleList: CapsuleType[]) =>
     .sort(
       (a: CapsuleType, b: CapsuleType) => a.open.getTime() - b.open.getTime()
     )
-    .map((capsule: CapsuleType) => <Capsule capsule={capsule} />);
+    .map((capsule: CapsuleType, index: number) => (
+      <Capsule key={index} capsule={capsule} />
+    ));
 
 const SentPage = () => {
   const now = new Date();
