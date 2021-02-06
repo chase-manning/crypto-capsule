@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import dateformat from "dateformat";
+import Button from "../styles/Button";
 
 export type CapsuleType = {
   open: Date;
@@ -145,6 +146,8 @@ const Capsule = (props: Props) => {
         <Dollars>{"$" + props.capsule.dollars}</Dollars>
         <Crypto>{props.capsule.eth + " ETH"}</Crypto>
       </ValueContainer>
+      {open && !props.capsule.opened && <Button primary>Open</Button>}
+      {!open && <Button>Top Up</Button>}
     </StyledCapsule>
   );
 };
