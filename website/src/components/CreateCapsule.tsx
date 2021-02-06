@@ -14,7 +14,7 @@ const StyledCreateCapsule = styled.div`
   align-items: center;
 `;
 
-const ExitEvent = styled.div`
+const ExitEvent = styled.button`
   position: absolute;
   top: 0;
   left: 0;
