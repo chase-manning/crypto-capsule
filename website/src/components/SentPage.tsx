@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Capsule, { CapsuleType } from "./Capsule";
+import Footer from "./Footer";
 import Header from "./Header";
 
 const capsules: CapsuleType[] = [
@@ -109,6 +110,7 @@ const SentPage = () => {
           </>
         )}
       </Container>
+      <Footer />
     </StyledSentPage>
   );
 };
