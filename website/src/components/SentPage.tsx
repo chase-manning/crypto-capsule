@@ -78,24 +78,36 @@ const GetCapsules = (capsuleList: CapsuleType[]) =>
 
 const SentPage = () => {
   const now = new Date();
+  const ready = capsules.filter(
+    (cap: CapsuleType) => cap.open < now && !cap.opened
+  );
   const upcoming = capsules.filter((cap: CapsuleType) => cap.open >= now);
   const opened = capsules.filter(
     (cap: CapsuleType) => cap.open < now && cap.opened
-  );
-  const ready = capsules.filter(
-    (cap: CapsuleType) => cap.open < now && !cap.opened
   );
 
   return (
     <StyledSentPage>
       <Header />
       <Container>
-        <Title>Ready</Title>
-        {GetCapsules(ready)}
-        <Title>Upcoming</Title>
-        {GetCapsules(upcoming)}
-        <Title>Opened</Title>
-        {GetCapsules(opened)}
+        {ready.length > 0 && (
+          <>
+            <Title>Ready</Title>
+            {GetCapsules(ready)}
+          </>
+        )}
+        {upcoming.length > 0 && (
+          <>
+            <Title>Upcoming</Title>
+            {GetCapsules(upcoming)}
+          </>
+        )}
+        {opened.length > 0 && (
+          <>
+            <Title>Opened</Title>
+            {GetCapsules(opened)}
+          </>
+        )}
       </Container>
     </StyledSentPage>
   );
