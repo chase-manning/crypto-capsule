@@ -143,7 +143,7 @@ const Capsule = (props: Props) => {
         </OpenDate>
       </CountdownContainer>
       <ValueContainer>
-        <Dollars>{"$" + props.capsule.dollars}</Dollars>
+        <Dollars>{"$" + props.capsule.dollars.toLocaleString()}</Dollars>
         <Crypto>{props.capsule.eth + " ETH"}</Crypto>
       </ValueContainer>
       {open && !props.capsule.opened && <Button primary>Open</Button>}
