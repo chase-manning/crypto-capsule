@@ -69,7 +69,11 @@ const GetCapsules = (capsuleList: CapsuleType[]) =>
       (a: CapsuleType, b: CapsuleType) => a.open.getTime() - b.open.getTime()
     )
     .map((capsule: CapsuleType, index: number) => (
-      <Capsule key={index} capsule={capsule} />
+      <Capsule
+        key={index}
+        capsule={capsule}
+        last={index === capsuleList.length - 1}
+      />
     ));
 
 const SentPage = () => {

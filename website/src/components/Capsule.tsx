@@ -10,6 +10,10 @@ export type CapsuleType = {
   opened: boolean;
 };
 
+type CapsuleProps = {
+  last: boolean;
+};
+
 const StyledCapsule = styled.div`
   width: 100%;
   height: 140px;
@@ -17,7 +21,8 @@ const StyledCapsule = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid 1px var(--sub);
+  border-bottom: solid 1px
+    ${(props: CapsuleProps) => (props.last ? "rgba(0,0,0,0)" : "var(--sub)")};
 `;
 
 const OpenImage = styled.div`
@@ -54,6 +59,7 @@ const OpenDate = styled.div`
 
 type Props = {
   capsule: CapsuleType;
+  last: boolean;
 };
 
 const Capsule = (props: Props) => {
@@ -97,7 +103,7 @@ const Capsule = (props: Props) => {
   const seconds = Math.trunc(secondsRemaining / secondsMult);
 
   return (
-    <StyledCapsule>
+    <StyledCapsule last={props.last}>
       {open && <OpenImage />}
       {!open && <ClosedImage />}
       <CountdownContainer>
