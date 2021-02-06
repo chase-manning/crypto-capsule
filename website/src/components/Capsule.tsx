@@ -102,6 +102,7 @@ const Capsule = (props: Props) => {
       {!open && <ClosedImage />}
       <CountdownContainer>
         <Countdown>
+          {open ? "0y 0d 0h 0m 0s" : ""}
           {(years > 0 ? years + "y " : "") +
             (days > 0 ? days + "d " : "") +
             (hours > 0 ? hours + "h " : "") +
