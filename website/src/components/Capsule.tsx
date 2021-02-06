@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import dateformat from "dateformat";
 
 export type CapsuleType = {
   open: Date;
@@ -19,12 +20,13 @@ const StyledCapsule = styled.div`
 `;
 
 const OpenImage = styled.div`
+  height: 100%;
   width: 120px;
   background-color: pink;
 `;
 
 const ClosedImage = styled.div`
-  height: 80px;
+  height: 100%;
   width: 120px;
   background-color: yellow;
 `;
@@ -33,14 +35,14 @@ const CountdownContainer = styled.div`
   flex: 1;
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-direction: column;
   padding: 0 30px;
 `;
 
 const Countdown = styled.div`
   color: var(--main);
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 500;
 `;
 
@@ -105,7 +107,9 @@ const Capsule = (props: Props) => {
             (minutes > 0 ? minutes + "m " : "") +
             (seconds > 0 ? seconds + "s" : "")}
         </Countdown>
-        <OpenDate>{props.capsule.open.toString()}</OpenDate>
+        <OpenDate>
+          {dateformat(props.capsule.open, "hh:MM dd/mm/yyyy")}
+        </OpenDate>
       </CountdownContainer>
     </StyledCapsule>
   );
