@@ -57,6 +57,28 @@ const OpenDate = styled.div`
   font-size: 16px;
 `;
 
+const ValueContainer = styled.div`
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  padding: 0 30px;
+`;
+
+const Dollars = styled.div`
+  color: var(--main);
+  font-size: 30px;
+  font-weight: 500;
+  text-align: right;
+`;
+
+const Crypto = styled.div`
+  color: var(--sub);
+  font-size: 16px;
+  text-align: right;
+`;
+
 type Props = {
   capsule: CapsuleType;
   last: boolean;
@@ -119,6 +141,10 @@ const Capsule = (props: Props) => {
           {dateformat(props.capsule.open, "hh:MM dd/mm/yyyy")}
         </OpenDate>
       </CountdownContainer>
+      <ValueContainer>
+        <Dollars>{"$" + props.capsule.dollars}</Dollars>
+        <Crypto>{props.capsule.eth + " ETH"}</Crypto>
+      </ValueContainer>
     </StyledCapsule>
   );
 };
