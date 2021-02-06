@@ -29,7 +29,7 @@ const capsules: CapsuleType[] = [
     dollars: 76458,
   },
   {
-    open: new Date(new Date().setDate(new Date().getDate() + 0.76)),
+    open: new Date(2021, 1, 7),
     address: "0xF3f7f6466a6B2DfB43e2b3a17ecD9ae35D769840",
     eth: 2.2414141,
     dollars: 12040,
@@ -67,8 +67,8 @@ const GetCapsules = (capsuleList: CapsuleType[]) =>
 
 const SentPage = () => {
   const now = new Date();
-  const upcoming = capsules.filter((cap: CapsuleType) => cap.open < now);
-  const opened = capsules.filter((cap: CapsuleType) => cap.open >= now);
+  const upcoming = capsules.filter((cap: CapsuleType) => cap.open >= now);
+  const opened = capsules.filter((cap: CapsuleType) => cap.open < now);
 
   return (
     <StyledSentPage>
