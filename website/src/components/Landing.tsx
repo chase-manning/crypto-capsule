@@ -9,7 +9,7 @@ const StyledLanding = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 150px;
+  padding: 0 150px;
 `;
 
 const Left = styled.div`
