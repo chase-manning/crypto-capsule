@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Capsule, { CapsuleType } from "./Capsule";
+import { CapsuleType } from "./Capsule";
+import Capsules from "./Capsules";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -50,66 +51,11 @@ const StyledSentPage = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h2`
-  color: var(--main);
-  font-size: 35px;
-  font-weight: 700;
-  margin-top: 70px;
-  margin-bottom: 20px;
-`;
-
-const Container = styled.div`
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const GetCapsules = (capsuleList: CapsuleType[]) =>
-  capsuleList
-    .sort(
-      (a: CapsuleType, b: CapsuleType) => a.open.getTime() - b.open.getTime()
-    )
-    .map((capsule: CapsuleType, index: number) => (
-      <Capsule
-        key={index}
-        capsule={capsule}
-        last={index === capsuleList.length - 1}
-      />
-    ));
-
 const SentPage = () => {
-  const now = new Date();
-  const ready = capsules.filter(
-    (cap: CapsuleType) => cap.open < now && !cap.opened
-  );
-  const upcoming = capsules.filter((cap: CapsuleType) => cap.open >= now);
-  const opened = capsules.filter(
-    (cap: CapsuleType) => cap.open < now && cap.opened
-  );
-
   return (
     <StyledSentPage>
       <Header />
-      <Container>
-        {ready.length > 0 && (
-          <>
-            <Title>Ready</Title>
-            {GetCapsules(ready)}
-          </>
-        )}
-        {upcoming.length > 0 && (
-          <>
-            <Title>Upcoming</Title>
-            {GetCapsules(upcoming)}
-          </>
-        )}
-        {opened.length > 0 && (
-          <>
-            <Title>Opened</Title>
-            {GetCapsules(opened)}
-          </>
-        )}
-      </Container>
+      <Capsules capsules={capsules} />
       <Footer />
     </StyledSentPage>
   );
