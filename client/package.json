@@ -46,6 +46,7 @@
   "devDependencies": {
     "@types/dateformat": "^3.0.1",
     "@types/react-router-dom": "^5.1.7",
-    "@types/styled-components": "^5.1.7"
+    "@types/styled-components": "^5.1.7",
+    "web3-typescript-typings": "^0.10.2"
   }
 }
