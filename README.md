@@ -1,4 +1,4 @@
-# Blockchain Time Capsule
+# Crypto Capsule
 
 This project is still in early development.  
 It intends to be a decentralised time capsule built on top of the Ethereum network.  
