@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Landing from "./Landing";
 import SimpleStorageContract from "../contracts/SimpleStorage.json";
+import Web3 from "web3";
 
 const StyledCreatePage = styled.div`
   height: 100vh;
@@ -14,9 +15,9 @@ const StyledCreatePage = styled.div`
 
 const CreatePage = () => {
   const [value, setValue] = useState(0);
-  const [web3, setWeb3] = useState(null);
-  const [accounts, setAccounts] = useState(null);
-  const [contract, setContract] = useState(null);
+  const [web3, setWeb3] = useState<Web3 | null>(null);
+  const [accounts, setAccounts] = useState<string[]>([]);
+  const [contract, setContract] = useState<any | null>(null);
 
   useEffect(() => {
     const meow = async () => {
@@ -24,20 +25,19 @@ const CreatePage = () => {
         const web3 = await getWeb3();
         const accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();
-        const deployedNetwork = SimpleStorageContract.networks[networkId];
+        const deployedNetwork = (SimpleStorageContract as any).networks[
+          networkId
+        ];
         const instance = new web3.eth.Contract(
-          SimpleStorageContract.abi,
+          (SimpleStorageContract as any).abi,
           deployedNetwork && deployedNetwork.address
         );
 
-        // Set web3, accounts, and contract to the state, and then proceed with an
-        // example of interacting with the contract's methods.
-        this.setState({ web3, accounts, contract: instance }, this.runExample);
+        setWeb3(web3);
+        setAccounts(accounts);
+        setContract(instance);
       } catch (error) {
-        // Catch any errors for any of the above operations.
-        alert(
-          `Failed to load web3, accounts, or contract. Check console for details.`
-        );
+        alert("Error Loading Web3");
         console.error(error);
       }
     };
@@ -49,6 +49,7 @@ const CreatePage = () => {
       <Header />
       <Landing />
       <Footer />
+      {accounts.length > 0 && accounts[0]}
     </StyledCreatePage>
   );
 };
