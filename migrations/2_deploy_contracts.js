@@ -1,7 +1,5 @@
-var Capsule = artifacts.require("./Capsule.sol");
 var CapsuleFactory = artifacts.require("./CapsuleFactory.sol");
 
-export default function (deployer) {
-  deployer.deploy(Capsule);
+module.exports = function (deployer) {
   deployer.deploy(CapsuleFactory);
-}
+};
