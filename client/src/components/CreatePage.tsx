@@ -19,28 +19,29 @@ const CreatePage = () => {
   const [accounts, setAccounts] = useState<string[]>([]);
   const [contract, setContract] = useState<any | null>(null);
 
-  useEffect(() => {
-    const meow = async () => {
-      try {
-        const web3 = await getWeb3();
-        const accounts = await web3.eth.getAccounts();
-        const networkId = await web3.eth.net.getId();
-        const deployedNetwork = (SimpleStorageContract as any).networks[
-          networkId
-        ];
-        const instance = new web3.eth.Contract(
-          (SimpleStorageContract as any).abi,
-          deployedNetwork && deployedNetwork.address
-        );
+  const meow = async () => {
+    try {
+      const web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts();
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = (SimpleStorageContract as any).networks[
+        networkId
+      ];
+      const instance = new web3.eth.Contract(
+        (SimpleStorageContract as any).abi,
+        deployedNetwork && deployedNetwork.address
+      );
 
-        setWeb3(web3);
-        setAccounts(accounts);
-        setContract(instance);
-      } catch (error) {
-        alert("Error Loading Web3");
-        console.error(error);
-      }
-    };
+      setWeb3(web3);
+      setAccounts(accounts);
+      setContract(instance);
+    } catch (error) {
+      alert("Error Loading Web3");
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     meow();
   }, []);
 
