@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.21 <=0.7.4;
+pragma solidity >=0.6.0 <=0.7.4;
 
 import "./Capsule.sol";
 
@@ -20,10 +20,10 @@ contract CapsuleFactory {
         sentCapsules[msg.sender].push(capsule);
         receivedCapsules[_beneficiary].push(capsule);
         address(capsule).transfer(msg.value);
-        Created(capsule, msg.sender, _beneficiary, block.timestamp, _distributionDate, msg.value);
+        emit Created(capsule, msg.sender, _beneficiary, block.timestamp, _distributionDate, msg.value);
     }
 
-    fallback() external {
+    fallback () external {
         revert();
     }
 

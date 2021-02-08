@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.21 <=0.7.4;
+pragma solidity >=0.6.0 <=0.7.4;
 
 import "./IERC20.sol";
 
@@ -21,14 +21,14 @@ contract Capsule {
         createdDate = block.timestamp;
     }
 
-    receive() external payable {
+    receive () external payable {
         emit Received(msg.sender, msg.value);
     }
 
     function withdraw() onlyBeneficiary public {
         require(block.timestamp >= distributionDate);
         msg.sender.transfer(address(this).balance);
-        Withdrew(msg.sender, address(this).balance);
+        emit Withdrew(msg.sender, address(this).balance);
     }
 
     function withdrawTokens(address _tokenContract) onlyBeneficiary public {
@@ -36,7 +36,7 @@ contract Capsule {
         IERC20 token = IERC20(_tokenContract);
         uint256 tokenBalance = token.balanceOf(address(this));
         token.transfer(grantor, tokenBalance);
-        WithdrewTokens(_tokenContract, msg.sender, tokenBalance);
+        emit WithdrewTokens(_tokenContract, msg.sender, tokenBalance);
     }
 
     function info() public view returns(address, address, uint256, uint256, uint256) {
