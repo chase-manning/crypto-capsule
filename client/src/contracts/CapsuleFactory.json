@@ -65,7 +65,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -84,7 +85,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -108,7 +110,8 @@
         }
       ],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"contract Capsule\",\"name\":\"capsule\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"grantor\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"beneficiary\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"createdDate\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"distributionDate\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Created\",\"type\":\"event\"},{\"stateMutability\":\"nonpayable\",\"type\":\"fallback\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_beneficiary\",\"type\":\"address\"}],\"name\":\"getReceivedCapsules\",\"outputs\":[{\"internalType\":\"contract Capsule[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_grantor\",\"type\":\"address\"}],\"name\":\"getSentCapsules\",\"outputs\":[{\"internalType\":\"contract Capsule[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_beneficiary\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_distributionDate\",\"type\":\"uint256\"}],\"name\":\"newCapsule\",\"outputs\":[{\"internalType\":\"contract Capsule\",\"name\":\"capsule\",\"type\":\"address\"}],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/chasemanning/Documents/repositories/crypto-capsule/contracts/CapsuleFactory.sol\":\"CapsuleFactory\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/chasemanning/Documents/repositories/crypto-capsule/contracts/Capsule.sol\":{\"keccak256\":\"0xcb6d65699bd3eda68b94acd54cd309a9285fe9a05158efad48bdb706747b3f07\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://34551705032f9e9bc08cf40e26baec5bc49b4aa682c2ed16744fb26b0fc90f3b\",\"dweb:/ipfs/Qmc5Atn1S1qTog7GzAfXePgxipGcpamcaQTNJiUamnPLHi\"]},\"/Users/chasemanning/Documents/repositories/crypto-capsule/contracts/CapsuleFactory.sol\":{\"keccak256\":\"0x68596851e50e53b79e5452cd27d769f77dfcf83d88c5d954df3e32e7ca4ef56d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7423ccdfb2ddbf6f4ee273e98b3a78ae3df6d87fb7f2bdca422af899d1ac9e90\",\"dweb:/ipfs/QmbeVpuqKYPkRVtUiw7qMRwrchxSymuhwi843eZeJiXc2u\"]},\"/Users/chasemanning/Documents/repositories/crypto-capsule/contracts/IERC20.sol\":{\"keccak256\":\"0x417f55b923b440a47facdf0fd43b913c88cd64b7ce69ab9b9d25e36970dc8f7b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cc3367c760d1b62380385aa380111ba8569ab3116bbba9cab48c842d40f22060\",\"dweb:/ipfs/QmQVcKTRoQm7PmHy7mzpbjUX2yAQJAS9E36AAZqdVkNkt1\"]}},\"version\":1}",
@@ -3171,9 +3174,61 @@
     "name": "solc",
     "version": "0.7.4+commit.3f05b770.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "5777": {
+      "events": {
+        "0x14d5db8c1f746c7adcbcd13cf8945dd2ac6ad58be52380b8c4933c876f76e1bf": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract Capsule",
+              "name": "capsule",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "grantor",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "beneficiary",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "createdDate",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "distributionDate",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "Created",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x0246221B023fDDf92475138BebCF94Fe5f1096FD",
+      "transactionHash": "0x74650280131aa234704acd5fb1068ece626a4da1107008cc6b65c489a04be31f"
+    }
+  },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-02-08T07:47:56.750Z",
+  "updatedAt": "2021-02-08T08:09:26.791Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
