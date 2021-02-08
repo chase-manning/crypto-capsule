@@ -9,12 +9,12 @@ contract Capsule {
     uint256 public distributionDate;
     uint256 public createdDate;
 
-    modifier onlyOwner {
-        require(msg.sender == grantor);
+    modifier onlyBeneficiary {
+        require(msg.sender == beneficiary);
         _;
     }
 
-    constructor ( address _grantor, address _beneficiary, uint256 _distributionDate) {
+    constructor (address _grantor, address _beneficiary, uint256 _distributionDate) {
         grantor = _grantor;
         beneficiary = _beneficiary;
         distributionDate = _distributionDate;
@@ -25,13 +25,13 @@ contract Capsule {
         emit Received(msg.sender, msg.value);
     }
 
-    function withdraw() onlyOwner public {
+    function withdraw() onlyBeneficiary public {
         require(block.timestamp >= distributionDate);
         msg.sender.transfer(address(this).balance);
         Withdrew(msg.sender, address(this).balance);
     }
 
-    function withdrawTokens(address _tokenContract) onlyOwner public {
+    function withdrawTokens(address _tokenContract) onlyBeneficiary public {
         require(block.timestamp >= distributionDate);
         IERC20 token = IERC20(_tokenContract);
         uint256 tokenBalance = token.balanceOf(address(this));
