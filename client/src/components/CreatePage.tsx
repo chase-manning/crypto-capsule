@@ -62,7 +62,6 @@ const CreatePage = () => {
     const capsule = await capsuleFactory.methods
       .newCapsule(beneficiary, distributionDate.getTime() / 1000)
       .send({ from: accounts[0], value: web3.utils.toWei(amount) });
-    // .send({ from: accounts[0],  });
 
     const sent = await capsuleFactory.methods.getSentCapsules(accounts[0]);
     console.log(sent);
