@@ -55,28 +55,17 @@ const CreatePage = () => {
       return;
     }
 
-    console.log("meow");
-    console.log(amount);
-    const woof: string = web3.utils.toWei(amount);
-    console.log(woof);
-    console.log(distributionDate.getTime());
     var tx = {
       from: accounts[0],
-      value: woof,
+      value: web3.utils.toWei(amount),
     };
-    const meow = await capsuleFactory.methods
-      .newCapsule(beneficiary, distributionDate.getTime())
-      .send(tx);
+    // const meow = await capsuleFactory.methods
+    //   .newCapsule(beneficiary, distributionDate.getTime())
+    //   .send(tx);
 
-    // var tx = {
-    //   from: accounts[0],
-    //   value: web3.utils.toWei(amount),
-    // };
-    // const capsule = await capsuleFactory.methods
-    //   .newCapsule(beneficiary, distributionDate.getTime() / 1000)
-    //   .send({ from: accounts[0], value: web3.utils.toWei(amount) });
-
-    const sent = await capsuleFactory.methods.getSentCapsules(accounts[0]);
+    const sent = await capsuleFactory.methods
+      .getSentCapsules(accounts[0])
+      .call();
     console.log(sent);
     console.log(sent.length);
   };
@@ -91,9 +80,9 @@ const CreatePage = () => {
       <div
         onClick={() =>
           createCapsule(
-            "0xC09CdDAc192cA64b5A6C43286DeE091591c2aF1c",
+            "0x11ADbDe42070E6c6D7968c849B226956e3761f8E",
             new Date(),
-            "50"
+            "10"
           )
         }
       >
