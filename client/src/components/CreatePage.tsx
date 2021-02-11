@@ -55,13 +55,26 @@ const CreatePage = () => {
       return;
     }
 
+    console.log("meow");
+    console.log(amount);
+    const woof: string = web3.utils.toWei(amount);
+    console.log(woof);
+    console.log(distributionDate.getTime());
     var tx = {
       from: accounts[0],
-      value: web3.utils.toWei(amount),
+      value: woof,
     };
-    const capsule = await capsuleFactory.methods
-      .newCapsule(beneficiary, distributionDate.getTime() / 1000)
-      .send({ from: accounts[0], value: web3.utils.toWei(amount) });
+    const meow = await capsuleFactory.methods
+      .newCapsule(beneficiary, distributionDate.getTime())
+      .send(tx);
+
+    // var tx = {
+    //   from: accounts[0],
+    //   value: web3.utils.toWei(amount),
+    // };
+    // const capsule = await capsuleFactory.methods
+    //   .newCapsule(beneficiary, distributionDate.getTime() / 1000)
+    //   .send({ from: accounts[0], value: web3.utils.toWei(amount) });
 
     const sent = await capsuleFactory.methods.getSentCapsules(accounts[0]);
     console.log(sent);
