@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Web3 from "web3";
 import Button from "../styles/Button";
 import CreateCapsule from "./CreateCapsule";
+import { Contract } from "web3-eth-contract";
 
 const StyledLanding = styled.div`
   width: 100%;
@@ -34,7 +36,12 @@ const SubHeader = styled.div`
   line-height: 1.4;
 `;
 
-const Landing = () => {
+type Props = {
+  web3?: Web3;
+  capsuleFactory?: Contract;
+};
+
+const Landing = (props: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -52,7 +59,12 @@ const Landing = () => {
         </div>
       </Left>
       <div />
-      <CreateCapsule open={open} close={() => setOpen(false)} />
+      <CreateCapsule
+        web3={props.web3}
+        capsuleFactory={props.capsuleFactory}
+        open={open}
+        close={() => setOpen(false)}
+      />
     </StyledLanding>
   );
 };

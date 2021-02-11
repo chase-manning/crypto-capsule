@@ -3,9 +3,10 @@ import styled from "styled-components";
 import Footer from "./Footer";
 import Header from "./Header";
 import Landing from "./Landing";
-import { useDispatch, useSelector } from "react-redux";
-import { selectActiveAcount, selectCapsuleFactory } from "../state/web3Slice";
+import { useSelector } from "react-redux";
+import { selectActiveAcount } from "../state/web3Slice";
 import Web3 from "web3";
+import { Contract } from "web3-eth-contract";
 
 const StyledCreatePage = styled.div`
   height: 100vh;
@@ -15,19 +16,18 @@ const StyledCreatePage = styled.div`
 
 type Props = {
   web3?: Web3;
+  capsuleFactory?: Contract;
 };
 
 const CreatePage = (props: Props) => {
-  const dispatch = useDispatch();
   const activeAccount = useSelector(selectActiveAcount);
-  const capsuleFactory = useSelector(selectCapsuleFactory);
 
   const createCapsule = async (
     beneficiary: string,
     distributionDate: Date,
     amount: string
   ) => {
-    if (!capsuleFactory) {
+    if (!props.capsuleFactory) {
       console.log("Contract doesn't exits");
       return;
     }
@@ -41,11 +41,11 @@ const CreatePage = (props: Props) => {
       from: activeAccount,
       value: props.web3.utils.toWei(amount),
     };
-    const meow = await capsuleFactory.methods
+    const meow = await props.capsuleFactory.methods
       .newCapsule(beneficiary, distributionDate.getTime())
       .send(tx);
 
-    const sent = await capsuleFactory.methods
+    const sent = await props.capsuleFactory.methods
       .getSentCapsules(activeAccount)
       .call();
     console.log(sent);
@@ -66,7 +66,7 @@ const CreatePage = (props: Props) => {
       >
         meow
       </div>
-      <Landing />
+      <Landing web3={props.web3} capsuleFactory={props.capsuleFactory} />
       <Footer />
       {activeAccount && activeAccount}
     </StyledCreatePage>

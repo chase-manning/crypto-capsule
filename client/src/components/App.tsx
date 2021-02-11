@@ -8,11 +8,13 @@ import Web3 from "web3";
 import getWeb3 from "../services/web3Service";
 import CapsuleFactory from "../contracts/CapsuleFactory.json";
 import { useDispatch } from "react-redux";
-import { setAccounts, setCapsuleFactory } from "../state/web3Slice";
+import { setAccounts } from "../state/web3Slice";
+import { Contract } from "web3-eth-contract";
 
 const App = () => {
   const dispatch = useDispatch();
   const [web3, setWeb3] = useState<Web3 | undefined>();
+  const [capsuleFactory, setCapsuleFactory] = useState<Contract | undefined>();
 
   const initWeb3 = async () => {
     try {
@@ -26,8 +28,8 @@ const App = () => {
       );
 
       setWeb3(_web3);
+      setCapsuleFactory(_instance);
       dispatch(setAccounts(_accounts));
-      dispatch(setCapsuleFactory(_instance));
     } catch (error) {
       alert("Error Loading Web3");
       console.error(error);
@@ -51,7 +53,7 @@ const App = () => {
           <AboutPage />
         </Route>
         <Route path="/">
-          <CreatePage web3={web3} />
+          <CreatePage web3={web3} capsuleFactory={capsuleFactory} />
         </Route>
       </Switch>
     </Router>

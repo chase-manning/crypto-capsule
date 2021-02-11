@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import Web3 from "web3";
 import TextInput from "./TextInput";
+import { Contract } from "web3-eth-contract";
 
 const StyledCreateCapsule = styled.div`
   position: fixed;
@@ -8,7 +10,6 @@ const StyledCreateCapsule = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  /* background-color: rgba(0, 0, 0, 0.1); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,6 +49,8 @@ const Header = styled.div`
 `;
 
 type Props = {
+  web3?: Web3;
+  capsuleFactory?: Contract;
   open: boolean;
   close: () => void;
 };
