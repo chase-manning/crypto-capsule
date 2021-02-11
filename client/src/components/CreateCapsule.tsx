@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Web3 from "web3";
 import TextInput from "./TextInput";
 import { Contract } from "web3-eth-contract";
+import { useSelector } from "react-redux";
+import { selectActiveAcount } from "../state/web3Slice";
+import Button from "../styles/Button";
 
 const StyledCreateCapsule = styled.div`
   position: fixed;
@@ -56,6 +59,38 @@ type Props = {
 };
 
 const CreateCapsule = (props: Props) => {
+  const activeAccount = useSelector(selectActiveAcount);
+
+  const createCapsule = async (
+    beneficiary: string,
+    distributionDate: Date,
+    amount: string
+  ) => {
+    if (!props.capsuleFactory) {
+      console.log("Contract doesn't exits");
+      return;
+    }
+
+    if (!props.web3) {
+      console.log("Web 3 doesn't exits");
+      return;
+    }
+
+    var tx = {
+      from: activeAccount,
+      value: props.web3.utils.toWei(amount),
+    };
+    await props.capsuleFactory.methods
+      .newCapsule(beneficiary, distributionDate.getTime())
+      .send(tx);
+
+    // const sent = await props.capsuleFactory.methods
+    //   .getSentCapsules(activeAccount)
+    //   .call();
+    // console.log(sent);
+    // console.log(sent.length);
+  };
+
   if (!props.open) return null;
 
   return (
@@ -64,6 +99,17 @@ const CreateCapsule = (props: Props) => {
       <Container>
         <Header>Create Capsule</Header>
         <TextInput label="ETH" />
+        <Button
+          onClick={() => {
+            createCapsule(
+              "0x11ADbDe42070E6c6D7968c849B226956e3761f8E",
+              new Date(),
+              "10"
+            );
+          }}
+        >
+          Create
+        </Button>
       </Container>
     </StyledCreateCapsule>
   );
