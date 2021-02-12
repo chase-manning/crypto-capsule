@@ -38,6 +38,7 @@ const App = () => {
 
   useEffect(() => {
     initWeb3();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
