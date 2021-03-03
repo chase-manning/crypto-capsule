@@ -26,16 +26,27 @@ const StyledCapsule = styled.div`
     ${(props: CapsuleProps) => (props.last ? "rgba(0,0,0,0)" : "var(--sub)")};
 `;
 
-const OpenImage = styled.div`
+const Image = styled.div`
   height: 100%;
   width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--main);
+  text-transform: uppercase;
+`;
+
+const OpenImage = styled(Image)`
   background-color: pink;
 `;
 
-const ClosedImage = styled.div`
-  height: 100%;
-  width: 120px;
-  background-color: yellow;
+const ClosedImage = styled(Image)`
+  background-color: lightslategray;
+`;
+
+const ReadyImage = styled(Image)`
+  background-color: lightblue;
 `;
 
 const CountdownContainer = styled.div`
@@ -127,8 +138,9 @@ const Capsule = (props: Props) => {
 
   return (
     <StyledCapsule last={props.last}>
-      {open && <OpenImage />}
-      {!open && <ClosedImage />}
+      {open && props.capsule.opened && <OpenImage>asset 2</OpenImage>}
+      {open && !props.capsule.opened && <ReadyImage>asset 3</ReadyImage>}
+      {!open && <ClosedImage>asset 4</ClosedImage>}
       <CountdownContainer>
         <Countdown>
           {open ? "0y 0d 0h 0m 0s" : ""}
