@@ -39,7 +39,7 @@ const SubHeader = styled.div`
 const Image = styled.div`
   width: 40vw;
   height: 40vh;
-  background-color: lightgreen;
+  background-color: lightslategray;
   display: flex;
   justify-content: center;
   align-items: center;

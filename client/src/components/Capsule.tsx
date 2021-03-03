@@ -42,7 +42,7 @@ const OpenImage = styled(Image)`
 `;
 
 const ClosedImage = styled(Image)`
-  background-color: lightslategray;
+  background-color: lightgreen;
 `;
 
 const ReadyImage = styled(Image)`
