@@ -45,6 +45,7 @@ const Image = styled.div`
   align-items: center;
   font-size: 3rem;
   color: var(--main);
+  text-transform: uppercase;
 `;
 
 type Props = {
@@ -69,7 +70,7 @@ const Landing = (props: Props) => {
           </Button>
         </div>
       </Left>
-      <Image>ASSET 1</Image>
+      <Image>asset 1</Image>
       <CreateCapsule
         web3={props.web3}
         capsuleFactory={props.capsuleFactory}
