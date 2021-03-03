@@ -36,6 +36,17 @@ const SubHeader = styled.div`
   line-height: 1.4;
 `;
 
+const Image = styled.div`
+  width: 40vw;
+  height: 40vh;
+  background-color: lightgreen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: var(--main);
+`;
+
 type Props = {
   web3?: Web3;
   capsuleFactory?: Contract;
@@ -58,7 +69,7 @@ const Landing = (props: Props) => {
           </Button>
         </div>
       </Left>
-      <div />
+      <Image>ASSET 1</Image>
       <CreateCapsule
         web3={props.web3}
         capsuleFactory={props.capsuleFactory}
