@@ -60,7 +60,7 @@ const Landing = (props: Props) => {
       <Left>
         <Header>Crypto Capsule The Blockchain Time Capsule</Header>
         <SubHeader>
-          Send crytocurrencies into the future safely and securely using
+          Send crytocurrencies into the future, safely and securely using
           Ethereum smart contracts
         </SubHeader>
         <div>
