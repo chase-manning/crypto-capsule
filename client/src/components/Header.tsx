@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../styles/Button";
 
@@ -26,7 +26,7 @@ type NavProps = {
   active: boolean;
 };
 
-const Nav = styled.a`
+const Nav = styled.button`
   width: 100px;
   transition: color 0.3s;
 
@@ -71,24 +71,37 @@ const LoginButton = styled.button`
 
 const Header = () => {
   const location = useLocation();
+  const history = useHistory();
 
   return (
     <StyledHeader>
       <Logo href="/">Crypto Capsule</Logo>
       <NavContainer>
-        <Nav active={location.pathname === "/"} href="/">
+        <Nav
+          active={location.pathname === "/"}
+          onClick={() => history.push("/")}
+        >
           <Selection active={location.pathname === "/"} />
           <NavText>Create</NavText>
         </Nav>
-        <Nav active={location.pathname === "/sent"} href="/sent">
+        <Nav
+          active={location.pathname === "/sent"}
+          onClick={() => history.push("/sent")}
+        >
           <Selection active={location.pathname === "/sent"} />
           <NavText>Sent</NavText>
         </Nav>
-        <Nav active={location.pathname === "/received"} href="/received">
+        <Nav
+          active={location.pathname === "/received"}
+          onClick={() => history.push("/received")}
+        >
           <Selection active={location.pathname === "/received"} />
           <NavText>Received</NavText>
         </Nav>
-        <Nav active={location.pathname === "/about"} href="/about">
+        <Nav
+          active={location.pathname === "/about"}
+          onClick={() => history.push("/about")}
+        >
           <Selection active={location.pathname === "/about"} />
           <NavText>About</NavText>
         </Nav>
