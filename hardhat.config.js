@@ -1,4 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
+require("hardhat-abi-exporter");
+
 var secrets = require("./secrets");
 
 task("accounts", "Prints the list of accounts", async () => {
@@ -16,5 +18,12 @@ module.exports = {
       url: "https://eth-rinkeby.alchemyapi.io/v2/" + secrets.alchemyKey,
       accounts: [secrets.walletPrivateKey],
     },
+  },
+  abiExporter: {
+    path: "./client/src/contracts",
+    clear: true,
+    flat: true,
+    only: ["Capsule.sol", "CapsuleFactory.sol"],
+    spacing: 2,
   },
 };
