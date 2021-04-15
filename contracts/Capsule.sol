@@ -27,7 +27,7 @@ contract Capsule {
 
     function withdraw() onlyBeneficiary public {
         require(block.timestamp >= distributionDate);
-        msg.sender.transfer(address(this).balance);
+        payable(msg.sender).transfer(address(this).balance);
         emit Withdrew(msg.sender, address(this).balance);
     }
 
