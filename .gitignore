@@ -1,3 +1,6 @@
+# Main
+/node_modules
+
 # Website
 /client/node_modules
 /client/build
