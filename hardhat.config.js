@@ -12,8 +12,8 @@ task("accounts", "Prints the list of accounts", async () => {
 module.exports = {
   solidity: "0.8.0",
   networks: {
-    ropsten: {
-      url: "https://eth-ropsten.alchemyapi.io/v2/" + secrets.alchemyKey,
+    rinkenby: {
+      url: "https://eth-rinkeby.alchemyapi.io/v2/" + secrets.alchemyKey,
       accounts: [secrets.walletPrivateKey],
     },
   },

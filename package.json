@@ -7,7 +7,7 @@
     "test": "npx hardhat test",
     "compile": "npx hardhat compile",
     "deploy.local": "npm run compile && npx hardhat run --network localhost scripts/deploy.js",
-    "deploy.test": "npm run compile && npx hardhat run --network ropsten scripts/deploy.js"
+    "deploy.test": "npm run compile && npx hardhat run --network rinkenby scripts/deploy.js"
   },
   "repository": {
     "type": "git",
