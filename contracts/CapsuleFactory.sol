@@ -19,7 +19,7 @@ contract CapsuleFactory {
         capsule = new Capsule(msg.sender, _beneficiary, _distributionDate);
         sentCapsules[msg.sender].push(capsule);
         receivedCapsules[_beneficiary].push(capsule);
-        address(capsule).transfer(msg.value);
+        payable(capsule).transfer(msg.value);
         emit Created(capsule, msg.sender, _beneficiary, block.timestamp, _distributionDate, msg.value);
     }
 
