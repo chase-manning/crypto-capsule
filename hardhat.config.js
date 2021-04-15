@@ -24,6 +24,5 @@ module.exports = {
     clear: true,
     flat: true,
     only: ["Capsule.sol", "CapsuleFactory.sol"],
-    spacing: 2,
   },
 };
