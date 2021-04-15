@@ -1,6 +1,8 @@
 # Main
 /node_modules
 secrets.js
+/artifacts
+/cache
 
 # Website
 /client/node_modules
