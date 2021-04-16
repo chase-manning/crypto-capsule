@@ -15,35 +15,22 @@ contract SharedCapsuleV1 {
         uint256 createdDate;
         bool opened;
         uint256 value;
-        Asset[] assets;
+        address[] tokens;
+        uint256[] values;
+        // Asset[] assets;
     }
+    uint256 capsuleCount = 0;
+    // mapping(uint256 => Capsule) capsules;
     Capsule[] capsules;
     mapping(address => uint256[]) sent;
     mapping(address => uint256[]) received;
 
     function createCapsule(address _grantor, address _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
         // TODO Add Requires Here
-        uint256 assetCount = _tokens.length;
-        Asset[] memory assets = new Asset[](assetCount);
-        for (uint256 i = 0; i < assetCount; i++) {
-            assets[i] = Asset(_tokens[i], _values[i]);
-        }
-       uint256 capsuleId = capsules.length;
-       capsules[capsuleId] = Capsule(_grantor, _beneficiary, _distributionDate, block.timestamp, false, msg.value, assets);
-       sent[msg.sender][sent[msg.sender].length] = capsuleId;
-       received[msg.sender][received[msg.sender].length] = capsuleId;
-
-    //    Capsule memory _capsule;
-    //    _capsule.grantor = _grantor;
-    //    _capsule.beneficiary = _beneficiary;
-    //    _capsule.distributionDate = _distributionDate;
-    //    _capsule.createdDate = block.timestamp;
-    //    _capsule.opened = false;
-    //    _capsule.value = msg.value;
-    //    _capsule.assets = _assets;
-    //    Asset[] memory _assets = new Asset[](2);
-    //    _assets[0] = Asset()
-    //    _capsule.assets = _assets;
+        capsules.push(Capsule(_grantor, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
+        sent[msg.sender][sent[msg.sender].length] = capsuleCount;
+        received[msg.sender][received[msg.sender].length] = capsuleCount;
+        capsuleCount ++;
             // IERC20 token = IERC20(_capsule.tokens[i].contractAddress);
     }
 
@@ -53,11 +40,10 @@ contract SharedCapsuleV1 {
         require(block.timestamp >= _capsule.distributionDate, "Capsule has not matured yet");
         require(msg.sender == _capsule.beneficiary, "You are not the beneficiary of this Capsule");
 
-        for (uint256 i = 0; i < _capsule.assets.length; i++) {
-            Asset memory asset  = _capsule.assets[i];
-            IERC20 erc20Token = IERC20(asset.token);
-            erc20Token.transfer(_capsule.beneficiary, asset.value);
-            emit ClaimedAsset(asset, capsuleId);
+        for (uint256 i = 0; i < _capsule.tokens.length; i++) {
+            IERC20 erc20Token = IERC20(_capsule.tokens[i]);
+            erc20Token.transfer(_capsule.beneficiary, _capsule.values[i]);
+            emit ClaimedAsset(_capsule.tokens[i], _capsule.values[i], capsuleId);
         }
 
         _capsule.opened = true;
@@ -86,6 +72,6 @@ contract SharedCapsuleV1 {
         return _capsules;
     }
 
-    event ClaimedAsset(Asset asset, uint256 capsuleId);
+    event ClaimedAsset(address asset, uint256 value, uint256 capsuleId);
     event CapsuleOpened(uint256 capsuleId);
 }
