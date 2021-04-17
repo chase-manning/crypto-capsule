@@ -3,47 +3,74 @@ pragma solidity ^0.8.0;
 
 import "./interfaces/IERC20.sol";
 
-contract Capsule {
-    address public grantor;
-    address public beneficiary;
-    uint256 public distributionDate;
-    uint256 public createdDate;
+contract CryptoCapsule {
+    struct Asset {
+        address token;
+        uint256 value;
+    }
+    struct Capsule {
+        address grantor;
+        address beneficiary;
+        uint256 distributionDate;
+        uint256 createdDate;
+        bool opened;
+        uint256 value;
+        address[] tokens;
+        uint256[] values;
+        // Asset[] assets;
+    }
+    uint256 capsuleCount = 0;
+    Capsule[] capsules;
+    mapping(address => uint256[]) sent;
+    mapping(address => uint256[]) received;
 
-    modifier onlyBeneficiary {
-        require(msg.sender == beneficiary);
-        _;
+    function createCapsule(address _grantor, address _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
+        // TODO Add Requires Here
+        capsules.push(Capsule(_grantor, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
+        uint256 capsuleId = capsules.length;
+        sent[msg.sender].push(capsuleId);
+        received[msg.sender].push(capsuleId);
+            // IERC20 token = IERC20(_capsule.tokens[i].contractAddress);
     }
 
-    constructor (address _grantor, address _beneficiary, uint256 _distributionDate) {
-        grantor = _grantor;
-        beneficiary = _beneficiary;
-        distributionDate = _distributionDate;
-        createdDate = block.timestamp;
+    function openCapsule(uint256 capsuleId) public {
+        Capsule memory _capsule = capsules[capsuleId];
+        require(!_capsule.opened, "Capsule has already been opened");
+        require(block.timestamp >= _capsule.distributionDate, "Capsule has not matured yet");
+        require(msg.sender == _capsule.beneficiary, "You are not the beneficiary of this Capsule");
+
+        for (uint256 i = 0; i < _capsule.tokens.length; i++) {
+            IERC20 erc20Token = IERC20(_capsule.tokens[i]);
+            erc20Token.transfer(_capsule.beneficiary, _capsule.values[i]);
+            emit ClaimedAsset(_capsule.tokens[i], _capsule.values[i], capsuleId);
+        }
+
+        _capsule.opened = true;
+        emit CapsuleOpened(capsuleId);
     }
 
-    receive () external payable {
-        emit Received(msg.sender, msg.value);
+    function getCapsule(uint256 capsuleId) public view returns(Capsule memory) {
+        return capsules[capsuleId];
     }
 
-    function withdraw() onlyBeneficiary public {
-        require(block.timestamp >= distributionDate);
-        payable(msg.sender).transfer(address(this).balance);
-        emit Withdrew(msg.sender, address(this).balance);
+    function getSentCapsules(address grantor) public view returns(Capsule[] memory) {
+        uint[] memory ids = sent[grantor];
+        Capsule[] memory _capsules = new Capsule[](ids.length);
+        for (uint256 i = 0; i < ids.length; i++) {
+            _capsules[i] = capsules[ids[i]];
+        }
+        return _capsules;
     }
 
-    function withdrawTokens(address _tokenContract) onlyBeneficiary public {
-        require(block.timestamp >= distributionDate);
-        IERC20 token = IERC20(_tokenContract);
-        uint256 tokenBalance = token.balanceOf(address(this));
-        token.transfer(grantor, tokenBalance);
-        emit WithdrewTokens(_tokenContract, msg.sender, tokenBalance);
+    function getReceivedCapsules(address beneficiary) public view returns(Capsule[] memory) {
+        uint[] memory ids = received[beneficiary];
+        Capsule[] memory _capsules = new Capsule[](ids.length);
+        for (uint256 i = 0; i < ids.length; i++) {
+            _capsules[i] = capsules[ids[i]];
+        }
+        return _capsules;
     }
 
-    function info() public view returns(address, address, uint256, uint256, uint256) {
-        return (grantor, beneficiary, distributionDate, createdDate, address(this).balance);
-    }
-
-    event Received(address from, uint256 amount);
-    event Withdrew(address to, uint256 amount);
-    event WithdrewTokens(address tokenContract, address to, uint256 amount);
+    event ClaimedAsset(address asset, uint256 value, uint256 capsuleId);
+    event CapsuleOpened(uint256 capsuleId);
 }
