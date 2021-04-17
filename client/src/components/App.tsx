@@ -6,7 +6,7 @@ import ReceivedPage from "./ReceivedPage";
 import SentPage from "./SentPage";
 import Web3 from "web3";
 import getWeb3 from "../services/web3Service";
-import CapsuleFactory from "../contracts/CapsuleFactory.json";
+import CapsuleFactory from "../contracts/CryptoCapsule.json";
 import { useDispatch } from "react-redux";
 import { setAccounts } from "../state/web3Slice";
 import { Contract } from "web3-eth-contract";
