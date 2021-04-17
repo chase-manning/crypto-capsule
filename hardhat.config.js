@@ -23,6 +23,6 @@ module.exports = {
     path: "./client/src/contracts",
     clear: true,
     flat: true,
-    only: ["Capsule.sol", "CapsuleFactory.sol"],
+    only: ["Capsule.sol"],
   },
 };
