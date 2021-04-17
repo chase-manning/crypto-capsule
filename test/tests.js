@@ -1,9 +1,9 @@
 const { expect } = require("chai");
 
-describe("Capsule Factory", () => {
+describe("Capsule", () => {
   it("Should successfully deply", async () => {
-    const Factory = await ethers.getContractFactory("CapsuleFactory");
-    const factory = await Factory.deploy();
-    await factory.deployed();
+    const Capsule = await ethers.getContractFactory("CryptoCapsule");
+    const capsule = await Capsule.deploy();
+    await capsule.deployed();
   });
 });
