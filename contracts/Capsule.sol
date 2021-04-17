@@ -17,7 +17,6 @@ contract CryptoCapsule {
         uint256 value;
         address[] tokens;
         uint256[] values;
-        // Asset[] assets;
     }
     uint256 capsuleCount = 0;
     Capsule[] capsules;
@@ -30,7 +29,6 @@ contract CryptoCapsule {
         uint256 capsuleId = capsules.length;
         sent[msg.sender].push(capsuleId);
         received[msg.sender].push(capsuleId);
-            // IERC20 token = IERC20(_capsule.tokens[i].contractAddress);
     }
 
     function openCapsule(uint256 capsuleId) public {
