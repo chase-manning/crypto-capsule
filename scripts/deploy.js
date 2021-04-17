@@ -1,10 +1,10 @@
 const hre = require("hardhat");
 
 async function main() {
-  const CapsuleFactory = await hre.ethers.getContractFactory("CapsuleFactory");
-  const capsuleFactory = await CapsuleFactory.deploy();
-  await capsuleFactory.deployed();
-  console.log("Capsule Factory deployed to:", capsuleFactory.address);
+  const Capsule = await hre.ethers.getContractFactory("CryptoCapsule");
+  const capsule = await Capsule.deploy();
+  await capsule.deployed();
+  console.log("Capsule deployed to:", capsule.address);
 }
 
 main()
