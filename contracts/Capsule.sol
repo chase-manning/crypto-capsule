@@ -23,9 +23,12 @@ contract CryptoCapsule {
     mapping(address => uint256[]) sent;
     mapping(address => uint256[]) received;
 
-    function createCapsule(address _grantor, address _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
+    function createCapsule(address _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
+        require(_distributionDate > block.timestamp, "Distribution Date must be in future");
+        require(_tokens.length == _values.length, "Tokens and Values must be same length");
+
         // TODO Add Requires Here
-        capsules.push(Capsule(_grantor, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
+        capsules.push(Capsule(msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
         uint256 capsuleId = capsules.length;
         sent[msg.sender].push(capsuleId);
         received[msg.sender].push(capsuleId);

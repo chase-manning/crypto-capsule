@@ -41,11 +41,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_grantor",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_beneficiary",
         "type": "address"
       },
