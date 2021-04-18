@@ -13,6 +13,10 @@ const Input = styled.input`
   :active {
     border: solid 1px var(--primary);
   }
+
+  ::placeholder {
+    color: var(--sub);
+  }
 `;
 
 export default Input;
