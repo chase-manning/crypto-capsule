@@ -5,10 +5,11 @@ import CreatePage from "./CreatePage";
 import ReceivedPage from "./ReceivedPage";
 import SentPage from "./SentPage";
 import HomePage from "./HomePage";
-import { initWeb3 } from "../services/web3Service";
 import { useDispatch } from "react-redux";
 import { getTokens } from "../services/tokenService";
 import { setTokens } from "../state/tokenSlice";
+import { getAddress } from "../services/contracthelper";
+import { setAddress } from "../state/userSlice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -16,10 +17,12 @@ const App = () => {
   const init = async () => {
     const tokens = await getTokens();
     dispatch(setTokens(tokens));
+
+    const address = await getAddress();
+    dispatch(setAddress(address));
   };
 
   useEffect(() => {
-    initWeb3();
     init();
   }, []);
 
