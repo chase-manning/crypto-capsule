@@ -35,10 +35,8 @@ describe("Capsule", () => {
 
     const sent = await capsule.getSentCapsules(SENDER_ADDRESS);
     console.log(sent);
-    // expect(sent).to.equal([]);
 
-    const received = await capsule.getSentCapsules(RECEIVER_ADDRESS);
+    const received = await capsule.getReceivedCapsules(RECEIVER_ADDRESS);
     console.log(received);
-    // expect(received).to.equal([]);
   });
 });
