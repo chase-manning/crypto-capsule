@@ -10,13 +10,14 @@ const StyledTextInput = styled.div`
 type Props = {
   label: string;
   placeholder?: string;
+  maxWidth?: string;
 };
 
 const TextInput = (props: Props) => {
   return (
     <StyledTextInput>
       <Label>{props.label}</Label>
-      <Input placeholder={props.placeholder} />
+      <Input placeholder={props.placeholder} maxWidth={props.maxWidth} />
     </StyledTextInput>
   );
 };
