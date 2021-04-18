@@ -1,15 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import Title from "../styles/Title";
 import CapsuleType from "../types/CapsuleType";
 import Capsule from "./Capsule";
-
-const Title = styled.h2`
-  color: var(--main);
-  font-size: 35px;
-  font-weight: 700;
-  margin-top: 70px;
-  margin-bottom: 20px;
-`;
 
 const Container = styled.div`
   width: 60%;
