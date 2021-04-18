@@ -28,15 +28,17 @@ export const getCapsuleContract = async (): Promise<Contract> => {
 export const createCapsule = async (
   beneficiary: string,
   distributionDate: Date,
-  value: string,
   assets: Asset[]
 ): Promise<void> => {
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
 
+  const ethAssets = assets.filter((a: Asset) => a.token === "ETH");
+  const eth = ethAssets.length === 1 ? ethAssets[0].value : 0;
+
   var tx = {
     from: address,
-    value: toWeiUnit(value),
+    value: toWeiUnit(eth.toString()),
   };
   await capsuleContract.methods
     .createCapsule(

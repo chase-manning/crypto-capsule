@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { createCapsule } from "../services/contracthelper";
+import { inputToDate } from "../services/dateHelper";
 import Button from "../styles/Button";
 import Title from "../styles/Title";
 import { Asset } from "../types/CapsuleType";
@@ -34,12 +35,9 @@ const CreatePage = () => {
     setBeneficiary("");
   };
 
-  const create = async (
-    distributionDate: Date,
-    amount: string,
-    assets: Asset[]
-  ) => {
-    await createCapsule(beneficiary, distributionDate, amount, assets);
+  const create = async (assets: Asset[]) => {
+    const date = inputToDate(distributionDate);
+    await createCapsule(beneficiary, date, assets);
     clearInputs();
   };
 
@@ -68,7 +66,7 @@ const CreatePage = () => {
           <Button
             primary
             onClick={() => {
-              create(new Date("2021/06/12"), "0.01", []);
+              create([{ token: "ETH", value: 0.001 }]);
             }}
           >
             Create
