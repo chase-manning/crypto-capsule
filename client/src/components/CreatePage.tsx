@@ -22,7 +22,7 @@ const Content = styled.div`
 
 const ButtonContainer = styled.div`
   margin: auto;
-  margin-top: 2rem;
+  margin-top: 3rem;
 `;
 
 const CreatePage = () => {
