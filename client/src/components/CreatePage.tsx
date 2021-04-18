@@ -39,7 +39,10 @@ const CreatePage = () => {
       <Header />
       <Content>
         <Title>Create Capsule</Title>
-        <TextInput label="Beneficiary" />
+        <TextInput
+          label="Beneficiary"
+          placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
+        />
         <ButtonContainer>
           <Button
             primary
