@@ -1,9 +1,10 @@
 import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
+import BN from "bn.js";
 import GLOBALS from "../utils/globals";
 import capsuleAbi from "../contracts/CryptoCapsule.json";
-import { dateToUnix, toWeiUnit, UnixToDate } from "./web3Service";
-import CapsuleType from "../types/CapsuleType";
+import { dateToUnix, toEthUnit, toWeiUnit, UnixToDate } from "./web3Service";
+import CapsuleType, { Asset } from "../types/CapsuleType";
 import ContractCapsuleType from "../types/ContractCapsuleType";
 
 // Shared
@@ -66,12 +67,22 @@ export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
 export const responseToCapsule = (
   capsule: ContractCapsuleType
 ): CapsuleType => {
+  const assets: Asset[] = [];
+  const eth = toEthUnit(new BN(capsule.value));
+  if (eth > 0) assets.push({ token: "ETH", value: eth });
+  for (let i = 0; i < capsule.tokens.length; i++) {
+    assets.push({
+      token: capsule.tokens[i],
+      value: toEthUnit(new BN(capsule.values[i])),
+    });
+  }
+
   return {
     beneficiary: capsule.beneficiary,
     grantor: capsule.grantor,
     opened: capsule.opened,
     createdDate: UnixToDate(Number.parseFloat(capsule.createdDate)),
     distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
-    assets: [],
+    assets: assets,
   };
 };
