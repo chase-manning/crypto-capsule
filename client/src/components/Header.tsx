@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../styles/Button";
+import Connector from "./Connector";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -55,20 +55,6 @@ const Selection = styled.div`
     props.active ? "var(--primary)" : "rgba(0,0,0,0)"};
 `;
 
-const LoginContainer = styled.div`
-  display: flex;
-`;
-
-const LoginButton = styled.button`
-  width: 90px;
-  height: 42px;
-  font-size: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
-
 const Header = () => {
   const location = useLocation();
   const history = useHistory();
@@ -113,10 +99,7 @@ const Header = () => {
           <NavText>About</NavText>
         </Nav>
       </NavContainer>
-      <LoginContainer>
-        <LoginButton>Login</LoginButton>
-        <Button>Sign Up</Button>
-      </LoginContainer>
+      <Connector />
     </StyledHeader>
   );
 };
