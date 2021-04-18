@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { createCapsule } from "../services/contracthelper";
 import Button from "../styles/Button";
@@ -27,13 +27,19 @@ const ButtonContainer = styled.div`
 `;
 
 const CreatePage = () => {
+  const [beneficiary, setBeneficiary] = useState("");
+
+  const clearInputs = () => {
+    setBeneficiary("");
+  };
+
   const create = async (
-    beneficiary: string,
     distributionDate: Date,
     amount: string,
     assets: Asset[]
   ) => {
     await createCapsule(beneficiary, distributionDate, amount, assets);
+    clearInputs();
   };
 
   return (
@@ -46,17 +52,14 @@ const CreatePage = () => {
           placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
           maxWidth="430px"
           tooltip="This is the wallet address that your crypto will be sent to on the distribution date."
+          value={beneficiary}
+          setValue={(value: string) => setBeneficiary(value)}
         />
         <ButtonContainer>
           <Button
             primary
             onClick={() => {
-              create(
-                "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e",
-                new Date("2021/06/12"),
-                "0.01",
-                []
-              );
+              create(new Date("2021/06/12"), "0.01", []);
             }}
           >
             Create

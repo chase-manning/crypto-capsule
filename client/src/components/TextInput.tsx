@@ -19,6 +19,8 @@ type Props = {
   placeholder?: string;
   maxWidth?: string;
   tooltip?: string;
+  value: string;
+  setValue: (value: string) => void;
 };
 
 const TextInput = (props: Props) => {
@@ -28,7 +30,12 @@ const TextInput = (props: Props) => {
         <Label>{props.label}</Label>
         {props.tooltip && <Tooltip content={props.tooltip}></Tooltip>}
       </LabelContainter>
-      <Input placeholder={props.placeholder} maxWidth={props.maxWidth} />
+      <Input
+        placeholder={props.placeholder}
+        maxWidth={props.maxWidth}
+        value={props.value}
+        onChange={(e: any) => props.setValue(e.target.value)}
+      />
     </StyledTextInput>
   );
 };
