@@ -44,8 +44,8 @@ export const createCapsule = async (
     .createCapsule(
       beneficiary,
       dateToUnix(distributionDate),
-      assets.map((a: Asset) => a.token),
-      assets.map((a: Asset) => a.value)
+      assets.filter((a: Asset) => a.token !== "ETH").map((a: Asset) => a.token),
+      assets.filter((a: Asset) => a.token !== "ETH").map((a: Asset) => a.value)
     )
     .send(tx);
 };
