@@ -6,10 +6,21 @@ import ReceivedPage from "./ReceivedPage";
 import SentPage from "./SentPage";
 import HomePage from "./HomePage";
 import { initWeb3 } from "../services/web3Service";
+import { useDispatch } from "react-redux";
+import { getTokens } from "../services/tokenService";
+import { setTokens } from "../state/tokenSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  const init = async () => {
+    const tokens = await getTokens();
+    dispatch(setTokens(tokens));
+  };
+
   useEffect(() => {
     initWeb3();
+    init();
   }, []);
 
   return (
