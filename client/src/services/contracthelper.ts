@@ -3,6 +3,7 @@ import Web3 from "web3";
 import GLOBALS from "../utils/globals";
 import capsuleAbi from "../contracts/CryptoCapsule.json";
 import { CapsuleType } from "../components/Capsule";
+import { toWeiUnit } from "./web3Service";
 
 // Shared
 export const getAddress = async (): Promise<string> => {
@@ -22,6 +23,24 @@ export const getCapsuleContract = async (): Promise<Contract> => {
 };
 
 // Functions
+export const createCapsule = async (
+  beneficiary: string,
+  distributionDate: Date,
+  value: string,
+  tokens: string[],
+  values: string[]
+): Promise<void> => {
+  const address = await getAddress();
+  const capsuleContract = await getCapsuleContract();
+
+  var tx = {
+    from: address,
+    value: toWeiUnit(value),
+  };
+  await capsuleContract.methods
+    .createCapsule(beneficiary, distributionDate.getTime(), tokens, values)
+    .send(tx);
+};
 
 // Views
 export const getSentCapsules = async (): Promise<CapsuleType[]> => {
