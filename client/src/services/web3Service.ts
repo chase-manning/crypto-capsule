@@ -3,7 +3,7 @@ import BN from "bn.js";
 
 declare global {
   interface Window {
-    web3: Web3;
+    web3: any;
   }
 }
 
