@@ -48,3 +48,9 @@ export const getSentCapsules = async (): Promise<CapsuleType[]> => {
   const capsuleContract = await getCapsuleContract();
   return await capsuleContract.methods.getSentCapsules(address).call();
 };
+
+export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
+  const address = await getAddress();
+  const capsuleContract = await getCapsuleContract();
+  return await capsuleContract.methods.getReceivedCapsules(address).call();
+};
