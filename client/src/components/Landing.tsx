@@ -58,7 +58,7 @@ const Landing = () => {
           Ethereum smart contracts
         </SubHeader>
         <div>
-          <Button onClick={() => history.push("/create")}>
+          <Button primary onClick={() => history.push("/create")}>
             Create Capsule
           </Button>
         </div>
