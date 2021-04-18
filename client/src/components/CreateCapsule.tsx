@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import TextInput from "./TextInput";
-import { useSelector } from "react-redux";
-import { selectActiveAcount } from "../state/web3Slice";
 import Button from "../styles/Button";
-import { getSentCapsules } from "../services/contracthelper";
+import { createCapsule } from "../services/contracthelper";
 
 const StyledCreateCapsule = styled.div`
   position: fixed;
@@ -56,30 +54,17 @@ type Props = {
 };
 
 const CreateCapsule = (props: Props) => {
-  const activeAccount = useSelector(selectActiveAcount);
-
-  const createCapsule = async (
+  const create = async (
     beneficiary: string,
     distributionDate: Date,
     amount: string
   ) => {
-    // var tx = {
-    //   from: activeAccount,
-    //   value: props.web3.utils.toWei(amount),
-    // };
-    // await props.capsuleFactory.methods
-    //   .newCapsule(beneficiary, distributionDate.getTime())
-    //   .send(tx);
-    // const sent = await props.capsuleFactory.methods
-    //   .getSentCapsules(activeAccount)
-    //   .call();
-    // console.log(sent);
-    // console.log(sent.length);
-    const meow = await getSentCapsules();
-    console.log(meow);
+    console.log("thing");
+    await createCapsule(beneficiary, distributionDate, amount, [], []);
   };
 
   if (!props.open) return null;
+  // 18.677;
 
   return (
     <StyledCreateCapsule>
@@ -89,10 +74,10 @@ const CreateCapsule = (props: Props) => {
         <TextInput label="ETH" />
         <Button
           onClick={() => {
-            createCapsule(
-              "0x11ADbDe42070E6c6D7968c849B226956e3761f8E",
+            create(
+              "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e",
               new Date(),
-              "10"
+              "0.01"
             );
           }}
         >
