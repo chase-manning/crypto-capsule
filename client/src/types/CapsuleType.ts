@@ -1,4 +1,4 @@
-type Asset = {
+export type Asset = {
   token: string;
   value: number;
 };
