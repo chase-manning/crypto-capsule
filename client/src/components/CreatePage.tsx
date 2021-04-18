@@ -20,6 +20,11 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
+const ButtonContainer = styled.div`
+  margin: auto;
+  margin-top: 2rem;
+`;
+
 const CreatePage = () => {
   const create = async (
     beneficiary: string,
@@ -34,18 +39,21 @@ const CreatePage = () => {
       <Header />
       <Content>
         <Title>Create Capsule</Title>
-        <TextInput label="ETH" />
-        <Button
-          onClick={() => {
-            create(
-              "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e",
-              new Date("2021/06/12"),
-              "0.01"
-            );
-          }}
-        >
-          Create
-        </Button>
+        <TextInput label="Beneficiary" />
+        <ButtonContainer>
+          <Button
+            primary
+            onClick={() => {
+              create(
+                "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e",
+                new Date("2021/06/12"),
+                "0.01"
+              );
+            }}
+          >
+            Create
+          </Button>
+        </ButtonContainer>
       </Content>
       <Footer />
     </StyledCreatePage>
