@@ -27,6 +27,8 @@ const HelpIcon = styled.button`
   background-color: var(--white);
   border: solid 1px var(--primary);
   color: var(--primary);
+  outline: none;
+  cursor: pointer;
 `;
 
 const Indicator = styled.div`
