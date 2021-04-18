@@ -5,7 +5,7 @@ type GlobalsType = {
 };
 
 const GLOBALS: GlobalsType = {
-  CAPSULE: "0x41B58E454bDbC9B204d9cE115a5fB83d4d86eF33",
+  CAPSULE: "0x2344105167893C659D189554b4BF89a96D5Ad798",
 };
 
 export default GLOBALS;
