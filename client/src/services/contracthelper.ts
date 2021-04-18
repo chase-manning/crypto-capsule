@@ -9,6 +9,7 @@ import ContractCapsuleType from "../types/ContractCapsuleType";
 
 // Shared
 export const getAddress = async (): Promise<string> => {
+  if ((window as any).address) return (window as any).address;
   if ((window as any).ethereum) {
     (window as any).web3 = new Web3((window as any).ethereum);
     (window as any).ethereum.enable();
