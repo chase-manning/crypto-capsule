@@ -21,3 +21,15 @@ export const toWeiUnit = (eth: string): string => {
   if (!window.web3) return "";
   return Web3.utils.toWei(eth);
 };
+
+export const dateToUnix = (date: Date): number => {
+  return date.getTime() / 1000;
+};
+
+export const getCurrentUnix = (): number => {
+  return new Date().getTime() / 1000;
+};
+
+export const UnixToDate = (unix: number): Date => {
+  return new Date(unix * 1000);
+};
