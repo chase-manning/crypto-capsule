@@ -47,7 +47,6 @@ const Popup = styled.div`
   top: 200%;
   left: 0;
   transform: translateX(-50%);
-  height: 100px;
   width: 400px;
   padding: 1.7rem;
   border-radius: 1rem;
