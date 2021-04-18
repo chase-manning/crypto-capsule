@@ -2,8 +2,11 @@
 pragma solidity ^0.8.0;
 
 import "./interfaces/IERC20.sol";
+import "./utils/EnumerableSet.sol";
 
 contract CryptoCapsule {
+    using EnumerableSet for EnumerableSet.UintSet;
+
     struct Capsule {
         address grantor;
         address beneficiary;
@@ -16,18 +19,17 @@ contract CryptoCapsule {
     }
     uint256 capsuleCount = 0;
     Capsule[] capsules;
-    mapping(address => uint256[]) sent;
-    mapping(address => uint256[]) received;
+    mapping (address => EnumerableSet.UintSet) private sent;
+    mapping (address => EnumerableSet.UintSet) private received;
 
     function createCapsule(address _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
 
-        // TODO Add Requires Here
         capsules.push(Capsule(msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
         uint256 capsuleId = capsules.length;
-        sent[msg.sender].push(capsuleId);
-        received[_beneficiary].push(capsuleId);
+        sent[msg.sender].add(capsuleId);
+        received[_beneficiary].add(capsuleId);
     }
 
     function openCapsule(uint256 capsuleId) public {
@@ -51,19 +53,19 @@ contract CryptoCapsule {
     }
 
     function getSentCapsules(address grantor) public view returns(Capsule[] memory) {
-        uint[] memory ids = sent[grantor];
-        Capsule[] memory _capsules = new Capsule[](ids.length);
-        for (uint256 i = 0; i < ids.length; i++) {
-            _capsules[i] = capsules[ids[i]];
+        uint256 count = sent[grantor].length();
+        Capsule[] memory _capsules = new Capsule[](count);
+        for (uint256 i = 0; i < count; i++) {
+            _capsules[i] = capsules[sent[grantor].at(i)];
         }
         return _capsules;
     }
 
     function getReceivedCapsules(address beneficiary) public view returns(Capsule[] memory) {
-        uint[] memory ids = received[beneficiary];
-        Capsule[] memory _capsules = new Capsule[](ids.length);
-        for (uint256 i = 0; i < ids.length; i++) {
-            _capsules[i] = capsules[ids[i]];
+        uint256 count = received[beneficiary].length();
+        Capsule[] memory _capsules = new Capsule[](count);
+        for (uint256 i = 0; i < count; i++) {
+            _capsules[i] = capsules[received[beneficiary].at(i)];
         }
         return _capsules;
     }
