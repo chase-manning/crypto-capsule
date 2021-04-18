@@ -76,7 +76,7 @@ const CreateCapsule = (props: Props) => {
           onClick={() => {
             create(
               "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e",
-              new Date(),
+              new Date("2021/06/12"),
               "0.01"
             );
           }}
