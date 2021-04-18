@@ -2,8 +2,8 @@ import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import GLOBALS from "../utils/globals";
 import capsuleAbi from "../contracts/CryptoCapsule.json";
-import { CapsuleType } from "../components/Capsule";
 import { toWeiUnit } from "./web3Service";
+import CapsuleType from "../types/CapsuleType";
 
 // Shared
 export const getAddress = async (): Promise<string> => {

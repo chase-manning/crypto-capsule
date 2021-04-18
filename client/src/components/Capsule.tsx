@@ -2,15 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import dateformat from "dateformat";
 import Button from "../styles/Button";
-
-export type CapsuleType = {
-  open: Date;
-  address: string;
-  eth: number;
-  dollars: number;
-  opened: boolean;
-};
-
+import CapsuleType from "../types/CapsuleType";
 type CapsuleProps = {
   last: boolean;
 };
@@ -111,10 +103,13 @@ const Capsule = (props: Props) => {
     setInterval(() => tick(), 1000);
   }, []);
 
-  const open = props.capsule.open.getTime() < nowRef.current.getTime();
+  const open =
+    new Date(props.capsule.distributionDate).getTime() <
+    nowRef.current.getTime();
   const remaining = open
     ? 0
-    : props.capsule.open.getTime() - nowRef.current.getTime();
+    : new Date(props.capsule.distributionDate).getTime() -
+      nowRef.current.getTime();
   const yearsMult = 1000 * 60 * 60 * 24 * 365;
   const years = Math.trunc(remaining / yearsMult);
   const daysMult = 1000 * 60 * 60 * 24;
@@ -151,12 +146,13 @@ const Capsule = (props: Props) => {
             (seconds > 0 ? seconds + "s" : "")}
         </Countdown>
         <OpenDate>
-          {dateformat(props.capsule.open, "hh:MM dd/mm/yyyy")}
+          {dateformat(props.capsule.distributionDate, "hh:MM dd/mm/yyyy")}
         </OpenDate>
       </CountdownContainer>
       <ValueContainer>
-        <Dollars>{"$" + props.capsule.dollars.toLocaleString()}</Dollars>
-        <Crypto>{props.capsule.eth + " ETH"}</Crypto>
+        {/* TODO Set Price */}
+        <Dollars>{"$" + (100).toLocaleString()}</Dollars>
+        <Crypto>{props.capsule.value + " ETH"}</Crypto>
       </ValueContainer>
       {open && !props.capsule.opened && <Button primary>Open</Button>}
       {!open && <Button>Top Up</Button>}

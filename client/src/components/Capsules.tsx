@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Capsule, { CapsuleType } from "./Capsule";
+import CapsuleType from "../types/CapsuleType";
+import Capsule from "./Capsule";
 
 const Title = styled.h2`
   color: var(--main);
@@ -19,7 +20,9 @@ const Container = styled.div`
 const GetCapsules = (capsuleList: CapsuleType[]) =>
   capsuleList
     .sort(
-      (a: CapsuleType, b: CapsuleType) => a.open.getTime() - b.open.getTime()
+      (a: CapsuleType, b: CapsuleType) =>
+        new Date(a.distributionDate).getTime() -
+        new Date(b.distributionDate).getTime()
     )
     .map((capsule: CapsuleType, index: number) => (
       <Capsule
@@ -36,11 +39,13 @@ type Props = {
 const Capsules = (props: Props) => {
   const now = new Date();
   const ready = props.capsules.filter(
-    (cap: CapsuleType) => cap.open < now && !cap.opened
+    (cap: CapsuleType) => new Date(cap.distributionDate) < now && !cap.opened
   );
-  const upcoming = props.capsules.filter((cap: CapsuleType) => cap.open >= now);
+  const upcoming = props.capsules.filter(
+    (cap: CapsuleType) => new Date(cap.distributionDate) >= now
+  );
   const opened = props.capsules.filter(
-    (cap: CapsuleType) => cap.open < now && cap.opened
+    (cap: CapsuleType) => new Date(cap.distributionDate) < now && cap.opened
   );
 
   return (
