@@ -4,6 +4,7 @@ import Web3 from "web3";
 import Button from "../styles/Button";
 import CreateCapsule from "./CreateCapsule";
 import { Contract } from "web3-eth-contract";
+import { useHistory } from "react-router";
 
 const StyledLanding = styled.div`
   width: 100%;
@@ -49,7 +50,7 @@ const Image = styled.div`
 `;
 
 const Landing = () => {
-  const [open, setOpen] = useState(false);
+  const history = useHistory();
 
   return (
     <StyledLanding>
@@ -60,13 +61,12 @@ const Landing = () => {
           Ethereum smart contracts
         </SubHeader>
         <div>
-          <Button onClick={() => setOpen(true)} primary>
+          <Button onClick={() => history.push("/create")}>
             Create Capsule
           </Button>
         </div>
       </Left>
       <Image>asset 1</Image>
-      <CreateCapsule open={open} close={() => setOpen(false)} />
     </StyledLanding>
   );
 };

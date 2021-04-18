@@ -1,23 +1,23 @@
 import React from "react";
 import styled from "styled-components";
-import CreateCapsule from "./CreateCapsule";
 import Footer from "./Footer";
 import Header from "./Header";
+import Landing from "./Landing";
 
-const StyledCreatePage = styled.div`
+const StyledHomePage = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
 `;
 
-const CreatePage = () => {
+const HomePage = () => {
   return (
-    <StyledCreatePage>
+    <StyledHomePage>
       <Header />
-      <CreateCapsule />
+      <Landing />
       <Footer />
-    </StyledCreatePage>
+    </StyledHomePage>
   );
 };
 
-export default CreatePage;
+export default HomePage;

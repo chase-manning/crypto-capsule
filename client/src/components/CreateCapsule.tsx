@@ -48,12 +48,7 @@ const Header = styled.div`
   margin-bottom: 40px;
 `;
 
-type Props = {
-  open: boolean;
-  close: () => void;
-};
-
-const CreateCapsule = (props: Props) => {
+const CreateCapsule = () => {
   const create = async (
     beneficiary: string,
     distributionDate: Date,
@@ -62,13 +57,10 @@ const CreateCapsule = (props: Props) => {
     console.log("thing");
     await createCapsule(beneficiary, distributionDate, amount, [], []);
   };
-
-  if (!props.open) return null;
   // 18.677;
 
   return (
     <StyledCreateCapsule>
-      <ExitEvent onClick={() => props.close()} />
       <Container>
         <Header>Create Capsule</Header>
         <TextInput label="ETH" />

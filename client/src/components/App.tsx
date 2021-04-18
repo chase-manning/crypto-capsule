@@ -4,6 +4,7 @@ import AboutPage from "./AboutPage";
 import CreatePage from "./CreatePage";
 import ReceivedPage from "./ReceivedPage";
 import SentPage from "./SentPage";
+import HomePage from "./HomePage";
 import { initWeb3 } from "../services/web3Service";
 
 const App = () => {
@@ -23,8 +24,11 @@ const App = () => {
         <Route path="/about">
           <AboutPage />
         </Route>
-        <Route path="/">
+        <Route path="/create">
           <CreatePage />
+        </Route>
+        <Route path="/">
+          <HomePage />
         </Route>
       </Switch>
     </Router>

@@ -82,6 +82,13 @@ const Header = () => {
           onClick={() => history.push("/")}
         >
           <Selection active={location.pathname === "/"} />
+          <NavText>Home</NavText>
+        </Nav>
+        <Nav
+          active={location.pathname === "/create"}
+          onClick={() => history.push("/create")}
+        >
+          <Selection active={location.pathname === "/create"} />
           <NavText>Create</NavText>
         </Nav>
         <Nav
