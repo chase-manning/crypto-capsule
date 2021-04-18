@@ -1,12 +1,15 @@
+type Asset = {
+  token: string;
+  value: number;
+};
+
 type CapsuleType = {
   grantor: string;
   beneficiary: string;
-  distributionDate: number;
-  createdDate: number;
+  distributionDate: Date;
+  createdDate: Date;
   opened: boolean;
-  value: number;
-  tokens: string[];
-  values: number[];
+  assets: Asset[];
 };
 
 export default CapsuleType;

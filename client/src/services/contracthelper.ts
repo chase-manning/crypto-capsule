@@ -2,8 +2,9 @@ import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import GLOBALS from "../utils/globals";
 import capsuleAbi from "../contracts/CryptoCapsule.json";
-import { toWeiUnit } from "./web3Service";
+import { dateToUnix, toWeiUnit, UnixToDate } from "./web3Service";
 import CapsuleType from "../types/CapsuleType";
+import ContractCapsuleType from "../types/ContractCapsuleType";
 
 // Shared
 export const getAddress = async (): Promise<string> => {
@@ -38,7 +39,7 @@ export const createCapsule = async (
     value: toWeiUnit(value),
   };
   await capsuleContract.methods
-    .createCapsule(beneficiary, distributionDate.getTime(), tokens, values)
+    .createCapsule(beneficiary, dateToUnix(distributionDate), tokens, values)
     .send(tx);
 };
 
@@ -52,5 +53,24 @@ export const getSentCapsules = async (): Promise<CapsuleType[]> => {
 export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
-  return await capsuleContract.methods.getReceivedCapsules(address).call();
+  const responseCapsules: ContractCapsuleType[] = await capsuleContract.methods
+    .getReceivedCapsules(address)
+    .call();
+  return responseCapsules.map((rc: ContractCapsuleType) =>
+    responseToCapsule(rc)
+  );
+};
+
+// Utils
+export const responseToCapsule = (
+  capsule: ContractCapsuleType
+): CapsuleType => {
+  return {
+    beneficiary: capsule.beneficiary,
+    grantor: capsule.grantor,
+    opened: capsule.opened,
+    createdDate: UnixToDate(Number.parseFloat(capsule.createdDate)),
+    distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
+    assets: [],
+  };
 };
