@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type Props = {
+  maxWidth?: string;
+};
+
 const Input = styled.input`
   width: 100%;
   border: solid 1px var(--sub);
@@ -9,6 +13,7 @@ const Input = styled.input`
   margin-top: 8px;
   font-size: 16px;
   background-color: rgba(0, 0, 0, 0);
+  max-width: ${(props: Props) => props.maxWidth};
 
   :active {
     border: solid 1px var(--primary);
