@@ -152,7 +152,8 @@ const Capsule = (props: Props) => {
       <ValueContainer>
         {/* TODO Set Price */}
         <Dollars>{"$" + (100).toLocaleString()}</Dollars>
-        <Crypto>{props.capsule.value + " ETH"}</Crypto>
+        {/* TODO Set Value */}
+        <Crypto>{10 + " ETH"}</Crypto>
       </ValueContainer>
       {open && !props.capsule.opened && <Button primary>Open</Button>}
       {!open && <Button>Top Up</Button>}
