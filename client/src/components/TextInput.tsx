@@ -9,13 +9,14 @@ const StyledTextInput = styled.div`
 
 type Props = {
   label: string;
+  placeholder?: string;
 };
 
 const TextInput = (props: Props) => {
   return (
     <StyledTextInput>
       <Label>{props.label}</Label>
-      <Input />
+      <Input placeholder={props.placeholder} />
     </StyledTextInput>
   );
 };
