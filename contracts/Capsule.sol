@@ -4,10 +4,6 @@ pragma solidity ^0.8.0;
 import "./interfaces/IERC20.sol";
 
 contract CryptoCapsule {
-    struct Asset {
-        address token;
-        uint256 value;
-    }
     struct Capsule {
         address grantor;
         address beneficiary;
