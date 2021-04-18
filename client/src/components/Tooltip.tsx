@@ -6,26 +6,52 @@ const StyledTooltip = styled.div`
   margin-left: 1rem;
 `;
 
+const ExitEvent = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+`;
+
 const HelpIcon = styled.button`
-  width: 10px;
-  height: 10px;
-  background-color: var(--primary);
+  width: 1.7rem;
+  height: 1.7rem;
   border-radius: 50%;
-  color: var(--white);
+  font-weight: 500;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+  border: solid 1px var(--primary);
+  color: var(--primary);
+`;
+
+const Indicator = styled.div`
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--white);
+  position: absolute;
+  top: 200%;
+  left: 30%;
+  transform: rotate(45deg) translateX(-50%);
+  border-radius: 0.2rem;
 `;
 
 const Popup = styled.div`
   position: absolute;
-  top: 100%;
+  top: 200%;
   left: 0;
   transform: translateX(-50%);
   height: 100px;
   width: 400px;
-  padding: 1rem;
-  border-radius: 30px;
+  padding: 1.7rem;
+  border-radius: 1rem;
   background-color: var(--white);
   color: var(--main);
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 `;
 
 type Props = {
@@ -37,8 +63,14 @@ const Tooltip = (props: Props) => {
 
   return (
     <StyledTooltip>
-      <HelpIcon onClick={() => setOpen(true)}>i</HelpIcon>
-      {open && <Popup>{props.content}</Popup>}
+      {open && <ExitEvent onClick={() => setOpen(false)} />}
+      <HelpIcon onClick={() => setOpen(true)}>?</HelpIcon>
+      {open && (
+        <>
+          <Indicator />
+          <Popup>{props.content}</Popup>
+        </>
+      )}
     </StyledTooltip>
   );
 };
