@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { createCapsule } from "../services/contracthelper";
 import { inputToDate } from "../services/dateHelper";
-import { selectTokens } from "../state/tokenSlice";
 import Button from "../styles/Button";
 import Title from "../styles/Title";
 import { Asset } from "../types/CapsuleType";
