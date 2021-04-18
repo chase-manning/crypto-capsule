@@ -1,4 +1,4 @@
-const TEST_MODE = true;
+export const TEST_MODE = true;
 
 type GlobalsType = {
   CAPSULE: string;
