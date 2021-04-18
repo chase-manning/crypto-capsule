@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import web3Reducer from "./web3Slice";
+import web3Reducer from "./userSlice";
 import tokensReducer from "./tokenSlice";
+import userReducer from "./userSlice";
 
 export const store = configureStore({
   reducer: {
     web3: web3Reducer,
     tokens: tokensReducer,
+    user: userReducer,
   },
 });
 
