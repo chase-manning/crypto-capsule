@@ -22,8 +22,8 @@ export const toWeiUnit = (eth: string): string => {
   return Web3.utils.toWei(eth);
 };
 
-export const dateToUnix = (date: Date): number => {
-  return date.getTime() / 1000;
+export const dateToUnix = (date: Date): BN => {
+  return new BN(date.getTime() / 1000);
 };
 
 export const getCurrentUnix = (): number => {
