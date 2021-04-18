@@ -29,8 +29,7 @@ export const createCapsule = async (
   beneficiary: string,
   distributionDate: Date,
   value: string,
-  tokens: string[],
-  values: string[]
+  assets: Asset[]
 ): Promise<void> => {
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
@@ -40,7 +39,12 @@ export const createCapsule = async (
     value: toWeiUnit(value),
   };
   await capsuleContract.methods
-    .createCapsule(beneficiary, dateToUnix(distributionDate), tokens, values)
+    .createCapsule(
+      beneficiary,
+      dateToUnix(distributionDate),
+      assets.map((a: Asset) => a.token),
+      assets.map((a: Asset) => a.value)
+    )
     .send(tx);
 };
 

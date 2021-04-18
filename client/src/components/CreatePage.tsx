@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { createCapsule } from "../services/contracthelper";
 import Button from "../styles/Button";
 import Title from "../styles/Title";
+import { Asset } from "../types/CapsuleType";
 import Footer from "./Footer";
 import Header from "./Header";
 import TextInput from "./TextInput";
@@ -29,9 +30,10 @@ const CreatePage = () => {
   const create = async (
     beneficiary: string,
     distributionDate: Date,
-    amount: string
+    amount: string,
+    assets: Asset[]
   ) => {
-    await createCapsule(beneficiary, distributionDate, amount, [], []);
+    await createCapsule(beneficiary, distributionDate, amount, assets);
   };
 
   return (
@@ -50,7 +52,8 @@ const CreatePage = () => {
               create(
                 "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e",
                 new Date("2021/06/12"),
-                "0.01"
+                "0.01",
+                []
               );
             }}
           >
