@@ -19,6 +19,7 @@ const SentPage = () => {
 
   const updateCapsules = async () => {
     const _capsules = await getSentCapsules();
+    console.log(_capsules);
     setCapsules(_capsules);
   };
 

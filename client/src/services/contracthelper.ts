@@ -47,18 +47,19 @@ export const createCapsule = async (
 export const getSentCapsules = async (): Promise<CapsuleType[]> => {
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
-  return await capsuleContract.methods.getSentCapsules(address).call();
+  const response: ContractCapsuleType[] = await capsuleContract.methods
+    .getSentCapsules(address)
+    .call();
+  return response.map((rc: ContractCapsuleType) => responseToCapsule(rc));
 };
 
 export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
-  const responseCapsules: ContractCapsuleType[] = await capsuleContract.methods
+  const response: ContractCapsuleType[] = await capsuleContract.methods
     .getReceivedCapsules(address)
     .call();
-  return responseCapsules.map((rc: ContractCapsuleType) =>
-    responseToCapsule(rc)
-  );
+  return response.map((rc: ContractCapsuleType) => responseToCapsule(rc));
 };
 
 // Utils
