@@ -4,7 +4,8 @@ import Input from "../styles/Input";
 import Label from "../styles/Label";
 
 const StyledTextInput = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 type Props = {
