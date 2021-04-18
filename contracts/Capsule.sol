@@ -26,8 +26,8 @@ contract CryptoCapsule {
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
 
-        capsules.push(Capsule(msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
         uint256 capsuleId = capsules.length;
+        capsules.push(Capsule(msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
         sent[msg.sender].add(capsuleId);
         received[_beneficiary].add(capsuleId);
     }
