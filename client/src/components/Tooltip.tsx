@@ -16,8 +16,8 @@ const ExitEvent = styled.div`
 `;
 
 const HelpIcon = styled.button`
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.8rem;
+  height: 1.8rem;
   border-radius: 50%;
   font-weight: 500;
   font-size: 1.3rem;
@@ -54,6 +54,7 @@ const Popup = styled.div`
   background-color: var(--white);
   color: var(--main);
   font-size: 1.5rem;
+  z-index: 1;
 `;
 
 type Props = {
