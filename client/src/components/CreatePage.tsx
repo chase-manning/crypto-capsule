@@ -11,6 +11,13 @@ const StyledCreatePage = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+`;
+
+const Content = styled.div`
+  width: 60%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const CreatePage = () => {
@@ -25,19 +32,21 @@ const CreatePage = () => {
   return (
     <StyledCreatePage>
       <Header />
-      <Title>Create Capsule</Title>
-      <TextInput label="ETH" />
-      <Button
-        onClick={() => {
-          create(
-            "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e",
-            new Date("2021/06/12"),
-            "0.01"
-          );
-        }}
-      >
-        Create
-      </Button>
+      <Content>
+        <Title>Create Capsule</Title>
+        <TextInput label="ETH" />
+        <Button
+          onClick={() => {
+            create(
+              "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e",
+              new Date("2021/06/12"),
+              "0.01"
+            );
+          }}
+        >
+          Create
+        </Button>
+      </Content>
       <Footer />
     </StyledCreatePage>
   );
