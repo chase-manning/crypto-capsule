@@ -4,10 +4,10 @@
   "description": "A Digital Decentralised Time Capsule built on the Ethereum Network",
   "main": "index.js",
   "scripts": {
-    "test": "npx hardhat test",
     "compile": "npx hardhat compile",
-    "deploy.local": "npm run compile && npx hardhat run --network localhost scripts/deploy.js",
-    "deploy.test": "npm run compile && npx hardhat run --network rinkenby scripts/deploy.js"
+    "test": "npx hardhat compile && npx hardhat test",
+    "deploy.local": "npx hardhat test && npx hardhat run --network localhost scripts/deploy.js",
+    "deploy.test": "npx hardhat test && npx hardhat run --network rinkenby scripts/deploy.js"
   },
   "repository": {
     "type": "git",
