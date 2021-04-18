@@ -27,7 +27,7 @@ contract CryptoCapsule {
         capsules.push(Capsule(msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
         uint256 capsuleId = capsules.length;
         sent[msg.sender].push(capsuleId);
-        received[msg.sender].push(capsuleId);
+        received[_beneficiary].push(capsuleId);
     }
 
     function openCapsule(uint256 capsuleId) public {
