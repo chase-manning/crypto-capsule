@@ -48,12 +48,7 @@ const Image = styled.div`
   text-transform: uppercase;
 `;
 
-type Props = {
-  web3?: Web3;
-  capsuleFactory?: Contract;
-};
-
-const Landing = (props: Props) => {
+const Landing = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -71,12 +66,7 @@ const Landing = (props: Props) => {
         </div>
       </Left>
       <Image>asset 1</Image>
-      <CreateCapsule
-        web3={props.web3}
-        capsuleFactory={props.capsuleFactory}
-        open={open}
-        close={() => setOpen(false)}
-      />
+      <CreateCapsule open={open} close={() => setOpen(false)} />
     </StyledLanding>
   );
 };
