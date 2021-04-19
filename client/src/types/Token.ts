@@ -4,6 +4,7 @@ type Token = {
   symbol: string;
   decimals: number;
   logoURI: string;
+  balance?: number;
 };
 
 export default Token;
