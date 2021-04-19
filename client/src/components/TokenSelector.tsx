@@ -17,7 +17,7 @@ const Container = styled.div`
   position: absolute;
   top: -1px;
   left: -1px;
-  width: 30rem;
+  width: 25rem;
   padding: 1.7rem;
   border-radius: 1rem;
   background-color: var(--white);
@@ -84,7 +84,7 @@ const TokenSelector = (props: Props) => {
       <ExitEvent onClick={() => props.setToken(props.token)} />
       <Container>
         <Input
-          placeholder="Search name or paste address"
+          placeholder="Search name"
           value={search}
           onChange={(e: any) => setSearch(e.target.value)}
         />
