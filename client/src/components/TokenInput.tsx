@@ -14,7 +14,7 @@ const Container = styled.div`
   align-items: center;
   border: solid 1px var(--sub);
   border-radius: 1rem;
-  width: 11.5rem;
+  width: 14rem;
   position: relative;
 `;
 
