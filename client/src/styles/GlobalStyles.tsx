@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
         --main: #223444;
         --sub: #98999B;
         --primary: #1661F4;
+        --primary-light: rgba(22, 97, 244, 0.1);
         --dark: #1C2326;
         --white: white;
     }
