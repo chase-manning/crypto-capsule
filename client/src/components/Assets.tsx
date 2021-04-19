@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ethToken } from "../services/tokenService";
 import Label from "../styles/Label";
 import Token from "../types/Token";
-import TokenSelector from "./TokenSelector";
+import TokenSelector from "./TokenInput";
 
 const StyledAssetAdder = styled.div`
   display: flex;
