@@ -8,6 +8,7 @@ contract CryptoCapsule {
     using EnumerableSet for EnumerableSet.UintSet;
 
     struct Capsule {
+        uint256 id;
         address grantor;
         address beneficiary;
         uint256 distributionDate;
@@ -17,7 +18,6 @@ contract CryptoCapsule {
         address[] tokens;
         uint256[] values;
     }
-    uint256 capsuleCount = 0;
     Capsule[] capsules;
     mapping (address => EnumerableSet.UintSet) private sent;
     mapping (address => EnumerableSet.UintSet) private received;
@@ -27,7 +27,7 @@ contract CryptoCapsule {
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
 
         uint256 capsuleId = capsules.length;
-        capsules.push(Capsule(msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
+        capsules.push(Capsule(capsuleId, msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
         sent[msg.sender].add(capsuleId);
         received[_beneficiary].add(capsuleId);
     }
@@ -35,7 +35,7 @@ contract CryptoCapsule {
     function openCapsule(uint256 capsuleId) public {
         Capsule memory _capsule = capsules[capsuleId];
         require(!_capsule.opened, "Capsule has already been opened");
-        require(block.timestamp >= _capsule.distributionDate, "Capsule has not matured yet");
+        require(block.timestamp >= _capsule.distributionDate / 1000, "Capsule has not matured yet");
         require(msg.sender == _capsule.beneficiary, "You are not the beneficiary of this Capsule");
 
         for (uint256 i = 0; i < _capsule.tokens.length; i++) {

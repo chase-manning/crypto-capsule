@@ -78,6 +78,11 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
             "internalType": "address",
             "name": "grantor",
             "type": "address"
@@ -139,6 +144,11 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
             "internalType": "address",
             "name": "grantor",
             "type": "address"
@@ -199,6 +209,11 @@
     "outputs": [
       {
         "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
           {
             "internalType": "address",
             "name": "grantor",
