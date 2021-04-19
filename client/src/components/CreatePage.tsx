@@ -38,7 +38,7 @@ const CreatePage = () => {
     setDistributionDate("");
   };
 
-  const create = async (assets: Asset[]) => {
+  const create = async () => {
     const date = inputToDate(distributionDate);
     await createCapsule(beneficiary, date, assets);
     clearInputs();
@@ -73,7 +73,7 @@ const CreatePage = () => {
           <Button
             primary
             onClick={() => {
-              create([{ token: "ETH", value: 0.001 }]);
+              create();
             }}
           >
             Create
