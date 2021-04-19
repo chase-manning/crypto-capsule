@@ -31,6 +31,7 @@ const ButtonContainer = styled.div`
 const CreatePage = () => {
   const [beneficiary, setBeneficiary] = useState("");
   const [distributionDate, setDistributionDate] = useState("");
+  const [assets, setAssets] = useState<Asset[]>([{ token: "ETH", value: 0 }]);
 
   const clearInputs = () => {
     setBeneficiary("");
@@ -64,7 +65,10 @@ const CreatePage = () => {
           value={beneficiary}
           setValue={(value: string) => setBeneficiary(value)}
         />
-        <Assets />
+        <Assets
+          assets={assets}
+          setAssets={(assets: Asset[]) => setAssets(assets)}
+        />
         <ButtonContainer>
           <Button
             primary

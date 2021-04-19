@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Input from "../styles/Input";
 import Token from "../types/Token";
 import TokenSelector from "./TokenSelector";
 
 const StyledTokenInput = styled.div`
   padding: 2rem;
   border-radius: 2rem;
+  display: flex;
 `;
 
 const Container = styled.div`
@@ -16,6 +18,7 @@ const Container = styled.div`
   border-radius: 1rem;
   width: 14rem;
   position: relative;
+  margin-right: 3rem;
 `;
 
 const OpenButton = styled.button`
@@ -49,11 +52,12 @@ const Arrow = styled.div`
 
 type Props = {
   token: Token;
-  setToken: (token: Token) => void;
+  setToken: (token: Token, value: number) => void;
 };
 
 const TokenInput = (props: Props) => {
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
 
   return (
     <StyledTokenInput>
@@ -66,11 +70,16 @@ const TokenInput = (props: Props) => {
           open={open}
           token={props.token}
           setToken={(token: Token) => {
-            props.setToken(token);
+            props.setToken(token, value);
             setOpen(false);
           }}
         />
       </Container>
+      <Input
+        placeholder="0.0"
+        value={value}
+        onChange={(e: any) => setValue(e.target.value)}
+      />
     </StyledTokenInput>
   );
 };

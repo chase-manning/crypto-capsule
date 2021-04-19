@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { ethToken } from "../services/tokenService";
 import Label from "../styles/Label";
+import { Asset } from "../types/CapsuleType";
 import Token from "../types/Token";
-import TokenSelector from "./TokenInput";
+import TokenInput from "./TokenInput";
 
 const StyledAssetAdder = styled.div`
   display: flex;
@@ -11,19 +12,29 @@ const StyledAssetAdder = styled.div`
   margin-top: 2rem;
 `;
 
-const Assets = () => {
+type Props = {
+  assets: Asset[];
+  setAssets: (assets: Asset[]) => void;
+};
+
+const Assets = (props: Props) => {
   const [tokens, setTokens] = useState([ethToken]);
+
   return (
     <StyledAssetAdder>
       <Label>Assets</Label>
       {tokens.map((token: Token, index: number) => (
-        <TokenSelector
+        <TokenInput
           key={index}
           token={token}
-          setToken={(token: Token) => {
+          setToken={(token: Token, value: number) => {
             const _tokens = [...tokens];
             _tokens[index] = token;
             setTokens(_tokens);
+
+            const _assets = [...props.assets];
+            _assets[index] = { token: token.address, value: value };
+            props.setAssets(_assets);
           }}
         />
       ))}
