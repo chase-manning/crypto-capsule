@@ -1,4 +1,5 @@
 type ContractCapsuleType = {
+  id: string;
   grantor: string;
   beneficiary: string;
   distributionDate: string;
