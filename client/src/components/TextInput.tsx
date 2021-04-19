@@ -13,6 +13,7 @@ const StyledTextInput = styled.div`
 const LabelContainter = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 0.8rem;
 `;
 
 type Props = {
