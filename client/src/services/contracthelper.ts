@@ -51,6 +51,11 @@ export const createCapsule = async (
     .send(tx);
 };
 
+export const openCapsule = async (capsuleId: number) => {
+  const capsuleContract = await getCapsuleContract();
+  await capsuleContract.methods.openCapsule(new BN(capsuleId)).send();
+};
+
 // Views
 export const getSentCapsules = async (): Promise<CapsuleType[]> => {
   const address = await getAddress();
@@ -85,6 +90,7 @@ export const responseToCapsule = (
   }
 
   return {
+    id: Number.parseInt(capsule.id),
     beneficiary: capsule.beneficiary,
     grantor: capsule.grantor,
     opened: capsule.opened,
