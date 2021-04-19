@@ -7,6 +7,7 @@ import Token from "../types/Token";
 const StyledTokenSelector = styled.div`
   padding: 2rem;
   border-radius: 2rem;
+  position: relative;
 `;
 
 const TokenContainer = styled.button`
