@@ -57,7 +57,7 @@ type Props = {
 
 const TokenInput = (props: Props) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("0");
 
   return (
     <StyledTokenInput>
@@ -70,7 +70,7 @@ const TokenInput = (props: Props) => {
           open={open}
           token={props.token}
           setToken={(token: Token) => {
-            props.setToken(token, value);
+            props.setToken(token, Number.parseFloat(value));
             setOpen(false);
           }}
         />
@@ -78,7 +78,10 @@ const TokenInput = (props: Props) => {
       <Input
         placeholder="0.0"
         value={value}
-        onChange={(e: any) => setValue(e.target.value)}
+        onChange={(e: any) => {
+          setValue(e.target.value);
+          props.setToken(props.token, Number.parseFloat(e.target.value));
+        }}
       />
     </StyledTokenInput>
   );
