@@ -8,6 +8,7 @@ export const getTokens = async (): Promise<Token[]> => {
   const data = await response.json();
   const tokens: Token[] = data.tokens;
   tokens.push(ethToken);
+  tokens.reverse();
   return tokens;
 };
 
