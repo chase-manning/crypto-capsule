@@ -3,6 +3,7 @@ import styled from "styled-components";
 import dateformat from "dateformat";
 import Button from "../styles/Button";
 import CapsuleType from "../types/CapsuleType";
+import { openCapsule } from "../services/contracthelper";
 type CapsuleProps = {
   last: boolean;
 };
@@ -103,10 +104,15 @@ const Capsule = (props: Props) => {
     setInterval(() => tick(), 1000);
   }, []);
 
-  const open =
+  const open = async () => {
+    await openCapsule(props.capsule.id);
+    props.capsule.opened = true;
+  };
+
+  const isOpen =
     new Date(props.capsule.distributionDate).getTime() <
     nowRef.current.getTime();
-  const remaining = open
+  const remaining = isOpen
     ? 0
     : new Date(props.capsule.distributionDate).getTime() -
       nowRef.current.getTime();
@@ -133,12 +139,12 @@ const Capsule = (props: Props) => {
 
   return (
     <StyledCapsule last={props.last}>
-      {open && props.capsule.opened && <OpenImage>asset 2</OpenImage>}
-      {open && !props.capsule.opened && <ReadyImage>asset 3</ReadyImage>}
-      {!open && <ClosedImage>asset 4</ClosedImage>}
+      {isOpen && props.capsule.opened && <OpenImage>asset 2</OpenImage>}
+      {isOpen && !props.capsule.opened && <ReadyImage>asset 3</ReadyImage>}
+      {!isOpen && <ClosedImage>asset 4</ClosedImage>}
       <CountdownContainer>
         <Countdown>
-          {open ? "0y 0d 0h 0m 0s" : ""}
+          {isOpen ? "0y 0d 0h 0m 0s" : ""}
           {(years > 0 ? years + "y " : "") +
             (days > 0 ? days + "d " : "") +
             (hours > 0 ? hours + "h " : "") +
@@ -155,8 +161,12 @@ const Capsule = (props: Props) => {
         {/* TODO Set Value */}
         <Crypto>{10 + " ETH"}</Crypto>
       </ValueContainer>
-      {open && !props.capsule.opened && <Button primary>Open</Button>}
-      {!open && <Button>Top Up</Button>}
+      {isOpen && !props.capsule.opened && (
+        <Button primary onClick={() => open()}>
+          Open
+        </Button>
+      )}
+      {!isOpen && <Button>Top Up</Button>}
     </StyledCapsule>
   );
 };
