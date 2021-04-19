@@ -2,45 +2,41 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectTokens } from "../state/tokenSlice";
+import Input from "../styles/Input";
 import Token from "../types/Token";
 
+type DisplayProps = {
+  show: boolean;
+};
+
 const StyledTokenSelector = styled.div`
-  padding: 2rem;
-  border-radius: 2rem;
-  position: relative;
+  display: ${(props: DisplayProps) => (props.show ? "flex" : "none")};
 `;
 
-const TokenContainer = styled.button`
-  display: flex;
-  padding: 1rem 0.7rem;
-  align-items: center;
-  border: solid 1px var(--sub);
+const Container = styled.div`
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 30rem;
+  padding: 1.7rem;
   border-radius: 1rem;
-  width: 11.5rem;
-  cursor: pointer;
-`;
-
-const TokenImage = styled.img`
-  height: 2.4rem;
-  margin-right: 0.7rem;
   background-color: var(--white);
-  border-radius: 50%;
-`;
-
-const TokenName = styled.div`
   color: var(--main);
-  font-size: 2rem;
-  font-weight: 500;
-  margin-right: 1rem;
+  font-size: 1.5rem;
+  z-index: 1;
 `;
 
-const Arrow = styled.div`
-  transform: rotate(90deg);
-  font-size: 2rem;
-  color: var(--sub);
+const ExitEvent = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 type Props = {
+  open: boolean;
   token: Token;
   setToken: (token: Token) => void;
 };
@@ -49,12 +45,11 @@ const TokenSelector = (props: Props) => {
   const tokens = useSelector(selectTokens);
 
   return (
-    <StyledTokenSelector>
-      <TokenContainer>
-        <TokenImage src={props.token.logoURI} />
-        <TokenName>{props.token.symbol}</TokenName>
-        <Arrow>{">"}</Arrow>
-      </TokenContainer>
+    <StyledTokenSelector show={props.open}>
+      <ExitEvent onClick={() => props.setToken(props.token)} />
+      <Container>
+        <Input placeholder="Search name or paste address" />
+      </Container>
     </StyledTokenSelector>
   );
 };
