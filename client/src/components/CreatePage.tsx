@@ -5,6 +5,7 @@ import { inputToDate } from "../services/dateHelper";
 import Button from "../styles/Button";
 import Title from "../styles/Title";
 import { Asset } from "../types/CapsuleType";
+import Assets from "./Assets";
 import Footer from "./Footer";
 import Header from "./Header";
 import TextInput from "./TextInput";
@@ -63,6 +64,7 @@ const CreatePage = () => {
           value={beneficiary}
           setValue={(value: string) => setBeneficiary(value)}
         />
+        <Assets />
         <ButtonContainer>
           <Button
             primary
