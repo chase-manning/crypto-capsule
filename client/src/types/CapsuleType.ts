@@ -4,6 +4,7 @@ export type Asset = {
 };
 
 type CapsuleType = {
+  id: number;
   grantor: string;
   beneficiary: string;
   distributionDate: Date;
