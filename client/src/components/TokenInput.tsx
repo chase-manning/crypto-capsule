@@ -5,7 +5,7 @@ import Token from "../types/Token";
 import TokenSelector from "./TokenSelector";
 
 const StyledTokenInput = styled.div`
-  padding: 2rem;
+  padding: 2rem 0;
   border-radius: 2rem;
   display: flex;
 `;
