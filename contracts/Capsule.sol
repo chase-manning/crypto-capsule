@@ -44,7 +44,7 @@ contract CryptoCapsule {
             emit ClaimedAsset(_capsule.tokens[i], _capsule.values[i], capsuleId);
         }
 
-        _capsule.opened = true;
+        capsules[capsuleId].opened = true;
         emit CapsuleOpened(capsuleId);
     }
 
