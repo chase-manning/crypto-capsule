@@ -5,9 +5,9 @@ import Token from "../types/Token";
 import TokenSelector from "./TokenSelector";
 
 const StyledTokenInput = styled.div`
-  padding: 2rem 0;
   border-radius: 2rem;
   display: flex;
+  padding-top: 2rem;
 `;
 
 const Container = styled.div`
@@ -50,9 +50,21 @@ const Arrow = styled.div`
   color: var(--sub);
 `;
 
+const RemoveAsset = styled.button`
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: underline;
+  width: 9rem;
+  cursor: pointer;
+  margin-left: 1rem;
+`;
+
 type Props = {
   token: Token;
   setToken: (token: Token, value: number) => void;
+  removeToken: () => void;
+  removable: boolean;
 };
 
 const TokenInput = (props: Props) => {
@@ -83,6 +95,9 @@ const TokenInput = (props: Props) => {
           props.setToken(props.token, Number.parseFloat(e.target.value));
         }}
       />
+      {props.removable && (
+        <RemoveAsset onClick={() => props.removeToken()}>Remove</RemoveAsset>
+      )}
     </StyledTokenInput>
   );
 };

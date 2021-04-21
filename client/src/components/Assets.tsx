@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { ethToken } from "../services/tokenService";
 import { selectTokens } from "../state/tokenSlice";
 import Label from "../styles/Label";
 import { Asset } from "../types/CapsuleType";
@@ -19,7 +18,7 @@ const AddAsset = styled.button`
   font-weight: 500;
   color: var(--primary);
   text-decoration: underline;
-  margin-top: 1rem;
+  margin-top: 3rem;
   width: 9rem;
   cursor: pointer;
 `;
@@ -55,6 +54,12 @@ const Assets = (props: Props) => {
               _assets[index] = { token: token.address, value: value };
               props.setAssets(_assets);
             }}
+            removeToken={() => {
+              const _assets = [...props.assets];
+              _assets.splice(index, 1);
+              props.setAssets(_assets);
+            }}
+            removable={props.assets.length > 1}
           />
         );
       })}
