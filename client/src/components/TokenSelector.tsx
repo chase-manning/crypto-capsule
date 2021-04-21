@@ -99,7 +99,10 @@ const TokenSelector = (props: Props) => {
             })
             .slice(0, 10)
             .map((token: Token) => (
-              <TokenContainer onClick={() => props.setToken(token)}>
+              <TokenContainer
+                key={token.address}
+                onClick={() => props.setToken(token)}
+              >
                 <Image src={token.logoURI} />
                 <Name>{token.name}</Name>
               </TokenContainer>
