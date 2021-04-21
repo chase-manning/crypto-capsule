@@ -18,6 +18,7 @@ contract CryptoCapsule {
         address[] tokens;
         uint256[] values;
     }
+
     Capsule[] capsules;
     mapping (address => EnumerableSet.UintSet) private sent;
     mapping (address => EnumerableSet.UintSet) private received;
@@ -25,6 +26,11 @@ contract CryptoCapsule {
     function createCapsule(address _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
+
+        for (uint256 i = 0; i < _tokens.length; i++) {
+            IERC20 erc20Token = IERC20(_tokens[i]);
+            erc20Token.transferFrom(msg.sender, address(this), _values[i]);
+        }
 
         uint256 capsuleId = capsules.length;
         capsules.push(Capsule(capsuleId, msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
