@@ -36,6 +36,7 @@ export const createCapsule = async (
 
   const ethAssets = assets.filter((a: Asset) => a.token === "ETH");
   const eth = ethAssets.length === 1 ? ethAssets[0].value : 0;
+  const otherAssets = assets.filter((a: Asset) => a.token !== "ETH");
 
   var tx = {
     from: address,
@@ -45,8 +46,8 @@ export const createCapsule = async (
     .createCapsule(
       beneficiary,
       dateToUnix(distributionDate),
-      assets.filter((a: Asset) => a.token !== "ETH").map((a: Asset) => a.token),
-      assets.filter((a: Asset) => a.token !== "ETH").map((a: Asset) => a.value)
+      otherAssets.map((a: Asset) => a.token),
+      otherAssets.map((a: Asset) => a.value)
     )
     .send(tx);
 };
@@ -85,7 +86,7 @@ export const responseToCapsule = (
   for (let i = 0; i < capsule.tokens.length; i++) {
     assets.push({
       token: capsule.tokens[i],
-      value: toEthUnit(new BN(capsule.values[i])),
+      value: Number.parseFloat(capsule.values[i]),
     });
   }
 
