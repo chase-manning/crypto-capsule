@@ -42,12 +42,11 @@ const Assets = (props: Props) => {
     <StyledAssetAdder>
       <Label>Assets</Label>
       {props.assets.map((asset: Asset, index: number) => {
-        if (!tokens || tokens.length === 0) return;
+        if (!tokens || tokens.length === 0) return null;
         const token = tokens.filter((t: Token) => t.address === asset.token)[0];
 
         return (
           <TokenInput
-            key={index}
             token={token}
             setToken={(token: Token, value: number) => {
               const _assets = [...props.assets];
