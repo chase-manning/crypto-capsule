@@ -3,6 +3,7 @@ import Web3 from "web3";
 import BN from "bn.js";
 import GLOBALS from "../utils/globals";
 import capsuleAbi from "../contracts/CryptoCapsule.json";
+import tokenAbi from "../contracts/IERC20.json";
 import { dateToUnix, toEthUnit, toWeiUnit, UnixToDate } from "./web3Service";
 import CapsuleType, { Asset } from "../types/CapsuleType";
 import ContractCapsuleType from "../types/ContractCapsuleType";
@@ -21,6 +22,12 @@ export const getAddress = async (): Promise<string> => {
 
 export const getCapsuleContract = async (): Promise<Contract> => {
   return new (window as any).web3.eth.Contract(capsuleAbi, GLOBALS.CAPSULE, {
+    from: await getAddress(),
+  });
+};
+
+export const getTokenContract = async (token: string): Promise<Contract> => {
+  return new (window as any).web3.eth.Contract(tokenAbi, token, {
     from: await getAddress(),
   });
 };
@@ -99,4 +106,18 @@ export const responseToCapsule = (
     distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
     assets: assets,
   };
+};
+
+// Tokens
+export const approveToken = async (token: string): Promise<void> => {
+  const tokenContract = await getTokenContract(token);
+  await tokenContract.methods
+    .approve(GLOBALS.CAPSULE, new BN("9999999999999999999999999999"))
+    .send();
+};
+
+export const tokenAllowance = async (token: string): Promise<number> => {
+  const address = await getAddress();
+  const tokenContract = await getTokenContract(token);
+  return await tokenContract.methods.allowance(address, GLOBALS.CAPSULE).call();
 };
