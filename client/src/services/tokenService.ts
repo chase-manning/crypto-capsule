@@ -12,7 +12,7 @@ export const getTokens = async (): Promise<Token[]> => {
       "https://tokens.coingecko.com/uniswap/all.json"
     );
     const data = await response.json();
-    const tokens: Token[] = data.tokens;
+    tokens = data.tokens;
   }
   tokens.push(ethToken);
   tokens.reverse();
