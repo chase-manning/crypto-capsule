@@ -63,10 +63,16 @@ const MaxButton = styled.button`
   color: var(--primary);
   font-weight: 600;
   position: absolute;
-  right: 1rem;
-  top: 0;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
-  height: 100%;
+  height: 2rem;
+  background-color: var(--white);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RemoveAsset = styled.button`
