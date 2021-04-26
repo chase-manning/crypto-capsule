@@ -122,10 +122,14 @@ export const approveToken = async (token: string): Promise<void> => {
     .send();
 };
 
-export const tokenAllowance = async (token: string): Promise<number> => {
+export const tokenApproved = async (token: string): Promise<boolean> => {
+  if (token === "ETH") return true;
   const address = await getAddress();
   const tokenContract = await getTokenContract(token);
-  return await tokenContract.methods.allowance(address, GLOBALS.CAPSULE).call();
+  const allowance = await tokenContract.methods
+    .allowance(address, GLOBALS.CAPSULE)
+    .call();
+  return new BN(allowance) > new BN("9999999999999999999999");
 };
 
 export const tokenBalance = async (token: Token): Promise<number> => {
