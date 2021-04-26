@@ -7,6 +7,7 @@ import tokenAbi from "../contracts/IERC20.json";
 import { dateToUnix, toEthUnit, toWeiUnit, UnixToDate } from "./web3Service";
 import CapsuleType, { Asset } from "../types/CapsuleType";
 import ContractCapsuleType from "../types/ContractCapsuleType";
+import Token from "../types/Token";
 
 // Shared
 export const getAddress = async (): Promise<string> => {
@@ -107,6 +108,12 @@ export const responseToCapsule = (
   };
 };
 
+export const ethBalance = async (): Promise<number> => {
+  const address = await getAddress();
+  const wei = await window.web3.eth.getBalance(address);
+  return toEthUnit(wei);
+};
+
 // Tokens
 export const approveToken = async (token: string): Promise<void> => {
   const tokenContract = await getTokenContract(token);
@@ -119,4 +126,13 @@ export const tokenAllowance = async (token: string): Promise<number> => {
   const address = await getAddress();
   const tokenContract = await getTokenContract(token);
   return await tokenContract.methods.allowance(address, GLOBALS.CAPSULE).call();
+};
+
+export const tokenBalance = async (token: Token): Promise<number> => {
+  const address = await getAddress();
+  const tokenContract = await getTokenContract(token.address);
+  const cents = await tokenContract.methods.balanceOf(address).call();
+  console.log(cents);
+  console.log(token.decimals);
+  return cents / Math.pow(10, token.decimals);
 };
