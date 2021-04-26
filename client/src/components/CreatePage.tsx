@@ -36,6 +36,7 @@ const CreatePage = () => {
   const clearInputs = () => {
     setBeneficiary("");
     setDistributionDate("");
+    setAssets([{ token: "ETH", value: 0 }]);
   };
 
   const create = async () => {
