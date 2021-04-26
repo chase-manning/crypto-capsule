@@ -1,14 +1,28 @@
 import React, { useState } from "react";
+import BN from "bn.js";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { createCapsule } from "../services/contracthelper";
+import {
+  createCapsule,
+  getTokenContract,
+  tokenApproved,
+} from "../services/contracthelper";
 import { inputToDate } from "../services/dateHelper";
+import { selectTokens } from "../state/tokenSlice";
 import Button from "../styles/Button";
 import Title from "../styles/Title";
 import { Asset } from "../types/CapsuleType";
+import Token from "../types/Token";
+import GLOBALS from "../utils/globals";
 import Assets from "./Assets";
 import Footer from "./Footer";
 import Header from "./Header";
 import TextInput from "./TextInput";
+
+type Approval = {
+  asset: Asset;
+  approved: boolean;
+};
 
 const StyledCreatePage = styled.div`
   height: 100vh;
@@ -29,14 +43,58 @@ const ButtonContainer = styled.div`
 `;
 
 const CreatePage = () => {
+  const ethAsset: Asset = { token: "ETH", value: 0 };
+  const [approving, setApproving] = useState(false);
   const [beneficiary, setBeneficiary] = useState("");
   const [distributionDate, setDistributionDate] = useState("");
-  const [assets, setAssets] = useState<Asset[]>([{ token: "ETH", value: 0 }]);
+  const [assets, setAssets] = useState<Asset[]>([ethAsset]);
+  const [approvals, setApprovals] = useState<Approval[]>([
+    { asset: ethAsset, approved: true },
+  ]);
+  const tokens = useSelector(selectTokens);
+
+  const unapproved = approvals.filter(
+    (approval: Approval) => !approval.approved
+  );
+
+  const addressSymbol = (address: string) =>
+    tokens.filter((token: Token) => token.address === address)[0].symbol;
+
+  const updateApprovals = async (assets: Asset[]) => {
+    const _approvals: Approval[] = [];
+    const promises = assets.map(async (asset: Asset) => {
+      _approvals.push({
+        asset: asset,
+        approved: await tokenApproved(asset.token),
+      });
+    });
+    await Promise.all(promises);
+    setApprovals(_approvals);
+  };
+
+  const tokenApprove = async (address: string) => {
+    const tokenContract = await getTokenContract(address);
+    tokenContract.methods
+      .approve(GLOBALS.CAPSULE, new BN("9999999999999999999999999999"))
+      .send()
+      .on("transactionHash", (hash: any) => {
+        setApproving(true);
+      })
+      .on("receipt", (receipt: any) => {
+        updateApprovals(assets).then(() => setApproving(false));
+      })
+      .on("error", (err: any) => {
+        console.log(`Error: ${err}`);
+        setApproving(false);
+      });
+  };
 
   const clearInputs = () => {
     setBeneficiary("");
     setDistributionDate("");
-    setAssets([{ token: "ETH", value: 0 }]);
+    setAssets([ethAsset]);
+    setApprovals([{ asset: ethAsset, approved: true }]);
+    setApproving(false);
   };
 
   const create = async () => {
@@ -68,16 +126,25 @@ const CreatePage = () => {
         />
         <Assets
           assets={assets}
-          setAssets={(assets: Asset[]) => setAssets(assets)}
+          setAssets={(assets: Asset[]) => {
+            setAssets(assets);
+            updateApprovals(assets);
+          }}
         />
         <ButtonContainer>
           <Button
             primary
             onClick={() => {
-              create();
+              if (approving) return;
+              if (unapproved.length === 0) create();
+              else tokenApprove(unapproved[0].asset.token);
             }}
           >
-            Create
+            {approving
+              ? "Loading"
+              : unapproved.length === 0
+              ? "Create"
+              : `Approve ${addressSymbol(unapproved[0].asset.token)}`}
           </Button>
         </ButtonContainer>
       </Content>
