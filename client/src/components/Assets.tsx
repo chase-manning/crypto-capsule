@@ -34,7 +34,6 @@ const Assets = (props: Props) => {
   const addAsset = () => {
     const _assets = [...props.assets];
     _assets.push({ token: "ETH", value: 0 });
-    console.log(_assets);
     props.setAssets(_assets);
   };
 
