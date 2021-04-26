@@ -102,7 +102,6 @@ const TokenInput = (props: Props) => {
       const _balance = await ethBalance();
       setBalance(_balance);
     } else {
-      console.log(token.address);
       const _balance = await tokenBalance(token);
       setBalance(_balance);
     }
