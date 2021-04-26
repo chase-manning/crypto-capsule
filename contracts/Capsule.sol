@@ -16,7 +16,7 @@ contract CryptoCapsule {
         bool opened;
         uint256 value;
         address[] tokens;
-        uint256[] values;
+        uint256[] amounts;
     }
 
     Capsule[] capsules;
@@ -46,8 +46,8 @@ contract CryptoCapsule {
 
         for (uint256 i = 0; i < _capsule.tokens.length; i++) {
             IERC20 erc20Token = IERC20(_capsule.tokens[i]);
-            erc20Token.transfer(_capsule.beneficiary, _capsule.values[i]);
-            emit ClaimedAsset(_capsule.tokens[i], _capsule.values[i], capsuleId);
+            erc20Token.transfer(_capsule.beneficiary, _capsule.amounts[i]);
+            emit ClaimedAsset(_capsule.tokens[i], _capsule.amounts[i], capsuleId);
         }
 
         capsules[capsuleId].opened = true;

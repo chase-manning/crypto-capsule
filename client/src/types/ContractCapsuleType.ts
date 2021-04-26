@@ -7,7 +7,7 @@ type ContractCapsuleType = {
   opened: boolean;
   value: string;
   tokens: string[];
-  values: string[];
+  amounts: string[];
 };
 
 export default ContractCapsuleType;

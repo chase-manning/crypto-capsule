@@ -93,7 +93,7 @@ export const responseToCapsule = (
   for (let i = 0; i < capsule.tokens.length; i++) {
     assets.push({
       token: capsule.tokens[i],
-      value: Number.parseFloat(capsule.values[i]),
+      value: Number.parseFloat(capsule.amounts[i]),
     });
   }
 
@@ -136,7 +136,5 @@ export const tokenBalance = async (token: Token): Promise<number> => {
   const address = await getAddress();
   const tokenContract = await getTokenContract(token.address);
   const cents = await tokenContract.methods.balanceOf(address).call();
-  console.log(cents);
-  console.log(token.decimals);
   return cents / Math.pow(10, token.decimals);
 };
