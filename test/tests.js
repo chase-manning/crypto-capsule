@@ -31,12 +31,7 @@ describe("Capsule", () => {
     await capsule.createCapsule(RECEIVER_ADDRESS, new Date().getTime(), [], []);
 
     const capsuleMeow = await capsule.getCapsule(0);
-    console.log(capsuleMeow);
-
     const sent = await capsule.getSentCapsules(SENDER_ADDRESS);
-    console.log(sent);
-
     const received = await capsule.getReceivedCapsules(RECEIVER_ADDRESS);
-    console.log(received);
   });
 });
