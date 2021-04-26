@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ethBalance, tokenBalance } from "../services/contracthelper";
 import Input from "../styles/Input";
 import Token from "../types/Token";
 import TokenSelector from "./TokenSelector";
@@ -50,6 +51,24 @@ const Arrow = styled.div`
   color: var(--sub);
 `;
 
+const InputContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const MaxButton = styled.button`
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 600;
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  cursor: pointer;
+  height: 100%;
+`;
+
 const RemoveAsset = styled.button`
   font-size: 1.4rem;
   font-weight: 500;
@@ -70,6 +89,22 @@ type Props = {
 const TokenInput = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("0");
+  const [balance, setBalance] = useState(0);
+
+  const updateBalance = async (token: Token) => {
+    if (token.address === "ETH") {
+      const _balance = await ethBalance();
+      setBalance(_balance);
+    } else {
+      console.log(token.address);
+      const _balance = await tokenBalance(token);
+      setBalance(_balance);
+    }
+  };
+
+  useEffect(() => {
+    updateBalance(props.token);
+  }, []);
 
   return (
     <StyledTokenInput>
@@ -83,18 +118,22 @@ const TokenInput = (props: Props) => {
           token={props.token}
           setToken={(token: Token) => {
             props.setToken(token, Number.parseFloat(value));
+            updateBalance(token);
             setOpen(false);
           }}
         />
       </Container>
-      <Input
-        placeholder="0.0"
-        value={value}
-        onChange={(e: any) => {
-          setValue(e.target.value);
-          props.setToken(props.token, Number.parseFloat(e.target.value));
-        }}
-      />
+      <InputContainer>
+        <Input
+          placeholder="0.0"
+          value={value}
+          onChange={(e: any) => {
+            setValue(e.target.value);
+            props.setToken(props.token, Number.parseFloat(e.target.value));
+          }}
+        />
+        <MaxButton onClick={() => setValue(balance.toString())}>max</MaxButton>
+      </InputContainer>
       {props.removable && (
         <RemoveAsset onClick={() => props.removeToken()}>Remove</RemoveAsset>
       )}
