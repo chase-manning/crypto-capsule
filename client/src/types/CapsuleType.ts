@@ -1,6 +1,6 @@
 export type Asset = {
   token: string;
-  value: number;
+  value: string;
 };
 
 type CapsuleType = {

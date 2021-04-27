@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import BN from "bn.js";
+import Token from "../types/Token";
 
 declare global {
   interface Window {
@@ -32,4 +33,18 @@ export const getCurrentUnix = (): number => {
 
 export const UnixToDate = (unix: number): Date => {
   return new Date(unix * 1000);
+};
+
+export const toCents = (dollars: number, token: Token): string => {
+  if (token.address === "ETH") return toWeiUnit(dollars.toString());
+  let decimals = Web3.utils.toBN(token.decimals);
+  return Web3.utils
+    .toBN(dollars)
+    .mul(Web3.utils.toBN(10).pow(decimals))
+    .toString();
+};
+
+export const toDollars = (cents: number, token: Token) => {
+  if (token.address === "ETH") return cents;
+  return cents / Math.pow(10, token.decimals);
 };

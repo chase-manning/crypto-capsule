@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ethBalance, tokenBalance } from "../services/contracthelper";
+import { toCents } from "../services/web3Service";
 import Input from "../styles/Input";
 import Token from "../types/Token";
 import TokenSelector from "./TokenSelector";
@@ -87,7 +88,7 @@ const RemoveAsset = styled.button`
 
 type Props = {
   token: Token;
-  setToken: (token: Token, value: number) => void;
+  setToken: (token: Token, value: string) => void;
   removeToken: () => void;
   removable: boolean;
 };
@@ -122,7 +123,7 @@ const TokenInput = (props: Props) => {
           open={open}
           token={props.token}
           setToken={(token: Token) => {
-            props.setToken(token, Number.parseFloat(value));
+            props.setToken(token, toCents(Number.parseFloat(value), token));
             updateBalance(token);
             setOpen(false);
           }}
@@ -134,7 +135,10 @@ const TokenInput = (props: Props) => {
           value={value}
           onChange={(e: any) => {
             setValue(e.target.value);
-            props.setToken(props.token, Number.parseFloat(e.target.value));
+            props.setToken(
+              props.token,
+              toCents(Number.parseFloat(e.target.value), props.token)
+            );
           }}
         />
         <MaxButton onClick={() => setValue(balance.toString())}>max</MaxButton>

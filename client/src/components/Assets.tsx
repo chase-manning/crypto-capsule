@@ -33,7 +33,7 @@ const Assets = (props: Props) => {
 
   const addAsset = () => {
     const _assets = [...props.assets];
-    _assets.push({ token: "ETH", value: 0 });
+    _assets.push({ token: "ETH", value: "0" });
     props.setAssets(_assets);
   };
 
@@ -47,7 +47,7 @@ const Assets = (props: Props) => {
         return (
           <TokenInput
             token={token}
-            setToken={(token: Token, value: number) => {
+            setToken={(token: Token, value: string) => {
               const _assets = [...props.assets];
               _assets[index] = { token: token.address, value: value };
               props.setAssets(_assets);

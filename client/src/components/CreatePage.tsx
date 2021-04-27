@@ -43,7 +43,7 @@ const ButtonContainer = styled.div`
 `;
 
 const CreatePage = () => {
-  const ethAsset: Asset = { token: "ETH", value: 0 };
+  const ethAsset: Asset = { token: "ETH", value: "0" };
   const [approving, setApproving] = useState(false);
   const [beneficiary, setBeneficiary] = useState("");
   const [distributionDate, setDistributionDate] = useState("");

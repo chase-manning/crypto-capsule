@@ -47,7 +47,7 @@ export const createCapsule = async (
 
   var tx = {
     from: address,
-    value: toWeiUnit(eth.toString()),
+    value: eth,
   };
   await capsuleContract.methods
     .createCapsule(
@@ -89,11 +89,11 @@ export const responseToCapsule = (
 ): CapsuleType => {
   const assets: Asset[] = [];
   const eth = toEthUnit(new BN(capsule.value));
-  if (eth > 0) assets.push({ token: "ETH", value: eth });
+  if (eth > 0) assets.push({ token: "ETH", value: capsule.value });
   for (let i = 0; i < capsule.tokens.length; i++) {
     assets.push({
       token: capsule.tokens[i],
-      value: Number.parseFloat(capsule.amounts[i]),
+      value: capsule.amounts[i],
     });
   }
 
