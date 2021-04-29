@@ -2,9 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import dateformat from "dateformat";
 import Button from "../styles/Button";
-import CapsuleType from "../types/CapsuleType";
+import CapsuleType, { Asset } from "../types/CapsuleType";
 import { openCapsule } from "../services/contracthelper";
 import countdown from "countdown";
+import { useSelector } from "react-redux";
+import { selectTokens } from "../state/tokenSlice";
+import Token from "../types/Token";
 
 type CapsuleProps = {
   last: boolean;
@@ -80,9 +83,21 @@ const Dollars = styled.div`
 `;
 
 const Crypto = styled.div`
-  color: var(--sub);
-  font-size: 16px;
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const CyptoIconContainer = styled.div`
+  width: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CryptoIcon = styled.img`
+  background-color: white;
+  border-radius: 50%;
+  width: 2rem;
 `;
 
 type Props = {
@@ -91,6 +106,8 @@ type Props = {
 };
 
 const Capsule = (props: Props) => {
+  const tokens = useSelector(selectTokens);
+
   const [now, setNow] = useState(new Date());
   const nowRef = useRef(now);
   nowRef.current = now;
@@ -138,7 +155,19 @@ const Capsule = (props: Props) => {
         {/* TODO Set Price */}
         <Dollars>{"$" + (100).toLocaleString()}</Dollars>
         {/* TODO Set Value */}
-        <Crypto>{10 + " ETH"}</Crypto>
+        <Crypto>
+          {props.capsule.assets.map((asset: Asset) => (
+            <CyptoIconContainer>
+              <CryptoIcon
+                src={
+                  tokens.filter(
+                    (token: Token) => token.address === asset.token
+                  )[0].logoURI
+                }
+              />
+            </CyptoIconContainer>
+          ))}
+        </Crypto>
       </ValueContainer>
       {isOpen && !props.capsule.opened && (
         <Button primary onClick={() => open()}>
