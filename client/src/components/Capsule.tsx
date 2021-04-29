@@ -4,6 +4,8 @@ import dateformat from "dateformat";
 import Button from "../styles/Button";
 import CapsuleType from "../types/CapsuleType";
 import { openCapsule } from "../services/contracthelper";
+import countdown from "countdown";
+
 type CapsuleProps = {
   last: boolean;
 };
@@ -63,7 +65,6 @@ const OpenDate = styled.div`
 `;
 
 const ValueContainer = styled.div`
-  flex: 1;
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -112,30 +113,6 @@ const Capsule = (props: Props) => {
   const isOpen =
     new Date(props.capsule.distributionDate).getTime() <
     nowRef.current.getTime();
-  const remaining = isOpen
-    ? 0
-    : new Date(props.capsule.distributionDate).getTime() -
-      nowRef.current.getTime();
-  const yearsMult = 1000 * 60 * 60 * 24 * 365;
-  const years = Math.trunc(remaining / yearsMult);
-  const daysMult = 1000 * 60 * 60 * 24;
-  const hoursMult = 1000 * 60 * 60;
-  const daysRemaining = remaining - years * yearsMult;
-  const days = Math.trunc(daysRemaining / daysMult);
-  const hoursRemaining = remaining - years * yearsMult - days * daysMult;
-  const hours = Math.trunc(hoursRemaining / hoursMult);
-  const minutesMult = 1000 * 60;
-  const minutesRemaining =
-    remaining - years * yearsMult - days * daysMult - hours * hoursMult;
-  const minutes = Math.trunc(minutesRemaining / minutesMult);
-  const secondsMult = 1000;
-  const secondsRemaining =
-    remaining -
-    years * yearsMult -
-    days * daysMult -
-    hours * hoursMult -
-    minutes * minutesMult;
-  const seconds = Math.trunc(secondsRemaining / secondsMult);
 
   return (
     <StyledCapsule last={props.last}>
@@ -144,15 +121,17 @@ const Capsule = (props: Props) => {
       {!isOpen && <ClosedImage>asset 4</ClosedImage>}
       <CountdownContainer>
         <Countdown>
-          {isOpen ? "0y 0d 0h 0m 0s" : ""}
-          {(years > 0 ? years + "y " : "") +
-            (days > 0 ? days + "d " : "") +
-            (hours > 0 ? hours + "h " : "") +
-            (minutes > 0 ? minutes + "m " : "") +
-            (seconds > 0 ? seconds + "s" : "")}
+          {isOpen
+            ? "0 hours, 0 minutes, 0 seconds"
+            : countdown(
+                new Date(),
+                props.capsule.distributionDate,
+                ~countdown.MILLISECONDS,
+                3
+              ).toString()}
         </Countdown>
         <OpenDate>
-          {dateformat(props.capsule.distributionDate, "hh:MM dd/mm/yyyy")}
+          {dateformat(props.capsule.distributionDate, "mm/dd/yyyy")}
         </OpenDate>
       </CountdownContainer>
       <ValueContainer>
