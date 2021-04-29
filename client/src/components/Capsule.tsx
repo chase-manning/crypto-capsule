@@ -174,7 +174,6 @@ const Capsule = (props: Props) => {
           Open
         </Button>
       )}
-      {!isOpen && <Button>Top Up</Button>}
     </StyledCapsule>
   );
 };
