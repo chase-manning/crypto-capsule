@@ -35,6 +35,7 @@ contract CryptoCapsule is Ownable{
         }
     }
 
+
     // Functions
     function createCapsule(address _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
@@ -114,6 +115,7 @@ contract CryptoCapsule is Ownable{
     function setOracle(address token, address oracle) public onlyOwner() {
         oracles[token] = AggregatorV3Interface(oracle);
     }
+
 
     // Internals
     function _getAssetInUsd(address token, uint256 amount) private view returns(uint256) {
