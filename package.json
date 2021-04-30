@@ -29,5 +29,8 @@
     "ethers": "^5.0.32",
     "hardhat": "^2.1.1",
     "hardhat-abi-exporter": "^2.2.0"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.1.7"
   }
 }
