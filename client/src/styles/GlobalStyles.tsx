@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
     }
   `;
 
-const GlobalStyles = () => {
+const GlobalStyles = (): JSX.Element => {
   return <GlobalStyle />;
 };
 

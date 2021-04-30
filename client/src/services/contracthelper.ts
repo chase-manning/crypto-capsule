@@ -45,7 +45,7 @@ export const createCapsule = async (
   const eth = ethAssets.length === 1 ? ethAssets[0].value : 0;
   const otherAssets = assets.filter((a: Asset) => a.token !== "ETH");
 
-  var tx = {
+  const tx = {
     from: address,
     value: eth,
   };
@@ -59,7 +59,7 @@ export const createCapsule = async (
     .send(tx);
 };
 
-export const openCapsule = async (capsuleId: number) => {
+export const openCapsule = async (capsuleId: number): Promise<void> => {
   const capsuleContract = await getCapsuleContract();
   await capsuleContract.methods.openCapsule(new BN(capsuleId)).send();
 };
@@ -114,14 +114,14 @@ export const responseToCapsule = (
   }
 
   return {
-    id: Number.parseInt(capsule.id),
+    id: Number(capsule.id),
     beneficiary: capsule.beneficiary,
     grantor: capsule.grantor,
     opened: capsule.opened,
     createdDate: UnixToDate(Number.parseFloat(capsule.createdDate)),
     distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
-    assets: assets,
-    usd: usd,
+    assets,
+    usd,
   };
 };
 
@@ -153,5 +153,5 @@ export const tokenBalance = async (token: Token): Promise<number> => {
   const address = await getAddress();
   const tokenContract = await getTokenContract(token.address);
   const cents = await tokenContract.methods.balanceOf(address).call();
-  return cents / Math.pow(10, token.decimals);
+  return cents / 10 ** token.decimals;
 };

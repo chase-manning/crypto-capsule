@@ -42,7 +42,7 @@ const ButtonContainer = styled.div`
   margin-top: 3rem;
 `;
 
-const CreatePage = () => {
+const CreatePage = (): JSX.Element => {
   const ethAsset: Asset = { token: "ETH", value: "0" };
   const [approving, setApproving] = useState(false);
   const [beneficiary, setBeneficiary] = useState("");
@@ -64,7 +64,7 @@ const CreatePage = () => {
     const _approvals: Approval[] = [];
     const promises = assets.map(async (asset: Asset) => {
       _approvals.push({
-        asset: asset,
+        asset,
         approved: await tokenApproved(asset.token),
       });
     });

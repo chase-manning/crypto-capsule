@@ -55,7 +55,7 @@ const Selection = styled.div`
     props.active ? "var(--primary)" : "rgba(0,0,0,0)"};
 `;
 
-const Header = () => {
+const Header = (): JSX.Element => {
   const location = useLocation();
   const history = useHistory();
 

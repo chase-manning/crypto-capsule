@@ -37,14 +37,17 @@ export const UnixToDate = (unix: number): Date => {
 
 export const toCents = (dollars: number, token: Token): string => {
   if (token.address === "ETH") return toWeiUnit(dollars.toString());
-  let decimals = Web3.utils.toBN(token.decimals);
-  return Web3.utils
-    .toBN(dollars)
-    .mul(Web3.utils.toBN(10).pow(decimals))
-    .toString();
+  const decimals = Web3.utils.toBN(token.decimals);
+  return (
+    Web3.utils
+      .toBN(dollars)
+      /* eslint-disable no-restricted-properties */
+      .mul(Web3.utils.toBN(10).pow(decimals))
+      .toString()
+  );
 };
 
-export const toDollars = (cents: number, token: Token) => {
+export const toDollars = (cents: number, token: Token): number => {
   if (token.address === "ETH") return cents;
   return cents / Math.pow(10, token.decimals);
 };

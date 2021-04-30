@@ -4,7 +4,7 @@ import { selectAddress, setAddress } from "../state/userSlice";
 import Button from "../styles/Button";
 import { getAddress } from "../services/contracthelper";
 
-const Connector = () => {
+const Connector = (): JSX.Element => {
   const dispatch = useDispatch();
   const address = useSelector(selectAddress);
 

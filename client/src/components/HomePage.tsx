@@ -10,7 +10,7 @@ const StyledHomePage = styled.div`
   flex-direction: column;
 `;
 
-const HomePage = () => {
+const HomePage = (): JSX.Element => {
   return (
     <StyledHomePage>
       <Header />

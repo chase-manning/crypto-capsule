@@ -1,7 +1,8 @@
 import React from "react";
-import styled from "styled-components";
-import Button from "../styles/Button";
 import { useHistory } from "react-router";
+import styled from "styled-components";
+
+import Button from "../styles/Button";
 
 const StyledLanding = styled.div`
   width: 100%;
@@ -46,7 +47,7 @@ const Image = styled.div`
   text-transform: uppercase;
 `;
 
-const Landing = () => {
+const Landing = (): JSX.Element => {
   const history = useHistory();
 
   return (

@@ -29,7 +29,7 @@ type Props = {
   capsules: CapsuleType[];
 };
 
-const Capsules = (props: Props) => {
+const Capsules = (props: Props): JSX.Element => {
   const now = new Date();
   const ready = props.capsules.filter(
     (cap: CapsuleType) => new Date(cap.distributionDate) < now && !cap.opened

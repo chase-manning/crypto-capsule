@@ -25,12 +25,12 @@ type Props = {
   setValue: (value: string) => void;
 };
 
-const TextInput = (props: Props) => {
+const TextInput = (props: Props): JSX.Element => {
   return (
     <StyledTextInput>
       <LabelContainter>
         <Label>{props.label}</Label>
-        {props.tooltip && <Tooltip content={props.tooltip}></Tooltip>}
+        {props.tooltip && <Tooltip content={props.tooltip} />}
       </LabelContainter>
       <Input
         placeholder={props.placeholder}

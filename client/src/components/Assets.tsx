@@ -28,7 +28,7 @@ type Props = {
   setAssets: (assets: Asset[]) => void;
 };
 
-const Assets = (props: Props) => {
+const Assets = (props: Props): JSX.Element => {
   const tokens = useSelector(selectTokens);
 
   const addAsset = () => {
@@ -49,7 +49,7 @@ const Assets = (props: Props) => {
             token={token}
             setToken={(token: Token, value: string) => {
               const _assets = [...props.assets];
-              _assets[index] = { token: token.address, value: value };
+              _assets[index] = { token: token.address, value };
               props.setAssets(_assets);
             }}
             removeToken={() => {

@@ -12,11 +12,11 @@ const Text = styled.div`
   font-size: 14px;
 `;
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <StyledFooter>
       <div />
-      <Text>{"Made with ❤️in New Zealand"}</Text>
+      <Text>Made with ❤️in New Zealand</Text>
     </StyledFooter>
   );
 };

@@ -75,7 +75,7 @@ type Props = {
   setToken: (token: Token) => void;
 };
 
-const TokenSelector = (props: Props) => {
+const TokenSelector = (props: Props): JSX.Element => {
   const tokens = useSelector(selectTokens);
   const [search, setSearch] = useState("");
 

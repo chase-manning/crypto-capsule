@@ -60,7 +60,7 @@ type Props = {
   content: string;
 };
 
-const Tooltip = (props: Props) => {
+const Tooltip = (props: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   return (

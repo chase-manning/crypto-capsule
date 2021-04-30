@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import dateformat from "dateformat";
+import countdown from "countdown";
+import { useSelector } from "react-redux";
+
 import Button from "../styles/Button";
 import CapsuleType, { Asset } from "../types/CapsuleType";
 import { openCapsule } from "../services/contracthelper";
-import countdown from "countdown";
-import { useSelector } from "react-redux";
 import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
 
@@ -105,7 +106,7 @@ type Props = {
   last: boolean;
 };
 
-const Capsule = (props: Props) => {
+const Capsule = (props: Props): JSX.Element => {
   const tokens = useSelector(selectTokens);
 
   const [now, setNow] = useState(new Date());
@@ -153,7 +154,7 @@ const Capsule = (props: Props) => {
       </CountdownContainer>
       <ValueContainer>
         {/* TODO Set Price */}
-        <Dollars>{"$" + props.capsule.usd.toLocaleString()}</Dollars>
+        <Dollars>{`$${props.capsule.usd.toLocaleString()}`}</Dollars>
         <Crypto>
           {props.capsule.assets.map((asset: Asset) => (
             <CyptoIconContainer>

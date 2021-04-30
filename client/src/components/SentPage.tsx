@@ -14,7 +14,7 @@ const StyledSentPage = styled.div`
   align-items: center;
 `;
 
-const SentPage = () => {
+const SentPage = (): JSX.Element => {
   const [capsules, setCapsules] = useState<CapsuleType[]>([]);
 
   const updateCapsules = async () => {

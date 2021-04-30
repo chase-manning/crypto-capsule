@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import AboutPage from "./AboutPage";
 import CreatePage from "./CreatePage";
 import ReceivedPage from "./ReceivedPage";
 import SentPage from "./SentPage";
 import HomePage from "./HomePage";
-import { useDispatch } from "react-redux";
 import { getTokens } from "../services/tokenService";
 import { setTokens } from "../state/tokenSlice";
 import { getAddress } from "../services/contracthelper";
 import { setAddress } from "../state/userSlice";
 
-const App = () => {
+const App = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const init = async () => {

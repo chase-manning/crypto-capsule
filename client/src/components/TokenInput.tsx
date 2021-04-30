@@ -93,7 +93,7 @@ type Props = {
   removable: boolean;
 };
 
-const TokenInput = (props: Props) => {
+const TokenInput = (props: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("0");
   const [balance, setBalance] = useState(0);

@@ -9,7 +9,7 @@ const StyledAboutPage = styled.div`
   flex-direction: column;
 `;
 
-const AboutPage = () => {
+const AboutPage = (): JSX.Element => {
   return (
     <StyledAboutPage>
       <Header />
