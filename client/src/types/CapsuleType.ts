@@ -11,6 +11,7 @@ type CapsuleType = {
   createdDate: Date;
   opened: boolean;
   assets: Asset[];
+  usd: string;
 };
 
 export default CapsuleType;

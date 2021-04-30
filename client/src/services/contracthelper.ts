@@ -71,7 +71,11 @@ export const getSentCapsules = async (): Promise<CapsuleType[]> => {
   const response: ContractCapsuleType[] = await capsuleContract.methods
     .getSentCapsules(address)
     .call();
-  return response.map((rc: ContractCapsuleType) => responseToCapsule(rc));
+  const capsuleIds = response.map((r: ContractCapsuleType) => r.id);
+  const usds: string[] = await getUsdValues(capsuleIds);
+  return response.map((rc: ContractCapsuleType, index: number) =>
+    responseToCapsule(rc, usds[index])
+  );
 };
 
 export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
@@ -80,12 +84,24 @@ export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
   const response: ContractCapsuleType[] = await capsuleContract.methods
     .getReceivedCapsules(address)
     .call();
-  return response.map((rc: ContractCapsuleType) => responseToCapsule(rc));
+  const capsuleIds = response.map((r: ContractCapsuleType) => r.id);
+  const usds: string[] = await getUsdValues(capsuleIds);
+  console.log("Here");
+  console.log(usds[2]);
+  return response.map((rc: ContractCapsuleType, index: number) =>
+    responseToCapsule(rc, usds[index])
+  );
+};
+
+export const getUsdValues = async (capsuleIds: string[]): Promise<string[]> => {
+  const capsuleContract = await getCapsuleContract();
+  return capsuleContract.methods.getUsdValues(capsuleIds).call();
 };
 
 // Utils
 export const responseToCapsule = (
-  capsule: ContractCapsuleType
+  capsule: ContractCapsuleType,
+  usd: string
 ): CapsuleType => {
   const assets: Asset[] = [];
   const eth = toEthUnit(new BN(capsule.value));
@@ -105,6 +121,7 @@ export const responseToCapsule = (
     createdDate: UnixToDate(Number.parseFloat(capsule.createdDate)),
     distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
     assets: assets,
+    usd: usd,
   };
 };
 
