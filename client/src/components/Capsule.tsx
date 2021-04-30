@@ -153,8 +153,7 @@ const Capsule = (props: Props) => {
       </CountdownContainer>
       <ValueContainer>
         {/* TODO Set Price */}
-        <Dollars>{"$" + (100).toLocaleString()}</Dollars>
-        {/* TODO Set Value */}
+        <Dollars>{"$" + props.capsule.usd.toLocaleString()}</Dollars>
         <Crypto>
           {props.capsule.assets.map((asset: Asset) => (
             <CyptoIconContainer>
