@@ -9,8 +9,6 @@ import {
 } from "../services/contracthelper";
 import { inputToDate } from "../services/dateHelper";
 import { selectTokens } from "../state/tokenSlice";
-import Button from "../styles/Button";
-import Title from "../styles/Title";
 import { Asset } from "../types/CapsuleType";
 import Token from "../types/Token";
 import GLOBALS from "../utils/globals";
@@ -27,11 +25,6 @@ const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-const ButtonContainer = styled.div`
-  margin: auto;
-  margin-top: 3rem;
 `;
 
 type Props = {
@@ -130,24 +123,20 @@ const CreateCapsule = (props: Props): JSX.Element => {
               updateApprovals(assets);
             }}
           />
-          <ButtonContainer>
-            <Button
-              primary
-              onClick={() => {
-                if (approving) return;
-                if (unapproved.length === 0) create();
-                else tokenApprove(unapproved[0].asset.token);
-              }}
-            >
-              {approving
-                ? "Loading"
-                : unapproved.length === 0
-                ? "Create"
-                : `Approve ${addressSymbol(unapproved[0].asset.token)}`}
-            </Button>
-          </ButtonContainer>
         </Content>
       }
+      buttonText={
+        approving
+          ? "Loading"
+          : unapproved.length === 0
+          ? "Create"
+          : `Approve ${addressSymbol(unapproved[0].asset.token)}`
+      }
+      buttonAction={() => {
+        if (approving) return;
+        if (unapproved.length === 0) create();
+        else tokenApprove(unapproved[0].asset.token);
+      }}
     />
   );
 };
