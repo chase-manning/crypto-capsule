@@ -21,7 +21,7 @@ const HelpIcon = styled.button`
   height: 1.8rem;
   border-radius: 50%;
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
