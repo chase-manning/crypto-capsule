@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import Button from "../styles/Button";
@@ -7,7 +6,6 @@ import CreateCapsule from "./CreateCapsule";
 
 const StyledLanding = styled.div`
   width: 100%;
-  flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,8 +47,6 @@ const Image = styled.div`
 `;
 
 const Landing = (): JSX.Element => {
-  const history = useHistory();
-
   const [creatingCapsule, setCreatingCapsule] = useState(false);
 
   return (

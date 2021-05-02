@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import styled from "styled-components";
 
 import AboutPage from "./AboutPage";
-import CreatePage from "./CreateCapsule";
 import ReceivedPage from "./ReceivedPage";
 import SentPage from "./SentPage";
 import HomePage from "./HomePage";
@@ -11,6 +11,15 @@ import { getTokens } from "../services/tokenService";
 import { setTokens } from "../state/tokenSlice";
 import { getAddress } from "../services/contracthelper";
 import { setAddress } from "../state/userSlice";
+import Header from "./Header";
+import Footer from "./Footer";
+
+const StyledApp = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -25,26 +34,29 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Router>
-      <Switch>
-        <Route path="/sent">
-          <SentPage />
-        </Route>
-        <Route path="/received">
-          <ReceivedPage />
-        </Route>
-        <Route path="/about">
-          <AboutPage />
-        </Route>
-        <Route path="/">
-          <HomePage />
-        </Route>
-      </Switch>
-    </Router>
+    <StyledApp>
+      <Router>
+        <Header />
+        <Switch>
+          <Route path="/sent">
+            <SentPage />
+          </Route>
+          <Route path="/received">
+            <ReceivedPage />
+          </Route>
+          <Route path="/about">
+            <AboutPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+        <Footer />
+      </Router>
+    </StyledApp>
   );
 };
 

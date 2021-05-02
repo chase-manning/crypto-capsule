@@ -3,12 +3,9 @@ import styled from "styled-components";
 import { getSentCapsules } from "../services/contracthelper";
 import CapsuleType from "../types/CapsuleType";
 import Capsules from "./Capsules";
-import Footer from "./Footer";
-import Header from "./Header";
 
 const StyledSentPage = styled.div`
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,9 +26,7 @@ const SentPage = (): JSX.Element => {
 
   return (
     <StyledSentPage>
-      <Header />
       <Capsules capsules={capsules} />
-      <Footer />
     </StyledSentPage>
   );
 };

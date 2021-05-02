@@ -9,6 +9,7 @@ const StyledHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 60px;
+  margin-bottom: 3rem;
 `;
 
 const Logo = styled.button`

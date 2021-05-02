@@ -44,6 +44,7 @@ const StyledFooter = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
+  margin-top: 3rem;
 `;
 
 const Section = styled.div`
