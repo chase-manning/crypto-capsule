@@ -71,13 +71,6 @@ const Header = (): JSX.Element => {
           <NavText>Home</NavText>
         </Nav>
         <Nav
-          active={location.pathname === "/create"}
-          onClick={() => history.push("/create")}
-        >
-          <Selection active={location.pathname === "/create"} />
-          <NavText>Create</NavText>
-        </Nav>
-        <Nav
           active={location.pathname === "/sent"}
           onClick={() => history.push("/sent")}
         >
