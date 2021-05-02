@@ -103,7 +103,6 @@ const CreateCapsule = (props: Props): JSX.Element => {
           <TextInput
             label="Distribution Date"
             placeholder="mm/dd/yyyy"
-            maxWidth="12rem"
             tooltip="This is the date when the capsule will be able to be opened"
             value={distributionDate}
             setValue={(value: string) => setDistributionDate(value)}
@@ -111,7 +110,6 @@ const CreateCapsule = (props: Props): JSX.Element => {
           <TextInput
             label="Beneficiary"
             placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
-            maxWidth="43rem"
             tooltip="This is the wallet address that your crypto will be sent to on the distribution date"
             value={beneficiary}
             setValue={(value: string) => setBeneficiary(value)}
