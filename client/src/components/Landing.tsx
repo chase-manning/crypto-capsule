@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
 import Button from "../styles/Button";
+import CreateCapsule from "./CreateCapsule";
 
 const StyledLanding = styled.div`
   width: 100%;
@@ -50,6 +51,8 @@ const Image = styled.div`
 const Landing = (): JSX.Element => {
   const history = useHistory();
 
+  const [creatingCapsule, setCreatingCapsule] = useState(false);
+
   return (
     <StyledLanding>
       <Left>
@@ -59,12 +62,16 @@ const Landing = (): JSX.Element => {
           Ethereum smart contracts
         </SubHeader>
         <div>
-          <Button primary onClick={() => history.push("/create")}>
+          <Button primary onClick={() => setCreatingCapsule(true)}>
             Create Capsule
           </Button>
         </div>
       </Left>
       <Image>asset 1</Image>
+      <CreateCapsule
+        show={creatingCapsule}
+        close={() => setCreatingCapsule(false)}
+      />
     </StyledLanding>
   );
 };
