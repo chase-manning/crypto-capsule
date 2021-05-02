@@ -47,9 +47,12 @@ const Name = styled.div`
 `;
 
 const Arrow = styled.div`
-  transform: rotate(90deg);
   font-size: 2rem;
   color: var(--sub);
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%) rotate(90deg);
 `;
 
 const InputContainer = styled.div`
