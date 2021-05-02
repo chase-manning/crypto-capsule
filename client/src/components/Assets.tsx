@@ -18,7 +18,7 @@ const AddAsset = styled.button`
   font-weight: 500;
   color: var(--primary);
   text-decoration: underline;
-  margin-top: 3rem;
+  margin-top: 2rem;
   width: 9rem;
   cursor: pointer;
 `;
