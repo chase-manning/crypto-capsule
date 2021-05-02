@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import AboutPage from "./AboutPage";
-import CreatePage from "./CreatePage";
+import CreatePage from "./CreateCapsule";
 import ReceivedPage from "./ReceivedPage";
 import SentPage from "./SentPage";
 import HomePage from "./HomePage";
@@ -39,9 +39,6 @@ const App = (): JSX.Element => {
         </Route>
         <Route path="/about">
           <AboutPage />
-        </Route>
-        <Route path="/create">
-          <CreatePage />
         </Route>
         <Route path="/">
           <HomePage />
