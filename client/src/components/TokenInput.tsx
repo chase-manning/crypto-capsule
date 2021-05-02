@@ -14,10 +14,10 @@ const StyledTokenInput = styled.div`
 
 const Container = styled.div`
   display: flex;
-  padding: 1rem 0.7rem;
-  align-items: center;
+  padding: 1rem;
   border: solid 1px var(--sub);
-  border-radius: 1rem;
+  align-items: center;
+  border-radius: 0.5rem;
   width: 14rem;
   position: relative;
   margin-right: 3rem;
@@ -33,15 +33,15 @@ const OpenButton = styled.button`
 `;
 
 const Image = styled.img`
-  height: 2.4rem;
-  margin-right: 0.7rem;
+  height: 1.6rem;
+  margin-right: 1rem;
   background-color: var(--white);
   border-radius: 50%;
 `;
 
 const Name = styled.div`
   color: var(--main);
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 500;
   margin-right: 1rem;
 `;
@@ -50,6 +50,8 @@ const Arrow = styled.div`
   font-size: 2rem;
   color: var(--sub);
   position: absolute;
+  font-weight: 200;
+  font-family: Arial, Helvetica, sans-serif;
   top: 50%;
   right: 1rem;
   transform: translateY(-50%) rotate(90deg);
