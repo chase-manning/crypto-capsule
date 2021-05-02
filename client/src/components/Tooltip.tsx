@@ -13,6 +13,7 @@ const ExitEvent = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
 `;
 
 const HelpIcon = styled.button`
@@ -40,6 +41,7 @@ const Indicator = styled.div`
   left: 30%;
   transform: rotate(45deg) translateX(-50%);
   border-radius: 0.2rem;
+  z-index: 2;
 `;
 
 const Popup = styled.div`
@@ -53,7 +55,7 @@ const Popup = styled.div`
   background-color: var(--white);
   color: var(--main);
   font-size: 1.5rem;
-  z-index: 1;
+  z-index: 2;
 `;
 
 type Props = {
