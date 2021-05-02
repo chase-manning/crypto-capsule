@@ -18,7 +18,7 @@ const Container = styled.div`
   border: solid 1px var(--sub);
   align-items: center;
   border-radius: 0.5rem;
-  width: 14rem;
+  width: 13rem;
   position: relative;
   margin-right: 3rem;
 `;
@@ -61,6 +61,7 @@ const InputContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  flex: 1;
 `;
 
 const MaxButton = styled.button`
