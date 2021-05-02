@@ -9,7 +9,7 @@ import TokenSelector from "./TokenSelector";
 const StyledTokenInput = styled.div`
   border-radius: 2rem;
   display: flex;
-  padding-top: 2rem;
+  padding-top: 1rem;
 `;
 
 const Container = styled.div`

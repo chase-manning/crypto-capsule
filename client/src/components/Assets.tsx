@@ -10,7 +10,7 @@ import TokenInput from "./TokenInput";
 const StyledAssetAdder = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
+  margin-top: 1rem;
 `;
 
 const AddAsset = styled.button`
