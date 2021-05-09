@@ -153,7 +153,6 @@ const Capsule = (props: Props): JSX.Element => {
         </OpenDate>
       </CountdownContainer>
       <ValueContainer>
-        {/* TODO Set Price */}
         <Dollars>{`$${props.capsule.usd.toLocaleString()}`}</Dollars>
         <Crypto>
           {props.capsule.assets.map((asset: Asset) => (
