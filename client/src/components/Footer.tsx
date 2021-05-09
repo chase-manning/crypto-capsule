@@ -89,7 +89,7 @@ const Footer = (): JSX.Element => {
     <StyledFooter>
       <Section>
         {buttons.map((button: Button) => (
-          <Button onClick={() => history.push(button.route)}>
+          <Button onClick={() => history.push(button.route)} key={button.label}>
             {button.label}
           </Button>
         ))}
@@ -97,7 +97,12 @@ const Footer = (): JSX.Element => {
       <Text>Made with ❤️in New Zealand</Text>
       <Section>
         {links.map((link: Link) => (
-          <Link href={link.link} target="_blank" rel="noreferrer">
+          <Link
+            href={link.link}
+            target="_blank"
+            rel="noreferrer"
+            key={link.label}
+          >
             {link.label}
           </Link>
         ))}
