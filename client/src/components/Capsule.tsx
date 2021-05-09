@@ -157,7 +157,7 @@ const Capsule = (props: Props): JSX.Element => {
         <Dollars>{`$${props.capsule.usd.toLocaleString()}`}</Dollars>
         <Crypto>
           {props.capsule.assets.map((asset: Asset) => (
-            <CyptoIconContainer>
+            <CyptoIconContainer key={asset.token}>
               <CryptoIcon
                 src={
                   tokens.filter(
