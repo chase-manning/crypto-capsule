@@ -68,7 +68,7 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address payable",
         "name": "_beneficiary",
         "type": "address"
       },
@@ -116,7 +116,7 @@
             "type": "address"
           },
           {
-            "internalType": "address",
+            "internalType": "address payable",
             "name": "beneficiary",
             "type": "address"
           },
@@ -182,7 +182,7 @@
             "type": "address"
           },
           {
-            "internalType": "address",
+            "internalType": "address payable",
             "name": "beneficiary",
             "type": "address"
           },
@@ -248,7 +248,7 @@
             "type": "address"
           },
           {
-            "internalType": "address",
+            "internalType": "address payable",
             "name": "beneficiary",
             "type": "address"
           },
