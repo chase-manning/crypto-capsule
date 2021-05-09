@@ -79,8 +79,9 @@ const CreateCapsule = (props: Props): JSX.Element => {
       .on("transactionHash", (hash: any) => {
         setLoading(true);
       })
-      .on("receipt", (receipt: any) => {
-        updateApprovals(assets).then(() => setLoading(false));
+      .on("receipt", async (receipt: any) => {
+        await updateApprovals(assets);
+        setLoading(false);
       })
       .on("error", (err: any) => {
         console.log(`Error: ${err}`);
