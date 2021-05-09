@@ -122,16 +122,16 @@ contract CryptoCapsule is Ownable{
 
     // Internals
     function _getAssetInUsd(address token, uint256 amount) private view returns(uint256) {
-        int price = _getOraclePrice(oracles[token]);
-        return uint256(price) * amount;
+        uint256 price = _getOraclePrice(oracles[token]);
+        return price * amount;
     }
 
     function _getEthInUsd(uint256 eth) private view returns(uint256) {
-        int price = _getOraclePrice(ethOracle);
-        return uint256(price) * eth;
+        uint256 price = _getOraclePrice(ethOracle);
+        return price * eth;
     }
 
-    function _getOraclePrice(AggregatorV3Interface oracle) private view returns(int) {
+    function _getOraclePrice(AggregatorV3Interface oracle) private view returns(uint256) {
         (
             uint80 roundID, 
             int price,
@@ -139,7 +139,8 @@ contract CryptoCapsule is Ownable{
             uint timeStamp,
             uint80 answeredInRound
         ) = oracle.latestRoundData();
-        return price;
+        uint256 decimals = oracle.decimals();
+        return uint256(price) / 10 ** decimals;
     }
 
 
