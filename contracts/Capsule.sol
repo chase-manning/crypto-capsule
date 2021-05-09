@@ -13,7 +13,7 @@ contract CryptoCapsule is Ownable{
     struct Capsule {
         uint256 id;
         address grantor;
-        address beneficiary;
+        address payable beneficiary;
         uint256 distributionDate;
         uint256 createdDate;
         bool opened;
@@ -37,7 +37,7 @@ contract CryptoCapsule is Ownable{
 
 
     // Functions
-    function createCapsule(address _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
+    function createCapsule(address payable _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
 
@@ -59,6 +59,7 @@ contract CryptoCapsule is Ownable{
         require(block.timestamp >= capsule.distributionDate / 1000, "Capsule has not matured yet");
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
 
+        if (capsule.value > 0) capsule.beneficiary.transfer(capsule.value);
         for (uint256 i = 0; i < capsule.tokens.length; i++) {
             IERC20 erc20Token = IERC20(capsule.tokens[i]);
             erc20Token.transfer(capsule.beneficiary, capsule.amounts[i]);
