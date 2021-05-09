@@ -86,8 +86,6 @@ export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
     .call();
   const capsuleIds = response.map((r: ContractCapsuleType) => r.id);
   const usds: string[] = await getUsdValues(capsuleIds);
-  console.log("Here");
-  console.log(usds[2]);
   return response.map((rc: ContractCapsuleType, index: number) =>
     responseToCapsule(rc, usds[index])
   );
