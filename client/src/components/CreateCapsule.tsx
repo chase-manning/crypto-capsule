@@ -17,6 +17,7 @@ import GLOBALS from "../utils/globals";
 import Assets from "./Assets";
 import TextInput from "./TextInput";
 import Popup from "./Popup";
+import { ValidationError } from "../styles/ValidationError";
 
 type Approval = {
   asset: Asset;
@@ -46,6 +47,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const [complete, setComplete] = useState(false);
   const [beneficiary, setBeneficiary] = useState("");
   const [distributionDate, setDistributionDate] = useState("");
+  const [distributionDateError, setDistributionDateError] = useState("");
   const [assets, setAssets] = useState<Asset[]>([ethAsset]);
   const [approvals, setApprovals] = useState<Approval[]>([approval]);
 
@@ -91,6 +93,17 @@ const CreateCapsule = (props: Props): JSX.Element => {
     await createCapsule(beneficiary, date, assets);
   };
 
+  const validateDate = (value: string) => {
+    try {
+      const newDate = inputToDate(value);
+      const now = new Date();
+      if (newDate < now) setDistributionDateError("Date must be in future");
+      else setDistributionDateError("");
+    } catch {
+      setDistributionDateError("Incorrect Date format");
+    }
+  };
+
   return (
     <>
       <Popup
@@ -104,8 +117,14 @@ const CreateCapsule = (props: Props): JSX.Element => {
               placeholder="mm/dd/yyyy"
               tooltip="This is the date when the capsule will be able to be opened"
               value={distributionDate}
-              setValue={(value: string) => setDistributionDate(value)}
+              setValue={(value: string) => {
+                validateDate(value);
+                setDistributionDate(value);
+              }}
             />
+            {distributionDateError && (
+              <ValidationError>{distributionDateError}</ValidationError>
+            )}
             <TextInput
               label="Beneficiary"
               placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
