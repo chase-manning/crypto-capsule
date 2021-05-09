@@ -153,7 +153,9 @@ const Capsule = (props: Props): JSX.Element => {
         </OpenDate>
       </CountdownContainer>
       <ValueContainer>
-        <Dollars>{`$${props.capsule.usd.toLocaleString()}`}</Dollars>
+        <Dollars>{`$${Number(props.capsule.usd)
+          .toFixed(2)
+          .toLocaleString()}`}</Dollars>
         <Crypto>
           {props.capsule.assets.map((asset: Asset) => (
             <CyptoIconContainer key={asset.token}>
