@@ -144,7 +144,7 @@ export const tokenApproved = async (token: string): Promise<boolean> => {
   const allowance = await tokenContract.methods
     .allowance(address, GLOBALS.CAPSULE)
     .call();
-  return new BN(allowance) > new BN("9999999999999999999999");
+  return new BN(allowance).gt(new BN("9999999999999999999999"));
 };
 
 export const tokenBalance = async (token: Token): Promise<number> => {
