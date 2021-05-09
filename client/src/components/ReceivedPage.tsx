@@ -9,6 +9,7 @@ const StyledReceivedPage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 77vh;
 `;
 
 const ReceivedPage = (): JSX.Element => {
