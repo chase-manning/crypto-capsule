@@ -48,6 +48,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const [beneficiary, setBeneficiary] = useState("");
   const [distributionDate, setDistributionDate] = useState("");
   const [distributionDateError, setDistributionDateError] = useState("");
+  const [addressError, setAddressError] = useState("");
   const [assets, setAssets] = useState<Asset[]>([ethAsset]);
   const [approvals, setApprovals] = useState<Approval[]>([approval]);
 
@@ -104,6 +105,11 @@ const CreateCapsule = (props: Props): JSX.Element => {
     }
   };
 
+  const validateAddress = (value: string) => {
+    if (value.length !== 42) setAddressError("Invalid Address");
+    else setAddressError("");
+  };
+
   return (
     <>
       <Popup
@@ -130,8 +136,12 @@ const CreateCapsule = (props: Props): JSX.Element => {
               placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
               tooltip="This is the wallet address that your crypto will be sent to on the distribution date"
               value={beneficiary}
-              setValue={(value: string) => setBeneficiary(value)}
+              setValue={(value: string) => {
+                validateAddress(value);
+                setBeneficiary(value);
+              }}
             />
+            {addressError && <ValidationError>{addressError}</ValidationError>}
             <Assets
               assets={assets}
               setAssets={(assets: Asset[]) => {
