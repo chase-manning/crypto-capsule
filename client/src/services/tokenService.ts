@@ -6,7 +6,7 @@ export const getTokens = async (): Promise<Token[]> => {
   let tokens: Token[] = [];
 
   if (TEST_MODE) {
-    tokens = rinkebyTokens;
+    tokens = [...rinkebyTokens];
   } else {
     const response = await fetch(
       "https://tokens.coingecko.com/uniswap/all.json"
