@@ -119,7 +119,7 @@ export const responseToCapsule = (
     createdDate: UnixToDate(Number.parseFloat(capsule.createdDate)),
     distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
     assets,
-    usd,
+    usd: toEthUnit(new BN(usd)).toString(),
   };
 };
 

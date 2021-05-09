@@ -103,12 +103,12 @@ contract CryptoCapsule is Ownable{
         return usd;
     }
 
-    function getUsdValues(uint256[] memory capsuleIds) public view returns(uint256) {
-        uint256 usd = 0;
+    function getUsdValues(uint256[] memory capsuleIds) public view returns(uint256[] memory) {
+        uint256[] memory usds = new uint256[](capsuleIds.length); 
         for (uint256 i = 0; i < capsuleIds.length; i++) {
-            usd += getUsdValue(capsuleIds[i]);
+            usds[i] = getUsdValue(capsuleIds[i]);
         }
-        return usd;
+        return usds;
     }
 
 
@@ -116,6 +116,8 @@ contract CryptoCapsule is Ownable{
     function setOracle(address token, address oracle) public onlyOwner() {
         oracles[token] = AggregatorV3Interface(oracle);
     }
+
+    // TODO: Add function to remove oracle
 
 
     // Internals
