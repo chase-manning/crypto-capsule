@@ -3,6 +3,8 @@ type ContractCapsuleType = {
   grantor: string;
   beneficiary: string;
   distributionDate: string;
+  periodSize: string;
+  periodCount: string;
   createdDate: string;
   opened: boolean;
   value: string;

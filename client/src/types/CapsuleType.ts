@@ -8,6 +8,8 @@ type CapsuleType = {
   grantor: string;
   beneficiary: string;
   distributionDate: Date;
+  periodType: string;
+  periodCount: number;
   createdDate: Date;
   opened: boolean;
   assets: Asset[];

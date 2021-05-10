@@ -4,7 +4,8 @@ import BN from "bn.js";
 import GLOBALS from "../utils/globals";
 import capsuleAbi from "../contracts/CryptoCapsule.json";
 import tokenAbi from "../contracts/IERC20.json";
-import { dateToUnix, toEthUnit, toWeiUnit, UnixToDate } from "./web3Service";
+import { toEthUnit } from "./web3Service";
+import { dateToUnix, getPeriodType, UnixToDate } from "./dateHelper";
 import CapsuleType, { Asset } from "../types/CapsuleType";
 import ContractCapsuleType from "../types/ContractCapsuleType";
 import Token from "../types/Token";
@@ -36,6 +37,8 @@ export const getTokenContract = async (token: string): Promise<Contract> => {
 export const createCapsule = async (
   beneficiary: string,
   distributionDate: Date,
+  periodSize: number,
+  periodCount: number,
   assets: Asset[]
 ): Promise<void> => {
   const address = await getAddress();
@@ -53,6 +56,8 @@ export const createCapsule = async (
     .createCapsule(
       beneficiary,
       dateToUnix(distributionDate),
+      periodSize,
+      periodCount,
       otherAssets.map((a: Asset) => a.token),
       otherAssets.map((a: Asset) => a.value)
     )
@@ -118,6 +123,8 @@ export const responseToCapsule = (
     opened: capsule.opened,
     createdDate: UnixToDate(Number.parseFloat(capsule.createdDate)),
     distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
+    periodType: getPeriodType(capsule.periodSize),
+    periodCount: Number(capsule.periodCount),
     assets,
     usd: toEthUnit(new BN(usd)).toString(),
   };

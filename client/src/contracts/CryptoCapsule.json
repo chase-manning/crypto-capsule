@@ -78,6 +78,16 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "_periodSize",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_periodCount",
+        "type": "uint256"
+      },
+      {
         "internalType": "address[]",
         "name": "_tokens",
         "type": "address[]"
@@ -123,6 +133,21 @@
           {
             "internalType": "uint256",
             "name": "distributionDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "periodSize",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "periodCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimedPeriods",
             "type": "uint256"
           },
           {
@@ -193,6 +218,21 @@
           },
           {
             "internalType": "uint256",
+            "name": "periodSize",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "periodCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimedPeriods",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "createdDate",
             "type": "uint256"
           },
@@ -255,6 +295,21 @@
           {
             "internalType": "uint256",
             "name": "distributionDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "periodSize",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "periodCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimedPeriods",
             "type": "uint256"
           },
           {

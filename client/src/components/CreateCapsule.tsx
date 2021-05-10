@@ -92,7 +92,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const create = async () => {
     setLoading(true);
     const date = inputToDate(distributionDate);
-    await createCapsule(beneficiary, date, assets);
+    await createCapsule(beneficiary, date, 1, 1, assets);
     // TODO Confirmation Screen
     props.close();
   };

@@ -6,7 +6,7 @@ type GlobalsType = {
 };
 
 const GLOBALS: GlobalsType = {
-  CAPSULE: "0x6B6b712E67f69AA88121774063d4E7ca35971868",
+  CAPSULE: "0x284B527811dB3c8426A97be422CC53c3dB6c4aDb",
   NETWORK: TEST_MODE ? "rinkeby" : "mainnet",
 };
 

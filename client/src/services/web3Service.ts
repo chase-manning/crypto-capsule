@@ -23,18 +23,6 @@ export const toWeiUnit = (eth: string): string => {
   return Web3.utils.toWei(eth);
 };
 
-export const dateToUnix = (date: Date): BN => {
-  return new BN(date.getTime() / 1000);
-};
-
-export const getCurrentUnix = (): number => {
-  return new Date().getTime() / 1000;
-};
-
-export const UnixToDate = (unix: number): Date => {
-  return new Date(unix * 1000);
-};
-
 export const toCents = (dollars: number, token: Token): string => {
   if (token.address === "ETH") return toWeiUnit(dollars.toString());
   const decimals = Web3.utils.toBN(token.decimals);

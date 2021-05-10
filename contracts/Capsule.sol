@@ -15,6 +15,9 @@ contract CryptoCapsule is Ownable{
         address grantor;
         address payable beneficiary;
         uint256 distributionDate;
+        uint256 periodSize;
+        uint256 periodCount;
+        uint256 claimedPeriods;
         uint256 createdDate;
         bool opened;
         uint256 value;
@@ -37,7 +40,7 @@ contract CryptoCapsule is Ownable{
 
 
     // Functions
-    function createCapsule(address payable _beneficiary, uint256 _distributionDate, address[] calldata _tokens, uint256[] calldata _values) public payable {
+    function createCapsule(address payable _beneficiary, uint256 _distributionDate, uint256 _periodSize, uint256 _periodCount,  address[] calldata _tokens, uint256[] calldata _values) public payable {
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
 
@@ -47,7 +50,22 @@ contract CryptoCapsule is Ownable{
         }
 
         uint256 capsuleId = capsules.length;
-        capsules.push(Capsule(capsuleId, msg.sender, _beneficiary, _distributionDate, block.timestamp, false, msg.value, _tokens, _values));
+        capsules.push(
+            Capsule(
+                capsuleId,
+                msg.sender,
+                _beneficiary,
+                _distributionDate,
+                _periodSize,
+                _periodCount,
+                0,
+                block.timestamp,
+                false,
+                msg.value,
+                _tokens,
+                _values
+            )
+        );
         sent[msg.sender].add(capsuleId);
         received[_beneficiary].add(capsuleId);
         emit CapsuleCreated(capsuleId);
@@ -55,17 +73,25 @@ contract CryptoCapsule is Ownable{
 
     function openCapsule(uint256 capsuleId) public {
         Capsule memory capsule = capsules[capsuleId];
-        require(!capsule.opened, "Capsule has already been opened");
-        require(block.timestamp >= capsule.distributionDate / 1000, "Capsule has not matured yet");
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
+        require(!capsule.opened, "Capsule has already been opened");
+        require(capsule.claimedPeriods >= capsule.periodCount, "All Capsule periods already claim");
+        require(block.timestamp >= capsule.distributionDate, "Capsule has not matured yet");
+        uint256 nextClaimDate = capsule.distributionDate + capsule.claimedPeriods * capsule.periodSize;
+        require(block.timestamp >= nextClaimDate, "No periods available to claim");
 
-        if (capsule.value > 0) capsule.beneficiary.transfer(capsule.value);
+        uint256 claimablePeriods = (block.timestamp - nextClaimDate) / capsule.periodSize + 1;
+        uint256 unclaimedPeriods = capsule.periodCount - capsule.claimedPeriods;
+        claimablePeriods = claimablePeriods > unclaimedPeriods ? unclaimedPeriods : claimablePeriods;
+
+        if (capsule.value > 0) capsule.beneficiary.transfer(capsule.value * claimablePeriods / capsule.periodCount);
         for (uint256 i = 0; i < capsule.tokens.length; i++) {
             IERC20 erc20Token = IERC20(capsule.tokens[i]);
-            erc20Token.transfer(capsule.beneficiary, capsule.amounts[i]);
+            erc20Token.transfer(capsule.beneficiary, capsule.amounts[i] * claimablePeriods / capsule.periodCount);
         }
 
-        capsules[capsuleId].opened = true;
+        capsules[capsuleId].claimedPeriods = capsule.claimedPeriods + claimablePeriods;
+        capsules[capsuleId].opened = capsule.claimedPeriods + claimablePeriods == capsule.periodCount;
         emit CapsuleOpened(capsuleId);
     }
 
