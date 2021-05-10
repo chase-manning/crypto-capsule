@@ -11,6 +11,7 @@ const LabelContainter = styled.div`
 const StyledLabel = styled.label`
   color: var(--main);
   font-size: 17px;
+  text-transform: capitalize;
 `;
 
 type Props = {
