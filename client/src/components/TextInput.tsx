@@ -1,19 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Input from "../styles/Input";
-import Label from "../styles/Label";
-import Tooltip from "./Tooltip";
+import Label from "./Label";
 
 const StyledTextInput = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1rem 0;
-`;
-
-const LabelContainter = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.8rem;
 `;
 
 type Props = {
@@ -28,10 +21,7 @@ type Props = {
 const TextInput = (props: Props): JSX.Element => {
   return (
     <StyledTextInput>
-      <LabelContainter>
-        <Label>{props.label}</Label>
-        {props.tooltip && <Tooltip content={props.tooltip} />}
-      </LabelContainter>
+      <Label text={props.label} tooltip={props.tooltip} />
       <Input
         placeholder={props.placeholder}
         maxWidth={props.maxWidth}
