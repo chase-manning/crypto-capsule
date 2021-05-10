@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectTokens } from "../state/tokenSlice";
-import Label from "../styles/Label";
 import { Asset } from "../types/CapsuleType";
 import Token from "../types/Token";
+import Label from "./Label";
 import TokenInput from "./TokenInput";
 
 const StyledAssetAdder = styled.div`
@@ -39,7 +39,10 @@ const Assets = (props: Props): JSX.Element => {
 
   return (
     <StyledAssetAdder>
-      <Label>Assets</Label>
+      <Label
+        text="Assets"
+        tooltip="The List of Cryptocurrencies to include in the Capsule"
+      />
       {props.assets.map((asset: Asset, index: number) => {
         if (!tokens || tokens.length === 0) return null;
         const token = tokens.filter((t: Token) => t.address === asset.token)[0];
