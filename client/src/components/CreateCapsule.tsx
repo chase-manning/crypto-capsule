@@ -128,7 +128,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
               activeOption={periodType}
               setOption={(option: string) => setPeriodType(option)}
               label="Distribution Type"
-              tooltip="An Immediate Capsule will open completely on the distribution date, allowing all crypto to be accessed at once. A Staggered Capsule will first opened on the Distribution Start Date for a portion of the crypto, and more crypto will become accessible at the defined intervals"
+              tooltip="An Immediate Capsule will open completely on the distribution date, allowing all crypto to be accessed at once. A Staggered Capsule will first open on the Distribution Start Date for a portion of the crypto, and more crypto will become accessible at the defined intervals"
             />
             <TextInput
               label="Distribution Date"
