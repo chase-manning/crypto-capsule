@@ -18,26 +18,29 @@ type OptionProps = {
 };
 
 const Option = styled.button`
-  height: 2rem;
-  width: 5rem;
-  font-size: 1.3rem;
+  height: 3.5rem;
+  width: 12rem;
+  font-size: 1.4rem;
   font-weight: 500;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  text-transform: capitalize;
   background-color: ${(props: OptionProps) =>
-    props.active ? "var(--primary)" : "var(--white)"};
+    props.active ? "var(--main)" : "var(--white)"};
   color: ${(props: OptionProps) =>
-    props.active ? "var(--white)" : "var(--primary)"};
-  border: solid 1px var(--primary);
+    props.active ? "var(--white)" : "var(--main)"};
+  border: solid 1px var(--main);
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom-left-radius: ${(props: OptionProps) =>
-    props.left ? "1rem" : "0"};
+    props.left ? "1.7rem" : "0"};
   border-top-left-radius: ${(props: OptionProps) =>
-    props.left ? "1rem" : "0"};
+    props.left ? "1.7rem" : "0"};
   border-bottom-right-radius: ${(props: OptionProps) =>
-    props.right ? "1rem" : "0"};
+    props.right ? "1.7rem" : "0"};
   border-top-right-radius: ${(props: OptionProps) =>
-    props.right ? "1rem" : "0"};
+    props.right ? "1.7rem" : "0"};
 `;
 
 type Props = {
