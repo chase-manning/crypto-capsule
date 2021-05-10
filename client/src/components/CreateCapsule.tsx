@@ -18,6 +18,7 @@ import Assets from "./Assets";
 import TextInput from "./TextInput";
 import Popup from "./Popup";
 import { ValidationError } from "../styles/ValidationError";
+import Selector from "./Selector";
 
 type Approval = {
   asset: Asset;
@@ -51,6 +52,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const [addressError, setAddressError] = useState("");
   const [assets, setAssets] = useState<Asset[]>([ethAsset]);
   const [approvals, setApprovals] = useState<Approval[]>([approval]);
+  const [periodType, setPeriodType] = useState("immediate");
 
   const tokens = useSelector(selectTokens);
 
@@ -92,7 +94,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const create = async () => {
     setLoading(true);
     const date = inputToDate(distributionDate);
-    await createCapsule(beneficiary, date, 1, 1, assets);
+    await createCapsule(beneficiary, date, 4, 1, assets);
     // TODO Confirmation Screen
     props.close();
   };
@@ -121,6 +123,13 @@ const CreateCapsule = (props: Props): JSX.Element => {
         header="Create Capsule"
         content={
           <Content>
+            <Selector
+              options={["immediate", "staggered"]}
+              activeOption={periodType}
+              setOption={(option: string) => setPeriodType(option)}
+              label="Distribution Type"
+              tooltip="An Immediate Capsule will open completely on the distribution date, allowing all crypto to be accessed at once. A Staggered Capsule will first opened on the Distribution Start Date for a portion of the crypto, and more crypto will become accessible at the defined intervals"
+            />
             <TextInput
               label="Distribution Date"
               placeholder="mm/dd/yyyy"
