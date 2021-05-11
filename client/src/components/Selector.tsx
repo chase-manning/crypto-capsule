@@ -51,7 +51,7 @@ type Props = {
   setOption: (option: string) => void;
 };
 
-const Selector = (props: Props) => {
+const Selector = (props: Props): JSX.Element => {
   return (
     <StyledSelector>
       <Label text={props.label} tooltip={props.tooltip} />
