@@ -24,17 +24,17 @@ export const YEARS = Math.round(60 * 60 * 24 * 365);
 
 export const getPeriodType = (periodSize: string): string => {
   const size = Number(periodSize);
-  if (size === DAYS) return "days";
-  if (size === WEEKS) return "weeks";
-  if (size === MONTHS) return "months";
-  if (size === YEARS) return "years";
+  if (size === DAYS) return "daily";
+  if (size === WEEKS) return "weekly";
+  if (size === MONTHS) return "monthly";
+  if (size === YEARS) return "annually";
   return "unknown";
 };
 
 export const getPeriodSize = (periodType: string): number => {
-  if (periodType === "days") return DAYS;
-  if (periodType === "weeks") return WEEKS;
-  if (periodType === "months") return MONTHS;
-  if (periodType === "years") return YEARS;
+  if (periodType === "daily") return DAYS;
+  if (periodType === "weekly") return WEEKS;
+  if (periodType === "monthly") return MONTHS;
+  if (periodType === "annually") return YEARS;
   return 1;
 };
