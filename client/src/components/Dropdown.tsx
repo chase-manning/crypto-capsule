@@ -35,7 +35,7 @@ type Props = {
   setOption: (option: string) => void;
 };
 
-const Dropdown = (props: Props) => {
+const Dropdown = (props: Props): JSX.Element => {
   return (
     <StyledDropdown>
       <Label text={props.label} tooltip={props.tooltip} />
