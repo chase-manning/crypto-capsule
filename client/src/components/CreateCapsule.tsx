@@ -9,7 +9,7 @@ import {
   getTokenContract,
   tokenApproved,
 } from "../services/contracthelper";
-import { inputToDate } from "../services/dateHelper";
+import { getPeriodSize, inputToDate } from "../services/dateHelper";
 import { selectTokens } from "../state/tokenSlice";
 import { Asset } from "../types/CapsuleType";
 import Token from "../types/Token";
@@ -98,7 +98,13 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const create = async () => {
     setLoading(true);
     const date = inputToDate(distributionDate);
-    await createCapsule(beneficiary, date, 4, 1, assets);
+    await createCapsule(
+      beneficiary,
+      date,
+      getPeriodSize(distributionFrequency),
+      periodType === "immediate" ? 1 : Number(distributionPeriods),
+      assets
+    );
     // TODO Confirmation Screen
     props.close();
   };
@@ -171,25 +177,31 @@ const CreateCapsule = (props: Props): JSX.Element => {
             {distributionDateError && (
               <ValidationError>{distributionDateError}</ValidationError>
             )}
-            <Dropdown
-              label="Distribution Frequency"
-              tooltip="How often the crypto should be distributed to the beneficiary after the capsule is opened"
-              options={["daily", "weekly", "monthly", "annually"]}
-              activeOption={distributionFrequency}
-              setOption={(option: string) => setDistributionFrequency(option)}
-            />
-            <TextInput
-              label="Distribution Periods"
-              placeholder="e.g. 12"
-              tooltip="How many periods the crypto should be spread out over for the staggerd distribution"
-              value={distributionPeriods}
-              setValue={(value: string) => {
-                validatePeriods(value);
-                setDistributionPeriods(value);
-              }}
-            />
-            {distributionPeriodsError && (
-              <ValidationError>{distributionPeriodsError}</ValidationError>
+            {periodType === "staggered" && (
+              <>
+                <Dropdown
+                  label="Distribution Frequency"
+                  tooltip="How often the crypto should be distributed to the beneficiary after the capsule is opened"
+                  options={["daily", "weekly", "monthly", "annually"]}
+                  activeOption={distributionFrequency}
+                  setOption={(option: string) =>
+                    setDistributionFrequency(option)
+                  }
+                />
+                <TextInput
+                  label="Distribution Periods"
+                  placeholder="e.g. 12"
+                  tooltip="How many periods the crypto should be spread out over for the staggerd distribution"
+                  value={distributionPeriods}
+                  setValue={(value: string) => {
+                    validatePeriods(value);
+                    setDistributionPeriods(value);
+                  }}
+                />
+                {distributionPeriodsError && (
+                  <ValidationError>{distributionPeriodsError}</ValidationError>
+                )}
+              </>
             )}
             <TextInput
               label="Beneficiary"
