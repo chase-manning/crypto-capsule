@@ -19,6 +19,7 @@ import TextInput from "./TextInput";
 import Popup from "./Popup";
 import { ValidationError } from "../styles/ValidationError";
 import Selector from "./Selector";
+import Dropdown from "./Dropdown";
 
 type Approval = {
   asset: Asset;
@@ -53,6 +54,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const [assets, setAssets] = useState<Asset[]>([ethAsset]);
   const [approvals, setApprovals] = useState<Approval[]>([approval]);
   const [periodType, setPeriodType] = useState("immediate");
+  const [distributionFrequency, setDistributionFrequency] = useState("monthly");
 
   const tokens = useSelector(selectTokens);
 
@@ -151,6 +153,13 @@ const CreateCapsule = (props: Props): JSX.Element => {
             {distributionDateError && (
               <ValidationError>{distributionDateError}</ValidationError>
             )}
+            <Dropdown
+              label="Distribution Frequency"
+              tooltip="The Frequency of distributions after the Distribution Start Date for crypto to be withdrawn"
+              options={["daily", "weekly", "monthly", "annually"]}
+              activeOption={distributionFrequency}
+              setOption={(option: string) => setDistributionFrequency(option)}
+            />
             <TextInput
               label="Beneficiary"
               placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
