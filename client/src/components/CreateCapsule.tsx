@@ -49,12 +49,14 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const [complete, setComplete] = useState(false);
   const [beneficiary, setBeneficiary] = useState("");
   const [distributionDate, setDistributionDate] = useState("");
-  const [distributionDateError, setDistributionDateError] = useState("");
-  const [addressError, setAddressError] = useState("");
-  const [assets, setAssets] = useState<Asset[]>([ethAsset]);
-  const [approvals, setApprovals] = useState<Approval[]>([approval]);
   const [periodType, setPeriodType] = useState("immediate");
   const [distributionFrequency, setDistributionFrequency] = useState("monthly");
+  const [distributionPeriods, setDistributionPeriods] = useState("");
+  const [distributionDateError, setDistributionDateError] = useState("");
+  const [addressError, setAddressError] = useState("");
+  const [distributionPeriodsError, setDistributionPeriodsError] = useState("");
+  const [assets, setAssets] = useState<Asset[]>([ethAsset]);
+  const [approvals, setApprovals] = useState<Approval[]>([approval]);
 
   const tokens = useSelector(selectTokens);
 
@@ -117,6 +119,22 @@ const CreateCapsule = (props: Props): JSX.Element => {
     else setAddressError("");
   };
 
+  const validatePeriods = (value: string) => {
+    let periods = 0;
+    try {
+      periods = Number(value);
+      if (periods <= 0)
+        setDistributionPeriodsError("Periods must be a positive number");
+      else if (periods === 1)
+        setDistributionPeriodsError(
+          "For only one period, use an Immediate Capsule"
+        );
+      else setDistributionPeriodsError("");
+    } catch {
+      setDistributionPeriodsError("Invalid Number");
+    }
+  };
+
   return (
     <>
       <Popup
@@ -155,11 +173,24 @@ const CreateCapsule = (props: Props): JSX.Element => {
             )}
             <Dropdown
               label="Distribution Frequency"
-              tooltip="The Frequency of distributions after the Distribution Start Date for crypto to be withdrawn"
+              tooltip="How often the crypto should be distributed to the beneficiary after the capsule is opened"
               options={["daily", "weekly", "monthly", "annually"]}
               activeOption={distributionFrequency}
               setOption={(option: string) => setDistributionFrequency(option)}
             />
+            <TextInput
+              label="Distribution Periods"
+              placeholder="e.g. 12"
+              tooltip="How many periods the crypto should be spread out over for the staggerd distribution"
+              value={distributionPeriods}
+              setValue={(value: string) => {
+                validatePeriods(value);
+                setDistributionPeriods(value);
+              }}
+            />
+            {distributionPeriodsError && (
+              <ValidationError>{distributionPeriodsError}</ValidationError>
+            )}
             <TextInput
               label="Beneficiary"
               placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
