@@ -5,10 +5,22 @@ import Label from "./Label";
 const StyledDropdown = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 1rem 0;
 `;
 
 const Select = styled.select`
   text-transform: capitalize;
+  width: 100%;
+  border: solid 1px var(--sub);
+  border-radius: 5px;
+  padding: 10px;
+  color: var(--main);
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0);
+
+  :active {
+    border: solid 1px var(--primary);
+  }
 `;
 
 const Option = styled.option`
