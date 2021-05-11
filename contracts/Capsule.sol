@@ -75,7 +75,7 @@ contract CryptoCapsule is Ownable{
         Capsule memory capsule = capsules[capsuleId];
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
         require(!capsule.opened, "Capsule has already been opened");
-        require(capsule.claimedPeriods >= capsule.periodCount, "All Capsule periods already claim");
+        require(capsule.claimedPeriods < capsule.periodCount, "All Capsule periods already claimed");
         require(block.timestamp >= capsule.distributionDate, "Capsule has not matured yet");
         uint256 nextClaimDate = capsule.distributionDate + capsule.claimedPeriods * capsule.periodSize;
         require(block.timestamp >= nextClaimDate, "No periods available to claim");
