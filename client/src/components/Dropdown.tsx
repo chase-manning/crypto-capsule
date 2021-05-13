@@ -39,13 +39,12 @@ const Dropdown = (props: Props): JSX.Element => {
   return (
     <StyledDropdown>
       <Label text={props.label} tooltip={props.tooltip} />
-      <Select>
+      <Select onChange={(event) => props.setOption(event.target.value)}>
         {props.options.map((option: string) => (
           <Option
             key={option}
             value={option}
             selected={props.activeOption === option}
-            onClick={() => props.setOption(option)}
           >
             {option}
           </Option>
