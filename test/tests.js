@@ -230,10 +230,16 @@ describe("Capsule", () => {
     await network.provider.send("evm_mine");
   });
 
-  it("Should Open Capsule", async () => {
+  it("Should open Capsule", async () => {
     // TODO Check that token and ETH balance increases
     await capsuleContract.openCapsule(testCapsule.id);
     testCapsule = await capsuleContract.getCapsule(testCapsule.id);
     expect(testCapsule.opened).to.equal(true);
+  });
+
+  it("Should not open already opened Capsule", async () => {
+    await expect(
+      capsuleContract.openCapsule(testCapsule.id)
+    ).to.be.revertedWith("Capsule has already been opened");
   });
 });
