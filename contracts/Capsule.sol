@@ -40,11 +40,11 @@ contract CryptoCapsule is Ownable{
 
 
     // Functions
-    function createCapsule(address payable _beneficiary, uint256 _distributionDate, uint256 _periodSize, uint256 _periodCount,  address[] calldata _tokens, uint256[] calldata _values) public payable { //Test
+    function createCapsule(address payable _beneficiary, uint256 _distributionDate, uint256 _periodSize, uint256 _periodCount,  address[] calldata _tokens, uint256[] calldata _values) public payable returns(Capsule memory){
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
-        require(_periodSize >= 1, "Period Size must greater than or equal to 1"); //Test
-        require(_periodCount >= 1, "Period Count must greater than or equal to 1"); //Test
+        require(_periodSize >= 1, "Period Size must greater than or equal to 1");
+        require(_periodCount >= 1, "Period Count must greater than or equal to 1");
 
         for (uint256 i = 0; i < _tokens.length; i++) {
             IERC20 erc20Token = IERC20(_tokens[i]);
@@ -71,6 +71,7 @@ contract CryptoCapsule is Ownable{
         sent[msg.sender].add(capsuleId);
         received[_beneficiary].add(capsuleId);
         emit CapsuleCreated(capsuleId);
+        return getCapsule(capsuleId);
     }
 
     function openCapsule(uint256 capsuleId) public { //Test
@@ -98,8 +99,12 @@ contract CryptoCapsule is Ownable{
     }
 
     // Views
+    function getCapsuleCount() public view returns(uint256) { //Test
+        return capsules.length;
+    }
+    
     function getCapsule(uint256 capsuleId) public view returns(Capsule memory) {
-        require(capsules.length > capsuleId, "Capsule does not exist"); //Test
+        require(capsules.length > capsuleId, "Capsule does not exist");
         return capsules[capsuleId];
     }
 
