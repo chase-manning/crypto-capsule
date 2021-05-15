@@ -44,12 +44,12 @@ describe("Capsule", () => {
     const TokenA = await ethers.getContractFactory("TestERC20");
     tokenA = await TokenA.deploy();
     tokenA.__ERC20_init("tokena", "tokena");
-    tokenA.mint(walletA.address, balance);
+    tokenA.mint(walletA.address, "10000000000");
 
     const TokenB = await ethers.getContractFactory("TestERC20");
     tokenB = await TokenB.deploy();
     tokenB.__ERC20_init("tokenb", "tokenb");
-    tokenB.mint(walletB.address, balance);
+    tokenB.mint(walletB.address, "10000000000");
   });
 
   it("Should have no Capsules on creation", async () => {
@@ -62,11 +62,12 @@ describe("Capsule", () => {
   });
 
   it("Should create Capsule", async () => {
+    // TODO Add variation with ETH
     const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
-    const tokenABalanceBefore = await tokenA.balanceOf(walletA.address);
+    const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
 
     await tokenA.approve(capsuleContract.address, amount);
     await capsuleContract.createCapsule(
@@ -78,9 +79,8 @@ describe("Capsule", () => {
       [amount]
     );
 
-    const tokenABalanceAfter = await tokenA.balanceOf(walletA.address);
-    const tokenABalanceAfterExpected = tokenABalanceBefore - Number(amount);
-    expect(Number(tokenABalanceAfter)).to.equal(tokenABalanceAfterExpected);
+    const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
+    expect(balanceAfter).to.equal(balanceBefore - Number(amount));
 
     const sentA = await capsuleContract.getSentCapsules(walletA.address);
     expect(sentA.length).to.equal(1);
@@ -240,10 +240,14 @@ describe("Capsule", () => {
   });
 
   it("Should open Capsule", async () => {
-    // TODO Check that token and ETH balance increases
+    const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
+
     await capsuleContract.openCapsule(testCapsule.id);
     testCapsule = await capsuleContract.getCapsule(testCapsule.id);
     expect(testCapsule.opened).to.equal(true);
+
+    const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
+    expect(balanceAfter).to.equal(balanceBefore + Number(amount));
   });
 
   it("Should not open already opened Capsule", async () => {
