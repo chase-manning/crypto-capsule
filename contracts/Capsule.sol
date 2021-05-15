@@ -74,12 +74,11 @@ contract CryptoCapsule is Ownable{
         return getCapsule(capsuleId);
     }
 
-    function openCapsule(uint256 capsuleId) public { //Test
+    function openCapsule(uint256 capsuleId) public {
         Capsule memory capsule = capsules[capsuleId];
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
-        require(!capsule.opened, "Capsule has already been opened"); //Test
-        require(capsule.claimedPeriods < capsule.periodCount, "All Capsule periods already claimed"); //Test
-        require(block.timestamp >= capsule.distributionDate, "Capsule has not matured yet"); //Test
+        require(!capsule.opened, "Capsule has already been opened");
+        require(block.timestamp >= capsule.distributionDate, "Capsule has not matured yet");
         uint256 nextClaimDate = capsule.distributionDate + capsule.claimedPeriods * capsule.periodSize;
         require(block.timestamp >= nextClaimDate, "No periods available to claim"); //Test
 
@@ -99,7 +98,7 @@ contract CryptoCapsule is Ownable{
     }
 
     // Views
-    function getCapsuleCount() public view returns(uint256) { //Test
+    function getCapsuleCount() public view returns(uint256) {
         return capsules.length;
     }
     
