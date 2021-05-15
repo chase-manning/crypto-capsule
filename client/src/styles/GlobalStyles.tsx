@@ -3,11 +3,11 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
     :root {
-        --main: #223444;
-        --sub: #98999B;
-        --primary: #1661F4;
+        --main: #5268A1;
+        --sub: #82B4D1;
+        --primary: #D796D3;
         --primary-light: rgba(22, 97, 244, 0.1);
-        --dark: #1C2326;
+        --dark: #5268A1;
         --white: white;
         --danger: #ef5252;
     }
