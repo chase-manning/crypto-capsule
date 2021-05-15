@@ -40,11 +40,11 @@ contract CryptoCapsule is Ownable{
 
 
     // Functions
-    function createCapsule(address payable _beneficiary, uint256 _distributionDate, uint256 _periodSize, uint256 _periodCount,  address[] calldata _tokens, uint256[] calldata _values) public payable {
+    function createCapsule(address payable _beneficiary, uint256 _distributionDate, uint256 _periodSize, uint256 _periodCount,  address[] calldata _tokens, uint256[] calldata _values) public payable { //Test
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
-        require(_periodSize >= 1, "Period Size must greater than or equal to 1");
-        require(_periodCount >= 1, "Period Count must greater than or equal to 1");
+        require(_periodSize >= 1, "Period Size must greater than or equal to 1"); //Test
+        require(_periodCount >= 1, "Period Count must greater than or equal to 1"); //Test
 
         for (uint256 i = 0; i < _tokens.length; i++) {
             IERC20 erc20Token = IERC20(_tokens[i]);
@@ -73,14 +73,14 @@ contract CryptoCapsule is Ownable{
         emit CapsuleCreated(capsuleId);
     }
 
-    function openCapsule(uint256 capsuleId) public {
+    function openCapsule(uint256 capsuleId) public { //Test
         Capsule memory capsule = capsules[capsuleId];
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
-        require(!capsule.opened, "Capsule has already been opened");
-        require(capsule.claimedPeriods < capsule.periodCount, "All Capsule periods already claimed");
-        require(block.timestamp >= capsule.distributionDate, "Capsule has not matured yet");
+        require(!capsule.opened, "Capsule has already been opened"); //Test
+        require(capsule.claimedPeriods < capsule.periodCount, "All Capsule periods already claimed"); //Test
+        require(block.timestamp >= capsule.distributionDate, "Capsule has not matured yet"); //Test
         uint256 nextClaimDate = capsule.distributionDate + capsule.claimedPeriods * capsule.periodSize;
-        require(block.timestamp >= nextClaimDate, "No periods available to claim");
+        require(block.timestamp >= nextClaimDate, "No periods available to claim"); //Test
 
         uint256 claimablePeriods = (block.timestamp - nextClaimDate) / capsule.periodSize + 1;
         uint256 unclaimedPeriods = capsule.periodCount - capsule.claimedPeriods;
@@ -99,6 +99,7 @@ contract CryptoCapsule is Ownable{
 
     // Views
     function getCapsule(uint256 capsuleId) public view returns(Capsule memory) {
+        require(capsules.length > capsuleId, "Capsule does not exist"); //Test
         return capsules[capsuleId];
     }
 
@@ -120,7 +121,7 @@ contract CryptoCapsule is Ownable{
         return _capsules;
     }
 
-    function getUsdValue(uint256 capsuleId) public view returns(uint256) {
+    function getUsdValue(uint256 capsuleId) public view returns(uint256) { //Test
         Capsule memory capsule = capsules[capsuleId];
 
         uint256 usd = 0;
@@ -131,7 +132,7 @@ contract CryptoCapsule is Ownable{
         return usd;
     }
 
-    function getUsdValues(uint256[] memory capsuleIds) public view returns(uint256[] memory) {
+    function getUsdValues(uint256[] memory capsuleIds) public view returns(uint256[] memory) { //Test
         uint256[] memory usds = new uint256[](capsuleIds.length); 
         for (uint256 i = 0; i < capsuleIds.length; i++) {
             usds[i] = getUsdValue(capsuleIds[i]);
@@ -141,7 +142,7 @@ contract CryptoCapsule is Ownable{
 
 
     // Admin
-    function setOracle(address token, address oracle) public onlyOwner() {
+    function setOracle(address token, address oracle) public onlyOwner() { //Test
         oracles[token] = AggregatorV3Interface(oracle);
     }
 
