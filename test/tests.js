@@ -157,6 +157,24 @@ describe("Capsule", () => {
     ).to.be.revertedWith("Period Size must greater than or equal to 1");
   });
 
+  it("Should fail on negative or 0 period count", async () => {
+    const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
+    const distributionDate = dateToUnix(nextMonth);
+
+    await tokenA.approve(capsuleContract.address, amount);
+
+    await expect(
+      capsuleContract.createCapsule(
+        walletB.address,
+        distributionDate,
+        1,
+        0,
+        [tokenA.address],
+        [amount]
+      )
+    ).to.be.revertedWith("Period Count must greater than or equal to 1");
+  });
+
   it("Should not open for non-beneficiary", async () => {
     await expect(capsuleContract.openCapsule(0)).to.be.revertedWith(
       "You are not the beneficiary of this Capsule"
