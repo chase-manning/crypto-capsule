@@ -41,7 +41,7 @@ describe("Capsule", () => {
     tokenB.mint(walletB.address, balance);
   });
 
-  it("Should have no Capsules on Creation", async () => {
+  it("Should have no Capsules on creation", async () => {
     let failed = false;
     try {
       await capsuleContract.getCapsule(0);
@@ -51,9 +51,11 @@ describe("Capsule", () => {
     expect(failed).to.equal(true);
   });
 
-  it("Should Create Capsule", async () => {
+  it("Should create Capsule", async () => {
     const amount = "1000000000";
-    const distributionDate = new Date().getTime();
+    const now = new Date();
+    const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
+    const distributionDate = nextMonth.getTime();
 
     await tokenA.approve(capsuleContract.address, amount);
     await capsuleContract.createCapsule(
@@ -88,5 +90,11 @@ describe("Capsule", () => {
     expect(capsule.amounts[0]).to.equal(amount);
     expect(capsule.tokens.length).to.equal(1);
     expect(capsule.amounts.length).to.equal(1);
+  });
+
+  it("Should not open for non-beneficiary", async () => {
+    await expect(capsuleContract.openCapsule(0)).to.be.revertedWith(
+      "You are not the beneficiary of this Capsule"
+    );
   });
 });
