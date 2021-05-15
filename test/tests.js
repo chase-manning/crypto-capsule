@@ -11,10 +11,16 @@ const oracles = [
 
 const BASE = BigNumber.from(10).pow(18);
 const balance = BASE.mul(1000000);
+const amount = "1000000000";
+const now = new Date();
 
 let capsuleContract;
 let walletA, walletB, walletC;
 let tokenA, tokenB;
+
+const dateToUnix = (date) => {
+  return Math.round(date.getTime() / 1000);
+};
 
 describe("Capsule", () => {
   before(async () => {
@@ -52,10 +58,8 @@ describe("Capsule", () => {
   });
 
   it("Should create Capsule", async () => {
-    const amount = "1000000000";
-    const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
-    const distributionDate = nextMonth.getTime();
+    const distributionDate = dateToUnix(nextMonth);
 
     await tokenA.approve(capsuleContract.address, amount);
     await capsuleContract.createCapsule(
@@ -90,6 +94,24 @@ describe("Capsule", () => {
     expect(capsule.amounts[0]).to.equal(amount);
     expect(capsule.tokens.length).to.equal(1);
     expect(capsule.amounts.length).to.equal(1);
+  });
+
+  it("Should fail on distribution date in past", async () => {
+    const lastMonth = new Date(now.setMonth(now.getMonth() - 1));
+    const distributionDate = dateToUnix(lastMonth);
+
+    await tokenA.approve(capsuleContract.address, amount);
+
+    await expect(
+      capsuleContract.createCapsule(
+        walletB.address,
+        distributionDate,
+        1,
+        1,
+        [tokenA.address],
+        [amount]
+      )
+    ).to.be.revertedWith("Distribution Date must be in future");
   });
 
   it("Should not open for non-beneficiary", async () => {
