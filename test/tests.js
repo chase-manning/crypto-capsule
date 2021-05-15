@@ -9,54 +9,84 @@ const oracles = [
   },
 ];
 
-const SENDER_ADDRESS = "0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e";
-const RECEIVER_ADDRESS = "0xd83BbB419B928bB8066847f6c66eA453Fb062C7f";
+const BASE = BigNumber.from(10).pow(18);
+const balance = BASE.mul(1000000);
+
+let capsuleContract;
+let walletA, walletB, walletC;
+let tokenA, tokenB;
 
 describe("Capsule", () => {
-  it("Should successfully deply", async () => {
+  before(async () => {
+    let signers = await ethers.getSigners();
+    walletA = signers[0];
+    walletB = signers[1];
+    walletC = signers[2];
+
     const Capsule = await ethers.getContractFactory("CryptoCapsule");
-    const capsule = await Capsule.deploy(
+    capsuleContract = await Capsule.deploy(
       oracles.map((o) => o.token),
       oracles.map((o) => o.value),
       ethOracle
     );
-    await capsule.deployed();
+
+    const TokenA = await ethers.getContractFactory("TestERC20");
+    tokenA = await TokenA.deploy();
+    tokenA.__ERC20_init("tokena", "tokena");
+    tokenA.mint(walletA.address, balance);
+
+    const TokenB = await ethers.getContractFactory("TestERC20");
+    tokenB = await TokenB.deploy();
+    tokenB.__ERC20_init("tokenb", "tokenb");
+    tokenB.mint(walletB.address, balance);
   });
 
   it("Should have no Capsules on Creation", async () => {
-    const Capsule = await ethers.getContractFactory("CryptoCapsule");
-    const capsule = await Capsule.deploy(
-      oracles.map((o) => o.token),
-      oracles.map((o) => o.value),
-      ethOracle
-    );
-    await capsule.deployed();
-
-    const sent = await capsule.getSentCapsules(SENDER_ADDRESS);
-    expect(sent.length).to.equal(0);
-
-    const received = await capsule.getSentCapsules(RECEIVER_ADDRESS);
-    expect(received.length).to.equal(0);
+    let failed = false;
+    try {
+      await capsuleContract.getCapsule(0);
+    } catch {
+      failed = true;
+    }
+    expect(failed).to.equal(true);
   });
 
   it("Should Create Capsule", async () => {
-    const Capsule = await ethers.getContractFactory("CryptoCapsule");
-    const capsule = await Capsule.deploy(
-      oracles.map((o) => o.token),
-      oracles.map((o) => o.value),
-      ethOracle
+    const amount = "1000000000";
+    const distributionDate = new Date().getTime();
+
+    await tokenA.approve(capsuleContract.address, amount);
+    await capsuleContract.createCapsule(
+      walletB.address,
+      distributionDate,
+      1,
+      1,
+      [tokenA.address],
+      [amount]
     );
-    await capsule.deployed();
 
-    // await capsule.createCapsule(
-    //   RECEIVER_ADDRESS,
-    //   new Date().getTime(),
-    //   ["0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735"],
-    //   ["1000000000"]
-    // );
+    const sentA = await capsuleContract.getSentCapsules(walletA.address);
+    expect(sentA.length).to.equal(1);
+    const recA = await capsuleContract.getReceivedCapsules(walletA.address);
+    expect(recA.length).to.equal(0);
+    const sentB = await capsuleContract.getSentCapsules(walletB.address);
+    expect(sentB.length).to.equal(0);
+    const recB = await capsuleContract.getReceivedCapsules(walletB.address);
+    expect(recB.length).to.equal(1);
 
-    // const capsuleMeow = await capsule.getCapsule(0);
-    // const sent = await capsule.getSentCapsules(SENDER_ADDRESS);
-    // const received = await capsule.getReceivedCapsules(RECEIVER_ADDRESS);
+    const capsule = await capsuleContract.getCapsule(0);
+    expect(capsule.id).to.equal(0);
+    expect(capsule.grantor).to.equal(walletA.address);
+    expect(capsule.beneficiary).to.equal(walletB.address);
+    expect(capsule.distributionDate).to.equal(distributionDate);
+    expect(capsule.periodSize).to.equal(1);
+    expect(capsule.periodCount).to.equal(1);
+    expect(capsule.claimedPeriods).to.equal(0);
+    expect(capsule.opened).to.equal(false);
+    expect(capsule.value).to.equal(0);
+    expect(capsule.tokens[0]).to.equal(tokenA.address);
+    expect(capsule.amounts[0]).to.equal(amount);
+    expect(capsule.tokens.length).to.equal(1);
+    expect(capsule.amounts.length).to.equal(1);
   });
 });
