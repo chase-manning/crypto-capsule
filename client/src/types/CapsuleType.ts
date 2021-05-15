@@ -10,6 +10,7 @@ type CapsuleType = {
   distributionDate: Date;
   periodType: string;
   periodCount: number;
+  claimedPeriods: number;
   createdDate: Date;
   opened: boolean;
   assets: Asset[];

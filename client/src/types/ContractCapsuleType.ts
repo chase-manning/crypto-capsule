@@ -5,6 +5,7 @@ type ContractCapsuleType = {
   distributionDate: string;
   periodSize: string;
   periodCount: string;
+  claimedPeriods: string;
   createdDate: string;
   opened: boolean;
   value: string;

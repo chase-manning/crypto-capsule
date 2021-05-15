@@ -125,6 +125,7 @@ export const responseToCapsule = (
     distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
     periodType: getPeriodType(capsule.periodSize),
     periodCount: Number(capsule.periodCount),
+    claimedPeriods: Number(capsule.claimedPeriods),
     assets,
     usd: toEthUnit(new BN(usd)).toString(),
   };
