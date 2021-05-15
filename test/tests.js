@@ -48,13 +48,9 @@ describe("Capsule", () => {
   });
 
   it("Should have no Capsules on creation", async () => {
-    let failed = false;
-    try {
-      await capsuleContract.getCapsule(0);
-    } catch {
-      failed = true;
-    }
-    expect(failed).to.equal(true);
+    await expect(capsuleContract.getCapsule(0)).to.be.revertedWith(
+      "Capsule does not exist"
+    );
   });
 
   it("Should create Capsule", async () => {
