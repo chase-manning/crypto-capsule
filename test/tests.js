@@ -17,6 +17,7 @@ const now = new Date();
 let capsuleContract;
 let walletA, walletB, walletC;
 let tokenA, tokenB;
+let testCapsule;
 
 const dateToUnix = (date) => {
   return Math.round(date.getTime() / 1000);
@@ -48,6 +49,9 @@ describe("Capsule", () => {
   });
 
   it("Should have no Capsules on creation", async () => {
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+    expect(capsuleCount).to.equal(0);
+
     await expect(capsuleContract.getCapsule(0)).to.be.revertedWith(
       "Capsule does not exist"
     );
@@ -179,5 +183,27 @@ describe("Capsule", () => {
     await expect(capsuleContract.openCapsule(0)).to.be.revertedWith(
       "You are not the beneficiary of this Capsule"
     );
+  });
+
+  it("Should not open before distribution date", async () => {
+    const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
+    const distributionDate = dateToUnix(nextMonth);
+
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+
+    await capsuleContract.createCapsule(
+      walletA.address,
+      distributionDate,
+      1,
+      1,
+      [tokenA.address],
+      [amount]
+    );
+
+    testCapsule = await capsuleContract.getCapsule(capsuleCount);
+
+    await expect(
+      capsuleContract.openCapsule(testCapsule.id)
+    ).to.be.revertedWith("Capsule has not matured yet");
   });
 });

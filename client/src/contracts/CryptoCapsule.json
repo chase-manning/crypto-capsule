@@ -99,7 +99,75 @@
       }
     ],
     "name": "createCapsule",
-    "outputs": [],
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "grantor",
+            "type": "address"
+          },
+          {
+            "internalType": "address payable",
+            "name": "beneficiary",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "distributionDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "periodSize",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "periodCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "claimedPeriods",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "createdDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "opened",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "value",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address[]",
+            "name": "tokens",
+            "type": "address[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "amounts",
+            "type": "uint256[]"
+          }
+        ],
+        "internalType": "struct CryptoCapsule.Capsule",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
     "stateMutability": "payable",
     "type": "function"
   },
@@ -179,6 +247,19 @@
         "internalType": "struct CryptoCapsule.Capsule",
         "name": "",
         "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCapsuleCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
