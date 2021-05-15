@@ -1,5 +1,6 @@
 const { BigNumber } = require("@ethersproject/bignumber");
 const { expect } = require("chai");
+const { network } = require("hardhat");
 
 const ethOracle = "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e";
 const oracles = [
@@ -20,6 +21,10 @@ let testCapsule;
 
 const dateToUnix = (date) => {
   return Math.round(date.getTime() / 1000);
+};
+
+const unixToDate = (unix) => {
+  return new Date(unix * 1000);
 };
 
 describe("Capsule", () => {
@@ -241,5 +246,31 @@ describe("Capsule", () => {
     await expect(
       capsuleContract.openCapsule(testCapsule.id)
     ).to.be.revertedWith("Capsule has already been opened");
+  });
+
+  it("Should create Staggered Capsule", async () => {
+    // TODO Should check amounts
+    const now = new Date();
+    now.setMonth(now.getMonth() + 12);
+    await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
+    const nextMonth = new Date(now.setDate(now.getDate() + 30));
+    const distributionStartDate = dateToUnix(nextMonth);
+    const periodSize = 60 * 60 * 24;
+
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+
+    await tokenA.approve(capsuleContract.address, amount);
+    await capsuleContract.createCapsule(
+      walletA.address,
+      distributionStartDate,
+      periodSize,
+      3,
+      [tokenA.address],
+      [amount]
+    );
+
+    testCapsule = await capsuleContract.getCapsule(capsuleCount);
+    expect(testCapsule.periodSize).to.equal(periodSize);
+    expect(testCapsule.periodCount).to.equal(3);
   });
 });
