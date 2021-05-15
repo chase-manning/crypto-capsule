@@ -43,6 +43,8 @@ contract CryptoCapsule is Ownable{
     function createCapsule(address payable _beneficiary, uint256 _distributionDate, uint256 _periodSize, uint256 _periodCount,  address[] calldata _tokens, uint256[] calldata _values) public payable {
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
+        require(_periodSize >= 1, "Period Size must greater than or equal to 1");
+        require(_periodCount >= 1, "Period Count must greater than or equal to 1");
 
         for (uint256 i = 0; i < _tokens.length; i++) {
             IERC20 erc20Token = IERC20(_tokens[i]);
