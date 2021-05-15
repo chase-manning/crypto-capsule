@@ -114,6 +114,35 @@ describe("Capsule", () => {
     ).to.be.revertedWith("Distribution Date must be in future");
   });
 
+  it("Should fail on mismatched token and amount lengths", async () => {
+    const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
+    const distributionDate = dateToUnix(nextMonth);
+
+    await tokenA.approve(capsuleContract.address, amount);
+
+    await expect(
+      capsuleContract.createCapsule(
+        walletB.address,
+        distributionDate,
+        1,
+        1,
+        [tokenA.address, tokenB.address],
+        [amount]
+      )
+    ).to.be.revertedWith("Tokens and Values must be same length");
+
+    await expect(
+      capsuleContract.createCapsule(
+        walletB.address,
+        distributionDate,
+        1,
+        1,
+        [tokenA.address],
+        [amount, amount]
+      )
+    ).to.be.revertedWith("Tokens and Values must be same length");
+  });
+
   it("Should not open for non-beneficiary", async () => {
     await expect(capsuleContract.openCapsule(0)).to.be.revertedWith(
       "You are not the beneficiary of this Capsule"
