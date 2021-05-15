@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import landing from "../assets/capsule.jpg";
 
 import Button from "../styles/Button";
 import CreateCapsule from "./CreateCapsule";
@@ -7,15 +8,15 @@ import CreateCapsule from "./CreateCapsule";
 const StyledLanding = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  padding: 0 150px;
 `;
 
 const Left = styled.div`
   display: flex;
   flex-direction: column;
   width: 600px;
+  margin-left: 4rem;
 `;
 
 const Header = styled.h1`
@@ -34,9 +35,8 @@ const SubHeader = styled.div`
   line-height: 1.4;
 `;
 
-const Image = styled.div`
-  width: 40vw;
-  height: 40vh;
+const Image = styled.img`
+  width: 53vw;
   background-color: lightslategray;
   display: flex;
   justify-content: center;
@@ -63,7 +63,7 @@ const Landing = (): JSX.Element => {
           </Button>
         </div>
       </Left>
-      <Image>asset 1</Image>
+      <Image src={landing} />
       <CreateCapsule
         show={creatingCapsule}
         close={() => setCreatingCapsule(false)}
