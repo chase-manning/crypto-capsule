@@ -12,7 +12,6 @@ const oracles = [
 const BASE = BigNumber.from(10).pow(18);
 const balance = BASE.mul(1000000);
 const amount = "1000000000";
-const now = new Date();
 
 let capsuleContract;
 let walletA, walletB, walletC;
@@ -58,6 +57,9 @@ describe("Capsule", () => {
   });
 
   it("Should create Capsule", async () => {
+    // TODO Check balance before and after
+    // TODO Check that works with ETH
+    const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
@@ -97,6 +99,7 @@ describe("Capsule", () => {
   });
 
   it("Should fail on distribution date in past", async () => {
+    const now = new Date();
     const lastMonth = new Date(now.setMonth(now.getMonth() - 1));
     const distributionDate = dateToUnix(lastMonth);
 
@@ -115,6 +118,7 @@ describe("Capsule", () => {
   });
 
   it("Should fail on mismatched token and amount lengths", async () => {
+    const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
@@ -144,6 +148,7 @@ describe("Capsule", () => {
   });
 
   it("Should fail on negative or 0 period size", async () => {
+    const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
@@ -162,6 +167,7 @@ describe("Capsule", () => {
   });
 
   it("Should fail on negative or 0 period count", async () => {
+    const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
@@ -186,6 +192,7 @@ describe("Capsule", () => {
   });
 
   it("Should not open before distribution date", async () => {
+    const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
@@ -205,5 +212,28 @@ describe("Capsule", () => {
     await expect(
       capsuleContract.openCapsule(testCapsule.id)
     ).to.be.revertedWith("Capsule has not matured yet");
+  });
+
+  it("Should pass the time 1 months", async () => {
+    await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 7 * 4 * 1]);
+    await network.provider.send("evm_mine");
+  });
+
+  it("Should not open before distribution date", async () => {
+    await expect(
+      capsuleContract.openCapsule(testCapsule.id)
+    ).to.be.revertedWith("Capsule has not matured yet");
+  });
+
+  it("Should pass the time past 2 months", async () => {
+    await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 7 * 4 * 2]);
+    await network.provider.send("evm_mine");
+  });
+
+  it("Should Open Capsule", async () => {
+    // TODO Check that token and ETH balance increases
+    await capsuleContract.openCapsule(testCapsule.id);
+    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
+    expect(testCapsule.opened).to.equal(true);
   });
 });
