@@ -62,11 +62,11 @@ describe("Capsule", () => {
   });
 
   it("Should create Capsule", async () => {
-    // TODO Check balance before and after
-    // TODO Check that works with ETH
     const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
+
+    const tokenABalanceBefore = await tokenA.balanceOf(walletA.address);
 
     await tokenA.approve(capsuleContract.address, amount);
     await capsuleContract.createCapsule(
@@ -77,6 +77,10 @@ describe("Capsule", () => {
       [tokenA.address],
       [amount]
     );
+
+    const tokenABalanceAfter = await tokenA.balanceOf(walletA.address);
+    const tokenABalanceAfterExpected = tokenABalanceBefore - Number(amount);
+    expect(Number(tokenABalanceAfter)).to.equal(tokenABalanceAfterExpected);
 
     const sentA = await capsuleContract.getSentCapsules(walletA.address);
     expect(sentA.length).to.equal(1);
@@ -272,5 +276,11 @@ describe("Capsule", () => {
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
     expect(testCapsule.periodSize).to.equal(periodSize);
     expect(testCapsule.periodCount).to.equal(3);
+  });
+
+  it("Should not open Staggered Capsule before Distribution Start Date", async () => {
+    await expect(
+      capsuleContract.openCapsule(testCapsule.id)
+    ).to.be.revertedWith("Capsule has not matured yet");
   });
 });
