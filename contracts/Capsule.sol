@@ -47,6 +47,7 @@ contract CryptoCapsule is Ownable{
         require(_periodCount >= 1, "Period Count must greater than or equal to 1");
 
         for (uint256 i = 0; i < _tokens.length; i++) {
+            require(_values[i] > 0, "Token value must be greater than 0"); // Test
             IERC20 erc20Token = IERC20(_tokens[i]);
             erc20Token.transferFrom(msg.sender, address(this), _values[i]);
         }
@@ -80,7 +81,7 @@ contract CryptoCapsule is Ownable{
         require(!capsule.opened, "Capsule has already been opened");
         require(block.timestamp >= capsule.distributionDate, "Capsule has not matured yet");
         uint256 nextClaimDate = capsule.distributionDate + capsule.claimedPeriods * capsule.periodSize;
-        require(block.timestamp >= nextClaimDate, "No periods available to claim"); //Test
+        require(block.timestamp >= nextClaimDate, "No periods available to claim"); 
 
         uint256 claimablePeriods = (block.timestamp - nextClaimDate) / capsule.periodSize + 1;
         uint256 unclaimedPeriods = capsule.periodCount - capsule.claimedPeriods;
