@@ -1,17 +1,6 @@
-const { BigNumber } = require("@ethersproject/bignumber");
 const { expect } = require("chai");
 const { network } = require("hardhat");
 
-const ethOracle = "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e";
-const oracles = [
-  {
-    token: "0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735",
-    value: "0x2bA49Aaa16E6afD2a993473cfB70Fa8559B523cF",
-  },
-];
-
-const BASE = BigNumber.from(10).pow(18);
-const balance = BASE.mul(1000000);
 const amount = "1000000000";
 
 let capsuleContract;
@@ -23,10 +12,6 @@ const dateToUnix = (date) => {
   return Math.round(date.getTime() / 1000);
 };
 
-const unixToDate = (unix) => {
-  return new Date(unix * 1000);
-};
-
 describe("Capsule", () => {
   before(async () => {
     let signers = await ethers.getSigners();
@@ -34,12 +19,10 @@ describe("Capsule", () => {
     walletB = signers[1];
     walletC = signers[2];
 
-    const Capsule = await ethers.getContractFactory("CryptoCapsule");
-    capsuleContract = await Capsule.deploy(
-      oracles.map((o) => o.token),
-      oracles.map((o) => o.value),
-      ethOracle
-    );
+    const OracleEth = await ethers.getContractFactory("Oracle");
+    const oracleEth = await OracleEth.deploy();
+    const oracleA = await OracleEth.deploy();
+    const oracleB = await OracleEth.deploy();
 
     const TokenA = await ethers.getContractFactory("TestERC20");
     tokenA = await TokenA.deploy();
@@ -50,6 +33,13 @@ describe("Capsule", () => {
     tokenB = await TokenB.deploy();
     tokenB.__ERC20_init("tokenb", "tokenb");
     tokenB.mint(walletB.address, "10000000000");
+
+    const Capsule = await ethers.getContractFactory("CryptoCapsule");
+    capsuleContract = await Capsule.deploy(
+      [tokenA.address, tokenB.address],
+      [oracleA.address, oracleB.address],
+      oracleEth.address
+    );
   });
 
   it("Should have no Capsules on creation", async () => {
