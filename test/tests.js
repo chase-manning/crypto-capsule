@@ -126,6 +126,25 @@ describe("Capsule", () => {
     ).to.be.revertedWith("Distribution Date must be in future");
   });
 
+  it("Should fail with no token value", async () => {
+    const now = new Date();
+    const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
+    const distributionDate = dateToUnix(nextMonth);
+
+    await tokenA.approve(capsuleContract.address, amount);
+
+    await expect(
+      capsuleContract.createCapsule(
+        walletB.address,
+        distributionDate,
+        1,
+        1,
+        [tokenA.address],
+        [0]
+      )
+    ).to.be.revertedWith("Token value must be greater than 0");
+  });
+
   it("Should fail on mismatched token and amount lengths", async () => {
     const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
