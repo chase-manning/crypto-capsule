@@ -32,7 +32,7 @@ describe("Capsule", () => {
     const TokenB = await ethers.getContractFactory("TestERC20");
     tokenB = await TokenB.deploy();
     tokenB.__ERC20_init("tokenb", "tokenb");
-    tokenB.mint(walletB.address, "10000000000");
+    tokenB.mint(walletA.address, "10000000000");
 
     const Capsule = await ethers.getContractFactory("CryptoCapsule");
     capsuleContract = await Capsule.deploy(
@@ -52,7 +52,6 @@ describe("Capsule", () => {
   });
 
   it("Should create Capsule", async () => {
-    // TODO Add variation with ETH
     const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
@@ -266,7 +265,6 @@ describe("Capsule", () => {
   });
 
   it("Should create Staggered Capsule", async () => {
-    // TODO Should check amounts
     const now = new Date();
     now.setMonth(now.getMonth() + 12);
     await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
@@ -363,4 +361,43 @@ describe("Capsule", () => {
     testCapsule = await capsuleContract.getCapsule(testCapsule.id);
     expect(testCapsule.opened).to.be.true;
   });
+
+  it("Should create multi token Capsule", async () => {
+    const now = new Date();
+    now.setMonth(now.getMonth() + 24);
+    await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
+    const nextMonth = new Date(now.setDate(now.getDate() + 30));
+    const distributionStartDate = dateToUnix(nextMonth);
+
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+
+    await tokenA.approve(capsuleContract.address, amount);
+    await tokenB.approve(capsuleContract.address, amount);
+    await capsuleContract.createCapsule(
+      walletA.address,
+      distributionStartDate,
+      1,
+      1,
+      [tokenA.address, tokenB.address],
+      [amount, "10000000"]
+    );
+
+    testCapsule = await capsuleContract.getCapsule(capsuleCount);
+    expect(testCapsule.tokens.length).to.equal(2);
+    expect(testCapsule.amounts.length).to.equal(2);
+  });
+
+  it("Should get Capsule USD value", async () => {});
+
+  it("Should add new Oracle", async () => {});
+
+  it("Should get USD from new Oracle", async () => {});
+
+  it("Should remove Oracle", async () => {});
+
+  it("Should get USD without new Oracle", async () => {});
+
+  it("Should remove all Oracles", async () => {});
+
+  it("Should get USD with no oracles", async () => {});
 });
