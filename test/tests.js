@@ -263,7 +263,7 @@ describe("Capsule", () => {
     await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
     const nextMonth = new Date(now.setDate(now.getDate() + 30));
     const distributionStartDate = dateToUnix(nextMonth);
-    const periodSize = 60 * 60 * 24;
+    const periodSize = 60 * 60 * 24 * 7;
 
     const capsuleCount = await capsuleContract.getCapsuleCount();
 
@@ -286,5 +286,19 @@ describe("Capsule", () => {
     await expect(
       capsuleContract.openCapsule(testCapsule.id)
     ).to.be.revertedWith("Capsule has not matured yet");
+  });
+
+  it("Should pass 31 days", async () => {
+    await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 31]);
+    await network.provider.send("evm_mine");
+  });
+
+  it("Should open Staggered Capsule", async () => {
+    const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
+    await capsuleContract.openCapsule(testCapsule.id);
+    const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
+    expect(balanceAfter).to.equal(
+      balanceBefore + Math.trunc(Number(amount) / 3)
+    );
   });
 });
