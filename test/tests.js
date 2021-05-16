@@ -301,4 +301,10 @@ describe("Capsule", () => {
       balanceBefore + Math.trunc(Number(amount) / 3)
     );
   });
+
+  it("Should require there are periods to claim to open", async () => {
+    await expect(
+      capsuleContract.openCapsule(testCapsule.id)
+    ).to.be.revertedWith("No periods available to claim");
+  });
 });
