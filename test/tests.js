@@ -272,14 +272,14 @@ describe("Capsule", () => {
       walletA.address,
       distributionStartDate,
       periodSize,
-      3,
+      5,
       [tokenA.address],
       [amount]
     );
 
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
     expect(testCapsule.periodSize).to.equal(periodSize);
-    expect(testCapsule.periodCount).to.equal(3);
+    expect(testCapsule.periodCount).to.equal(5);
   });
 
   it("Should not open Staggered Capsule before Distribution Start Date", async () => {
@@ -298,7 +298,7 @@ describe("Capsule", () => {
     await capsuleContract.openCapsule(testCapsule.id);
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
     expect(balanceAfter).to.equal(
-      balanceBefore + Math.trunc(Number(amount) / 3)
+      balanceBefore + Math.trunc(Number(amount) / 5)
     );
   });
 
@@ -306,5 +306,52 @@ describe("Capsule", () => {
     await expect(
       capsuleContract.openCapsule(testCapsule.id)
     ).to.be.revertedWith("No periods available to claim");
+  });
+
+  it("Should pass 8 days", async () => {
+    await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 8]);
+    await network.provider.send("evm_mine");
+  });
+
+  it("Should open second portion of staggered capsule", async () => {
+    const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
+    await capsuleContract.openCapsule(testCapsule.id);
+    const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
+    expect(balanceAfter).to.equal(
+      balanceBefore + Math.trunc(Number(amount) / 5)
+    );
+  });
+
+  it("Should pass 15 days", async () => {
+    await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 15]);
+    await network.provider.send("evm_mine");
+  });
+
+  it("Should open third and forth portion of staggered capsule", async () => {
+    const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
+    await capsuleContract.openCapsule(testCapsule.id);
+    const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
+    expect(balanceAfter).to.equal(
+      balanceBefore + Math.trunc((Number(amount) / 5) * 2)
+    );
+  });
+
+  it("Should pass 8 days", async () => {
+    await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 8]);
+    await network.provider.send("evm_mine");
+  });
+
+  it("Should open last portion of staggered capsule", async () => {
+    const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
+    await capsuleContract.openCapsule(testCapsule.id);
+    const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
+    expect(balanceAfter).to.equal(
+      balanceBefore + Math.trunc(Number(amount) / 5)
+    );
+  });
+
+  it("Should have opened status", async () => {
+    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
+    expect(testCapsule.opened).to.be.true;
   });
 });
