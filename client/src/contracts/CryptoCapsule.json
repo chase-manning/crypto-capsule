@@ -68,6 +68,45 @@
   {
     "inputs": [
       {
+        "internalType": "bytes32",
+        "name": "c__0x6de42f3e",
+        "type": "bytes32"
+      }
+    ],
+    "name": "c_0x6de42f3e",
+    "outputs": [],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "c__0x86ac2662",
+        "type": "bytes32"
+      }
+    ],
+    "name": "c_0x86ac2662",
+    "outputs": [],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "c__0xd13b3e49",
+        "type": "bytes32"
+      }
+    ],
+    "name": "c_0xd13b3e49",
+    "outputs": [],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address payable",
         "name": "_beneficiary",
         "type": "address"

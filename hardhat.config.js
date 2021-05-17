@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-abi-exporter");
+require("solidity-coverage");
 
 var secrets = require("./secrets");
 

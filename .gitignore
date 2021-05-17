@@ -9,3 +9,7 @@ secrets.js
 /client/build
 /client/.eslintcache
 /client-example/node_modules
+
+# Solidity
+/coverage
+coverage.json
