@@ -5,6 +5,7 @@ import "./utils/EnumerableSet.sol";
 import "./utils/Ownable.sol";
 
 import "./interfaces/IERC20.sol";
+import "./extensions/IERC20Metadata.sol";
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 contract CryptoCapsule is Ownable{
@@ -47,7 +48,7 @@ contract CryptoCapsule is Ownable{
         require(_periodCount >= 1, "Period Count must greater than or equal to 1");
 
         for (uint256 i = 0; i < _tokens.length; i++) {
-            require(_values[i] > 0, "Token value must be greater than 0"); // Test
+            require(_values[i] > 0, "Token value must be greater than 0");
             IERC20 erc20Token = IERC20(_tokens[i]);
             erc20Token.transferFrom(msg.sender, address(this), _values[i]);
         }
@@ -156,13 +157,18 @@ contract CryptoCapsule is Ownable{
 
     // Internals
     function _getAssetInUsd(address token, uint256 amount) private view returns(uint256) {
-        uint256 price = _getOraclePrice(oracles[token]);
-        return (price * amount) / 10 ** 8;
+        uint256 tokenDecimals = IERC20Metadata(token).decimals();
+        return _getUsd(oracles[token], tokenDecimals, amount);
     }
 
     function _getEthInUsd(uint256 eth) private view returns(uint256) {
-        uint256 price = _getOraclePrice(ethOracle);
-        return (price * eth) / 10 ** 8;
+        return _getUsd(ethOracle, 18, eth);
+    }
+
+    function _getUsd(AggregatorV3Interface oracle, uint256 tokenDecimals, uint256 amount) private view returns(uint256) {
+        uint256 price = _getOraclePrice(oracle);
+        uint256 oracleDecimals = oracle.decimals();
+        return (price / 10 ** oracleDecimals) * (amount / 10 ** tokenDecimals);
     }
 
     function _getOraclePrice(AggregatorV3Interface oracle) private view returns(uint256) {
@@ -173,7 +179,6 @@ contract CryptoCapsule is Ownable{
             uint timeStamp,
             uint80 answeredInRound
         ) = oracle.latestRoundData();
-        uint256 decimals = oracle.decimals();
         return uint256(price);
     }
 
