@@ -399,6 +399,29 @@ describe("Capsule", () => {
     expect(usd).to.equal(6);
   });
 
+  it("Should get USD of multiple Capsules", async () => {
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+    await tokenA.approve(capsuleContract.address, amount);
+    await capsuleContract.createCapsule(
+      walletA.address,
+      10 ** 10,
+      1,
+      1,
+      [tokenA.address],
+      [amount],
+      { value: ethers.utils.parseEther("1") }
+    );
+
+    const usd = await capsuleContract.getUsdValues([
+      capsuleCount - 1,
+      capsuleCount,
+    ]);
+    expect(usd[0]).to.equal(6);
+    expect(usd[1]).to.equal(4);
+  });
+
+  it("Should get USD of multiple Capsules with just one Capsule", async () => {});
+
   it("Should add new Oracle", async () => {
     const NewOracleC = await ethers.getContractFactory("Oracle");
     const newOracleC = await NewOracleC.deploy();
