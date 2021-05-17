@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { network } = require("hardhat");
 
-const amount = "1000000000";
+const amount = "1000000000000000000";
 
 let capsuleContract;
 let walletA, walletB, walletC;
@@ -27,12 +27,12 @@ describe("Capsule", () => {
     const TokenA = await ethers.getContractFactory("TestERC20");
     tokenA = await TokenA.deploy();
     tokenA.__ERC20_init("tokena", "tokena");
-    tokenA.mint(walletA.address, "10000000000");
+    tokenA.mint(walletA.address, "10000000000000000000");
 
     const TokenB = await ethers.getContractFactory("TestERC20");
     tokenB = await TokenB.deploy();
     tokenB.__ERC20_init("tokenb", "tokenb");
-    tokenB.mint(walletA.address, "10000000000");
+    tokenB.mint(walletA.address, "10000000000000000000");
 
     const Capsule = await ethers.getContractFactory("CryptoCapsule");
     capsuleContract = await Capsule.deploy(
@@ -379,7 +379,8 @@ describe("Capsule", () => {
       1,
       1,
       [tokenA.address, tokenB.address],
-      [amount, "10000000"]
+      [amount, amount],
+      { value: ethers.utils.parseEther("1") }
     );
 
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
@@ -387,7 +388,10 @@ describe("Capsule", () => {
     expect(testCapsule.amounts.length).to.equal(2);
   });
 
-  it("Should get Capsule USD value", async () => {});
+  it("Should get Capsule USD value", async () => {
+    const usd = await capsuleContract.getUsdValue(testCapsule.id);
+    expect(usd).to.equal(6);
+  });
 
   it("Should add new Oracle", async () => {});
 
@@ -400,4 +404,6 @@ describe("Capsule", () => {
   it("Should remove all Oracles", async () => {});
 
   it("Should get USD with no oracles", async () => {});
+
+  // Change ETH Oracle
 });
