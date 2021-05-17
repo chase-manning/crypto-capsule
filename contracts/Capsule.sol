@@ -132,7 +132,9 @@ contract CryptoCapsule is Ownable{
 
         uint256 usd = 0;
         for (uint256 i = 0; i < capsule.tokens.length; i++) {
-            usd += _getAssetInUsd(capsule.tokens[i], capsule.amounts[i]);
+            if (address(oracles[capsule.tokens[i]]) != address(0)) {
+                usd += _getAssetInUsd(capsule.tokens[i], capsule.amounts[i]);
+            }
         }
         usd += _getEthInUsd(capsule.value);
         return usd;
