@@ -436,9 +436,14 @@ describe("Capsule", () => {
     expect(usd).to.equal(8);
   });
 
-  it("Should remove Oracle", async () => {});
+  it("Should remove Oracle", async () => {
+    await capsuleContract.removeOracle(tokenC.address);
+  });
 
-  it("Should get USD without new Oracle", async () => {});
+  it("Should get USD without new Oracle", async () => {
+    const usd = await capsuleContract.getUsdValue(testCapsule.id);
+    expect(usd).to.equal(6);
+  });
 
   it("Should remove all Oracles", async () => {});
 
