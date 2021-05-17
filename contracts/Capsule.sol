@@ -100,6 +100,7 @@ contract CryptoCapsule is Ownable{
         emit CapsuleOpened(capsuleId);
     }
 
+
     // Views
     function getCapsuleCount() public view returns(uint256) {
         return capsules.length;
@@ -139,7 +140,11 @@ contract CryptoCapsule is Ownable{
                 usd += _getAssetInUsd(capsule.tokens[i], capsule.amounts[i]);
             }
         }
-        usd += _getEthInUsd(capsule.value);
+
+        if (address(ethOracle) != address(0)) {
+            usd += _getEthInUsd(capsule.value);
+        }
+
         return usd;
     }
 
@@ -159,9 +164,18 @@ contract CryptoCapsule is Ownable{
         oracles[token] = AggregatorV3Interface(oracle);
     }
 
+    function setEthOracle(address oracle) public onlyOwner() {
+        ethOracle = AggregatorV3Interface(oracle);
+    }
+
     function removeOracle(address token) public onlyOwner() {
         oracles[token] = AggregatorV3Interface(address(0));
     }
+
+    function removeEthOracle() public onlyOwner() {
+        ethOracle = AggregatorV3Interface(address(0));
+    }
+
 
     // Internals
     function _getAssetInUsd(address token, uint256 amount) private view returns(uint256) {
