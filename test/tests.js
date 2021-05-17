@@ -420,7 +420,10 @@ describe("Capsule", () => {
     expect(usd[1]).to.equal(4);
   });
 
-  it("Should get USD of multiple Capsules with just one Capsule", async () => {});
+  it("Should get USD of multiple Capsules with just one Capsule", async () => {
+    const usd = await capsuleContract.getUsdValues([testCapsule.id]);
+    expect(usd[0]).to.equal(6);
+  });
 
   it("Should add new Oracle", async () => {
     const NewOracleC = await ethers.getContractFactory("Oracle");
