@@ -77,6 +77,7 @@ contract CryptoCapsule is Ownable{
     }
 
     function openCapsule(uint256 capsuleId) public {
+        require(capsules.length > capsuleId, "Capsule does not exist");
         Capsule memory capsule = capsules[capsuleId];
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
         require(!capsule.opened, "Capsule has already been opened");
@@ -127,7 +128,9 @@ contract CryptoCapsule is Ownable{
         return _capsules;
     }
 
-    function getUsdValue(uint256 capsuleId) public view returns(uint256) { //Test
+    function getUsdValue(uint256 capsuleId) public view returns(uint256) {
+        require(capsules.length > capsuleId, "Capsule does not exist");
+
         Capsule memory capsule = capsules[capsuleId];
 
         uint256 usd = 0;
@@ -141,6 +144,8 @@ contract CryptoCapsule is Ownable{
     }
 
     function getUsdValues(uint256[] memory capsuleIds) public view returns(uint256[] memory) { //Test
+        require(capsuleIds.length > 0, "Must provide at least one capsule id");
+
         uint256[] memory usds = new uint256[](capsuleIds.length); 
         for (uint256 i = 0; i < capsuleIds.length; i++) {
             usds[i] = getUsdValue(capsuleIds[i]);
@@ -150,12 +155,13 @@ contract CryptoCapsule is Ownable{
 
 
     // Admin
-    function setOracle(address token, address oracle) public onlyOwner() { //Test
+    function setOracle(address token, address oracle) public onlyOwner() {
         oracles[token] = AggregatorV3Interface(oracle);
     }
 
-    // TODO: Add function to remove oracle
-
+    function removeOracle(address token) public onlyOwner() {
+        oracles[token] = AggregatorV3Interface(address(0));
+    }
 
     // Internals
     function _getAssetInUsd(address token, uint256 amount) private view returns(uint256) {
