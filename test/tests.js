@@ -5,7 +5,7 @@ const amount = "1000000000000000000";
 
 let capsuleContract;
 let walletA, walletB, walletC;
-let tokenA, tokenB;
+let tokenA, tokenB, tokenC;
 let testCapsule;
 
 const dateToUnix = (date) => {
@@ -33,6 +33,11 @@ describe("Capsule", () => {
     tokenB = await TokenB.deploy();
     tokenB.__ERC20_init("tokenb", "tokenb");
     tokenB.mint(walletA.address, "10000000000000000000");
+
+    const TokenC = await ethers.getContractFactory("TestERC20");
+    tokenC = await TokenC.deploy();
+    tokenC.__ERC20_init("tokenc", "tokenc");
+    tokenC.mint(walletA.address, "10000000000000000000");
 
     const Capsule = await ethers.getContractFactory("CryptoCapsule");
     capsuleContract = await Capsule.deploy(
@@ -373,19 +378,20 @@ describe("Capsule", () => {
 
     await tokenA.approve(capsuleContract.address, amount);
     await tokenB.approve(capsuleContract.address, amount);
+    await tokenC.approve(capsuleContract.address, amount);
     await capsuleContract.createCapsule(
       walletA.address,
       distributionStartDate,
       1,
       1,
-      [tokenA.address, tokenB.address],
-      [amount, amount],
+      [tokenA.address, tokenB.address, tokenC.address],
+      [amount, amount, amount],
       { value: ethers.utils.parseEther("1") }
     );
 
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
-    expect(testCapsule.tokens.length).to.equal(2);
-    expect(testCapsule.amounts.length).to.equal(2);
+    expect(testCapsule.tokens.length).to.equal(3);
+    expect(testCapsule.amounts.length).to.equal(3);
   });
 
   it("Should get Capsule USD value", async () => {
@@ -393,9 +399,16 @@ describe("Capsule", () => {
     expect(usd).to.equal(6);
   });
 
-  it("Should add new Oracle", async () => {});
+  it("Should add new Oracle", async () => {
+    const NewOracleC = await ethers.getContractFactory("Oracle");
+    const newOracleC = await NewOracleC.deploy();
+    await capsuleContract.setOracle(tokenC.address, newOracleC.address);
+  });
 
-  it("Should get USD from new Oracle", async () => {});
+  it("Should get USD from new Oracle", async () => {
+    const usd = await capsuleContract.getUsdValue(testCapsule.id);
+    expect(usd).to.equal(8);
+  });
 
   it("Should remove Oracle", async () => {});
 
