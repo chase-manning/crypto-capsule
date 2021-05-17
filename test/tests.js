@@ -431,23 +431,47 @@ describe("Capsule", () => {
     await capsuleContract.setOracle(tokenC.address, newOracleC.address);
   });
 
-  it("Should get USD from new Oracle", async () => {
+  it("Should get USD from new tokenOracle", async () => {
     const usd = await capsuleContract.getUsdValue(testCapsule.id);
     expect(usd).to.equal(8);
   });
 
-  it("Should remove Oracle", async () => {
+  it("Should remove token Oracle", async () => {
     await capsuleContract.removeOracle(tokenC.address);
   });
 
-  it("Should get USD without new Oracle", async () => {
+  it("Should get USD without new token Oracle", async () => {
     const usd = await capsuleContract.getUsdValue(testCapsule.id);
     expect(usd).to.equal(6);
   });
 
-  it("Should remove all Oracles", async () => {});
+  it("Should remove all token Oracles", async () => {
+    await capsuleContract.removeOracle(tokenB.address);
+    await capsuleContract.removeOracle(tokenA.address);
+  });
 
-  it("Should get USD with no oracles", async () => {});
+  it("Should get USD with no token oracles", async () => {
+    const usd = await capsuleContract.getUsdValue(testCapsule.id);
+    expect(usd).to.equal(2);
+  });
 
-  // Change ETH Oracle
+  it("Should change ETH Oracle", async () => {
+    const NewEthOracle = await ethers.getContractFactory("Oracle");
+    const newEthOracle = await NewEthOracle.deploy();
+    await capsuleContract.setEthOracle(newEthOracle.address);
+  });
+
+  it("Should get USD with new ETH Oracle", async () => {
+    const usd = await capsuleContract.getUsdValue(testCapsule.id);
+    expect(usd).to.equal(2);
+  });
+
+  it("Should remove ETH Oracle", async () => {
+    await capsuleContract.removeEthOracle();
+  });
+
+  it("Should get USD with no ETH Oracle", async () => {
+    const usd = await capsuleContract.getUsdValue(testCapsule.id);
+    expect(usd).to.equal(0);
+  });
 });
