@@ -127,7 +127,7 @@ export const responseToCapsule = (
     periodCount: Number(capsule.periodCount),
     claimedPeriods: Number(capsule.claimedPeriods),
     assets,
-    usd: toEthUnit(new BN(usd)).toString(),
+    usd,
   };
 };
 
