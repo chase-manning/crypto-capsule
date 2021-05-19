@@ -17,8 +17,8 @@ contract CapsuleCoin is Context, IERC20, IERC20Metadata {
     uint256 private constant _cap = 10000000e18;
 
     constructor (address account) {
-        _balances[account] = 2000000e18;
-        emit Transfer(address(0), account, 2000000e18);
+        _balances[account] = 3000000e18;
+        emit Transfer(address(0), account, 3000000e18);
     }
 
     /**
