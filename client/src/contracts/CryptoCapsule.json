@@ -15,6 +15,11 @@
         "internalType": "address",
         "name": "_ethOracle",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_capsuleCoin",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",

@@ -31,12 +31,14 @@ contract CryptoCapsule is Ownable{
     mapping (address => EnumerableSet.UintSet) private received;
     mapping (address => AggregatorV3Interface) private oracles;
     AggregatorV3Interface private ethOracle;
+    IERC20 private capsuleCoin; 
 
-    constructor(address[] memory _tokens, address[] memory _oracles, address _ethOracle) Ownable() {
+    constructor(address[] memory _tokens, address[] memory _oracles, address _ethOracle, address _capsuleCoin) Ownable() {
         ethOracle = AggregatorV3Interface(_ethOracle);
         for (uint256 i = 0; i < _tokens.length; i++) {
             oracles[_tokens[i]] = AggregatorV3Interface(_oracles[i]);
         }
+        capsuleCoin = IERC20(_capsuleCoin);
     }
 
 

@@ -4,6 +4,7 @@ const { network } = require("hardhat");
 const amount = "1000000000000000000";
 
 let capsuleContract;
+let capsuleCoin;
 let walletA, walletB, walletC;
 let tokenA, tokenB, tokenC;
 let testCapsule;
@@ -24,6 +25,9 @@ describe("Capsule", () => {
     const oracleA = await OracleEth.deploy();
     const oracleB = await OracleEth.deploy();
 
+    const CapsuleCoin = await ethers.getContractFactory("CapsuleCoin");
+    capsuleCoin = await CapsuleCoin.deploy(walletA.address);
+
     const TokenA = await ethers.getContractFactory("TestERC20");
     tokenA = await TokenA.deploy();
     tokenA.__ERC20_init("tokena", "tokena");
@@ -43,7 +47,8 @@ describe("Capsule", () => {
     capsuleContract = await Capsule.deploy(
       [tokenA.address, tokenB.address],
       [oracleA.address, oracleB.address],
-      oracleEth.address
+      oracleEth.address,
+      capsuleCoin.address
     );
   });
 
