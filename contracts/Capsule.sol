@@ -162,18 +162,22 @@ contract CryptoCapsule is Ownable{
     // Admin
     function setOracle(address token, address oracle) public onlyOwner() {
         oracles[token] = AggregatorV3Interface(oracle);
+        emit OracleSet(token, oracle);
     }
 
     function setEthOracle(address oracle) public onlyOwner() {
         ethOracle = AggregatorV3Interface(oracle);
+        emit EthOracleSet(oracle);
     }
 
     function removeOracle(address token) public onlyOwner() {
         oracles[token] = AggregatorV3Interface(address(0));
+        emit OracleRemoved(token);
     }
 
     function removeEthOracle() public onlyOwner() {
         ethOracle = AggregatorV3Interface(address(0));
+        emit EthOracleRemoved();
     }
 
 
@@ -208,4 +212,8 @@ contract CryptoCapsule is Ownable{
     // Events
     event CapsuleOpened(uint256 capsuleId);
     event CapsuleCreated(uint256 capsuleId);
+    event OracleSet(address token, address oracle);
+    event EthOracleSet(address oracle);
+    event OracleRemoved(address token);
+    event EthOracleRemoved();
 }
