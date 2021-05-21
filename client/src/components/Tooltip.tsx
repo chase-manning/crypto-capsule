@@ -25,7 +25,7 @@ const HelpIcon = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--white);
+  background-color: var(--bg);
   border: solid 1px var(--primary);
   color: var(--primary);
   outline: none;
@@ -35,7 +35,7 @@ const HelpIcon = styled.button`
 const Indicator = styled.div`
   width: 2rem;
   height: 2rem;
-  background-color: var(--white);
+  background-color: var(--bg);
   position: absolute;
   top: 200%;
   left: 30%;
@@ -52,7 +52,7 @@ const Popup = styled.div`
   width: 400px;
   padding: 1.7rem;
   border-radius: 1rem;
-  background-color: var(--white);
+  background-color: var(--bg);
   color: var(--main);
   font-size: 1.5rem;
   z-index: 2;

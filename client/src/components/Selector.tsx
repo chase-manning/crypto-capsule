@@ -26,9 +26,9 @@ const Option = styled.button`
   cursor: pointer;
   text-transform: capitalize;
   background-color: ${(props: OptionProps) =>
-    props.active ? "var(--main)" : "var(--white)"};
+    props.active ? "var(--main)" : "var(--bg)"};
   color: ${(props: OptionProps) =>
-    props.active ? "var(--white)" : "var(--main)"};
+    props.active ? "var(--bg)" : "var(--main)"};
   border: solid 1px var(--main);
   display: flex;
   justify-content: center;

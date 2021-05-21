@@ -5,10 +5,11 @@ const GlobalStyle = createGlobalStyle`
     :root {
         --main: #5268A1;
         --sub: #82B4D1;
-        --primary: #D796D3;
-        --primary-light: rgba(22, 97, 244, 0.1);
+        --primary: rgb(215, 151, 211);
+        --primary-light: rgba(215, 150, 211, 0.1);
+        --primary-shadow: rgba(215, 150, 211, 0.6);
         --dark: #5268A1;
-        --white: white;
+        --bg: #F8F2F2;
         --danger: #ef5252;
     }
 

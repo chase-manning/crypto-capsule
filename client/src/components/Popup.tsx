@@ -29,8 +29,8 @@ const Container = styled.div`
   width: 600px;
   padding: 4rem;
   border-radius: 3rem;
-  background-color: var(--white);
-  border: 2px solid var(--white);
+  background-color: var(--bg);
+  border: 2px solid var(--bg);
   font-size: 1.4rem;
   font-weight: 500;
   color: var(--plain-dark);

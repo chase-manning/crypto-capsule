@@ -35,7 +35,7 @@ const OpenButton = styled.button`
 const Image = styled.img`
   height: 1.6rem;
   margin-right: 1rem;
-  background-color: var(--white);
+  background-color: var(--bg);
   border-radius: 50%;
 `;
 
@@ -75,7 +75,7 @@ const MaxButton = styled.button`
   transform: translateY(-50%);
   cursor: pointer;
   height: 2rem;
-  background-color: var(--white);
+  background-color: var(--bg);
   padding: 0.5rem;
   display: flex;
   justify-content: center;

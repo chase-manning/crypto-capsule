@@ -20,7 +20,7 @@ const Container = styled.div`
   width: 25rem;
   padding: 1.7rem;
   border-radius: 1rem;
-  background-color: var(--white);
+  background-color: var(--bg);
   color: var(--main);
   font-size: 1.5rem;
   z-index: 1;
@@ -60,7 +60,7 @@ const TokenContainer = styled.button`
 const Image = styled.img`
   width: 2.4rem;
   margin-right: 2rem;
-  background-color: var(--white);
+  background-color: var(--bg);
   border-radius: 50%;
 `;
 

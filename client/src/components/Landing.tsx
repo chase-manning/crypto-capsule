@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import landing from "../assets/capsule.jpg";
-
 import Button from "../styles/Button";
 import CreateCapsule from "./CreateCapsule";
 
@@ -37,7 +36,6 @@ const SubHeader = styled.div`
 
 const Image = styled.img`
   width: 53vw;
-  background-color: lightslategray;
   display: flex;
   justify-content: center;
   align-items: center;
