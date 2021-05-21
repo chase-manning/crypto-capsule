@@ -1,7 +1,7 @@
 {
   "name": "crypto-capsule",
   "version": "1.0.0",
-  "description": "A Digital Decentralised Time Capsule built on the Ethereum Network",
+  "description": "Send crytocurrencies into the future, safely and securely using Ethereum smart contracts",
   "main": "index.js",
   "scripts": {
     "compile": "npx hardhat compile",
