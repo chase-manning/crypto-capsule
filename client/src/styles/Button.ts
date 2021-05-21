@@ -16,12 +16,12 @@ const Button = styled.button`
   align-items: center;
   cursor: pointer;
   box-shadow: ${(props: Props) =>
-    props.primary ? "5px 5px 40px rgba(22, 97, 244, 0.6)" : "none"};
+    props.primary ? "5px 5px 40px var(--primary-shadow)" : "none"};
   transition: all 0.3s;
 
   :hover {
     box-shadow: ${(props: Props) =>
-      props.primary ? "2px 2px 20px rgba(22, 97, 244, 0.6)" : "none"};
+      props.primary ? "2px 2px 20px var(--primary-shadow)" : "none"};
   }
 `;
 
