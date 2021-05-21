@@ -19,6 +19,7 @@ const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: var(--bg);
 `;
 
 const App = (): JSX.Element => {
