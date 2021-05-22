@@ -9,6 +9,38 @@ const StyledBlock = styled.div`
   height: 100%;
 `;
 
+const TopLeft = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 0;
+  border-top: solid 2px var(--main);
+  transform: translate(-6px, -2px) rotate(45deg);
+`;
+
+const TopRight = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 9px;
+  height: 10px;
+  background: var(--bg);
+  border-top: solid 2px var(--main);
+  transform: translate(-2px, -4px) rotate(45deg);
+`;
+
+const BottomLeft = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 8px;
+  height: 10px;
+  background: var(--bg);
+  border-top: solid 2px var(--main);
+  transform: translate(-3px, -2px) rotate(-135deg);
+`;
+
 const BackSection = styled.div`
   position: absolute;
   top: 0;
@@ -34,6 +66,9 @@ const Block = () => {
   return (
     <StyledBlock>
       <BackSection />
+      <TopLeft />
+      <TopRight />
+      <BottomLeft />
       <MainSection />
     </StyledBlock>
   );
