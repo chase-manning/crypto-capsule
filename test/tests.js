@@ -28,9 +28,6 @@ describe("Capsule", () => {
     const oracleA = await OracleEth.deploy();
     const oracleB = await OracleEth.deploy();
 
-    const CapsuleCoin = await ethers.getContractFactory("CapsuleCoin");
-    capsuleCoin = await CapsuleCoin.deploy(walletA.address);
-
     const TokenA = await ethers.getContractFactory("TestERC20");
     tokenA = await TokenA.deploy();
     tokenA.__ERC20_init("tokena", "tokena");
@@ -50,11 +47,8 @@ describe("Capsule", () => {
     capsuleContract = await Capsule.deploy(
       [tokenA.address, tokenB.address],
       [oracleA.address, oracleB.address],
-      oracleEth.address,
-      capsuleCoin.address
+      oracleEth.address
     );
-
-    await capsuleCoin.transfer(capsuleContract.address, BASE.mul(7_000_000));
   });
 
   it("Should have no Capsules on creation", async () => {
@@ -260,12 +254,6 @@ describe("Capsule", () => {
   it("Should pass the time past 2 months", async () => {
     await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 7 * 4 * 2]);
     await network.provider.send("evm_mine");
-  });
-
-  it("Should have 3 million Capsule Coins before opening", async () => {
-    const expectedBalance = BASE.mul(3_000_000);
-    const balance = await capsuleCoin.balanceOf(walletA.address);
-    expect(balance).to.equal(expectedBalance);
   });
 
   it("Should open Capsule", async () => {
