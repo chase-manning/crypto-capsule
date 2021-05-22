@@ -43,6 +43,8 @@ const Image = styled.img`
   font-size: 3rem;
   color: var(--main);
   text-transform: uppercase;
+  user-drag: none;
+  user-select: none;
 `;
 
 const Landing = (): JSX.Element => {
