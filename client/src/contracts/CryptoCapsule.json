@@ -230,6 +230,21 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "usd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rewardPerUsdPaid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule",
@@ -311,6 +326,21 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "usd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rewardPerUsdPaid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule",
@@ -405,11 +435,45 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "usd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rewardPerUsdPaid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule[]",
         "name": "",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "capsuleId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getRewardsEarned",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -486,6 +550,21 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "usd",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "rewardPerUsdPaid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reward",
+            "type": "uint256"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule[]",

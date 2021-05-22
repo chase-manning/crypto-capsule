@@ -11,6 +11,7 @@ import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 contract CryptoCapsule is Ownable{
     using EnumerableSet for EnumerableSet.UintSet;
 
+    // Capsule Data
     struct Capsule {
         uint256 id;
         address grantor;
@@ -24,15 +25,28 @@ contract CryptoCapsule is Ownable{
         uint256 value;
         address[] tokens;
         uint256[] amounts;
+        uint256 usd;
+        uint256 rewardPerUsdPaid;
+        uint256 reward;
     }
 
     Capsule[] capsules;
     mapping (address => EnumerableSet.UintSet) private sent;
     mapping (address => EnumerableSet.UintSet) private received;
     mapping (address => AggregatorV3Interface) private oracles;
+
     AggregatorV3Interface private ethOracle;
     IERC20 private capsuleCoin; 
 
+    // Capsule Coin Reward Data
+    uint256 private rewardDuration = 60 * 60 * 24 * 356 * 4;
+    uint256 private rewardRate = 7000000e18 / rewardDuration;
+    uint256 private lastUpdate = block.timestamp;
+    uint256 private rewardEnd = block.timestamp + rewardDuration;
+    uint256 private rewardPerUsd = 0;
+    uint256 private usd = 0;
+
+    // Constructor 
     constructor(address[] memory _tokens, address[] memory _oracles, address _ethOracle, address _capsuleCoin) Ownable() {
         ethOracle = AggregatorV3Interface(_ethOracle);
         for (uint256 i = 0; i < _tokens.length; i++) {
@@ -69,9 +83,15 @@ contract CryptoCapsule is Ownable{
                 false,
                 msg.value,
                 _tokens,
-                _values
+                _values,
+                0,
+                0,
+                0
             )
         );
+        uint256 capsuleUsd = getUsdValue(capsuleId);
+        capsules[capsuleId].usd = capsuleUsd;
+        usd += capsuleUsd;
         sent[msg.sender].add(capsuleId);
         received[_beneficiary].add(capsuleId);
         emit CapsuleCreated(capsuleId);
@@ -96,6 +116,8 @@ contract CryptoCapsule is Ownable{
             IERC20 erc20Token = IERC20(capsule.tokens[i]);
             erc20Token.transfer(capsule.beneficiary, capsule.amounts[i] * claimablePeriods / capsule.periodCount);
         }
+        uint256 reward = getRewardsEarned(capsuleId);
+        if (reward > 0) capsuleCoin.transfer(capsule.beneficiary, reward);
 
         capsules[capsuleId].claimedPeriods = capsule.claimedPeriods + claimablePeriods;
         capsules[capsuleId].opened = capsule.claimedPeriods + claimablePeriods == capsule.periodCount;
@@ -160,6 +182,11 @@ contract CryptoCapsule is Ownable{
         return usds;
     }
 
+    function getRewardsEarned(uint256 capsuleId) public view returns (uint256) {
+        Capsule memory capsule = capsules[capsuleId];
+        return (capsule.usd * (rewardPerUsd - capsule.rewardPerUsdPaid)) / 1e18 + capsule.reward;
+    }
+
 
     // Admin
     function setOracle(address token, address oracle) public onlyOwner() {
@@ -208,6 +235,14 @@ contract CryptoCapsule is Ownable{
             uint80 answeredInRound
         ) = oracle.latestRoundData();
         return uint256(price);
+    }
+
+    function _updateCapsuleReward(uint256 capsuleId) private {
+        uint256 rewardTime = block.timestamp < rewardEnd ? block.timestamp : rewardEnd;
+        rewardPerUsd += ((rewardTime - lastUpdate) * rewardRate * 1e18) / usd;
+        capsules[capsuleId].reward = getRewardsEarned(lastUpdate);
+        capsules[capsuleId].rewardPerUsdPaid = rewardPerUsd;
+        lastUpdate = block.timestamp;
     }
 
 
