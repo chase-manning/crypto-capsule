@@ -15,6 +15,7 @@ const StyledButton = styled.button`
   align-items: center;
   cursor: pointer;
   margin-right: -2px;
+  transform: translateX(8px);
 `;
 
 const Content = styled.div`

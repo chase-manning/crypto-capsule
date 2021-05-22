@@ -10,7 +10,7 @@ const StyledSelector = styled.div`
 
 const Container = styled.div`
   display: flex;
-  margin: 1rem;
+  margin: 1rem 0;
 `;
 
 const OptionsContainer = styled.div`
