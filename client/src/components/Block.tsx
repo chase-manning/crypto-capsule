@@ -72,7 +72,7 @@ type Props = {
   pressed?: boolean;
 };
 
-const Block = (props: Props) => {
+const Block = (props: Props): JSX.Element => {
   return (
     <StyledBlock>
       <BackSection small={props.small} pressed={props.pressed} />

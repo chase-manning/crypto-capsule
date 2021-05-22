@@ -30,7 +30,7 @@ const Dots = styled.div`
   opacity: 0.9;
 `;
 
-const Slider = () => {
+const Slider = (): JSX.Element => {
   return (
     <StyledSlider>
       <Dots />

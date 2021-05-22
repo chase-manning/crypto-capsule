@@ -35,7 +35,7 @@ type Props = {
   click: () => void;
 };
 
-const Button = (props: Props) => {
+const Button = (props: Props): JSX.Element => {
   return (
     <StyledButton onClick={() => props.click()}>
       <Block pressed={props.selected} />
