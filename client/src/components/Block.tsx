@@ -25,7 +25,8 @@ const TopRight = styled.div`
   right: 0;
   width: 9px;
   height: 10px;
-  background: var(--bg);
+  background: ${(props: Props) =>
+    props.pressed ? "var(--main)" : "var(--bg)"};
   border-top: solid 2px var(--main);
   transform: translate(-2px, -4px) rotate(45deg);
 `;
@@ -36,7 +37,8 @@ const BottomLeft = styled.div`
   left: 0;
   width: 8px;
   height: 10px;
-  background: var(--bg);
+  background: ${(props: Props) =>
+    props.pressed ? "var(--main)" : "var(--bg)"};
   border-top: solid 2px var(--main);
   transform: translate(-3px, -2px) rotate(-135deg);
 `;
@@ -47,8 +49,9 @@ const BackSection = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg);
   border: solid 2px var(--main);
+  background: ${(props: Props) =>
+    props.pressed ? "var(--main)" : "var(--bg)"};
   transform: ${(props: Props) =>
     props.small ? "translate(-4px, -4px)" : "translate(-6px, -6px)"};
 `;
@@ -59,7 +62,8 @@ const MainSection = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg);
+  background: ${(props: Props) =>
+    props.pressed ? "var(--main)" : "var(--bg)"};
   border: solid 2px var(--main);
 `;
 
@@ -73,9 +77,9 @@ const Block = (props: Props) => {
     <StyledBlock>
       <BackSection small={props.small} pressed={props.pressed} />
       <TopLeft />
-      <TopRight />
-      <BottomLeft />
-      <MainSection />
+      <TopRight small={props.small} pressed={props.pressed} />
+      <BottomLeft small={props.small} pressed={props.pressed} />
+      <MainSection small={props.small} pressed={props.pressed} />
     </StyledBlock>
   );
 };
