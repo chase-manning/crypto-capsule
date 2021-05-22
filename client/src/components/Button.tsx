@@ -10,16 +10,18 @@ type StyledProps = {
 
 const StyledButton = styled.button`
   position: relative;
-  color: var(--main);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin-right: -2px;
 `;
 
 const Content = styled.div`
+  color: ${(props: StyledProps) =>
+    props.selected ? "var(--bg)" : "var(--main)"};
   padding: ${(props: StyledProps) =>
-    props.small ? "5px 5px" : props.primary ? "18px 34px" : "13px 27px"};
+    props.small ? "7px 12px" : props.primary ? "18px 34px" : "13px 27px"};
   font-size: ${(props: StyledProps) => (props.primary ? "18px" : "15px")};
   position: relative;
 `;
