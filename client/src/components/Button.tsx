@@ -4,6 +4,8 @@ import Block from "./Block";
 
 type StyledProps = {
   primary?: boolean;
+  selected?: boolean;
+  small?: boolean;
 };
 
 const StyledButton = styled.button`
@@ -17,13 +19,15 @@ const StyledButton = styled.button`
 
 const Content = styled.div`
   padding: ${(props: StyledProps) =>
-    props.primary ? "18px 34px" : "13px 27px"};
+    props.small ? "5px 5px" : props.primary ? "18px 34px" : "13px 27px"};
   font-size: ${(props: StyledProps) => (props.primary ? "18px" : "15px")};
   position: relative;
 `;
 
 type Props = {
   primary?: boolean;
+  selected?: boolean;
+  small?: boolean;
   text: string;
   click: () => void;
 };
@@ -31,8 +35,14 @@ type Props = {
 const Button = (props: Props) => {
   return (
     <StyledButton onClick={() => props.click()}>
-      <Block />
-      <Content primary={props.primary}>{props.text}</Content>
+      <Block pressed={props.selected} />
+      <Content
+        primary={props.primary}
+        small={props.small}
+        selected={props.selected}
+      >
+        {props.text}
+      </Content>
     </StyledButton>
   );
 };
