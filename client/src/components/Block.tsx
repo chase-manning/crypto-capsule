@@ -49,7 +49,8 @@ const BackSection = styled.div`
   height: 100%;
   background: var(--bg);
   border: solid 2px var(--main);
-  transform: translate(-6px, -6px);
+  transform: ${(props: Props) =>
+    props.small ? "translate(-4px, -4px)" : "translate(-6px, -6px)"};
 `;
 
 const MainSection = styled.div`
@@ -62,10 +63,15 @@ const MainSection = styled.div`
   border: solid 2px var(--main);
 `;
 
-const Block = () => {
+type Props = {
+  small?: boolean;
+  pressed?: boolean;
+};
+
+const Block = (props: Props) => {
   return (
     <StyledBlock>
-      <BackSection />
+      <BackSection small={props.small} pressed={props.pressed} />
       <TopLeft />
       <TopRight />
       <BottomLeft />
