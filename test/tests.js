@@ -257,6 +257,11 @@ describe("Capsule", () => {
     await network.provider.send("evm_mine");
   });
 
+  it("Should have 3 million Capsule Coins before opening", async () => {
+    const balance = await capsuleCoin.balanceOf(walletA.address);
+    expect(balance).to.equal("3000000000000000000000000");
+  });
+
   it("Should open Capsule", async () => {
     const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
 
