@@ -8,8 +8,14 @@ const StyledSelector = styled.div`
   flex-direction: column;
 `;
 
+const Container = styled.div`
+  display: flex;
+  margin: 1rem;
+`;
+
 const OptionsContainer = styled.div`
   display: flex;
+  flex-direction: row-reverse;
 `;
 
 type Props = {
@@ -24,17 +30,19 @@ const Selector = (props: Props): JSX.Element => {
   return (
     <StyledSelector>
       <Label text={props.label} tooltip={props.tooltip} />
-      <OptionsContainer>
-        {props.options.map((option: string, index: number) => (
-          <Button
-            small
-            key={option}
-            primary={option === props.activeOption}
-            text={option}
-            click={() => props.setOption(option)}
-          />
-        ))}
-      </OptionsContainer>
+      <Container>
+        <OptionsContainer>
+          {props.options.map((option: string, index: number) => (
+            <Button
+              small
+              key={option}
+              selected={option === props.activeOption}
+              text={option}
+              click={() => props.setOption(option)}
+            />
+          ))}
+        </OptionsContainer>
+      </Container>
     </StyledSelector>
   );
 };
