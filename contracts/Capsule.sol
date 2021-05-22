@@ -40,11 +40,11 @@ contract CryptoCapsule is Ownable{
 
     // Capsule Coin Reward Data
     uint256 private rewardDuration = 60 * 60 * 24 * 356 * 4;
-    uint256 private rewardRate = 7000000e18 / rewardDuration;
+    uint256 public rewardRate = (7000000 * 10 ** 18) / rewardDuration;
     uint256 private lastUpdate = block.timestamp;
     uint256 private rewardEnd = block.timestamp + rewardDuration;
     uint256 private rewardPerUsd = 0;
-    uint256 private usd = 0;
+    uint256 private totalUsd = 0;
 
     // Constructor 
     constructor(address[] memory _tokens, address[] memory _oracles, address _ethOracle, address _capsuleCoin) Ownable() {
@@ -89,9 +89,12 @@ contract CryptoCapsule is Ownable{
                 0
             )
         );
+
         uint256 capsuleUsd = getUsdValue(capsuleId);
         capsules[capsuleId].usd = capsuleUsd;
-        usd += capsuleUsd;
+        totalUsd += capsuleUsd;
+        _updateCapsuleReward(capsuleId);
+
         sent[msg.sender].add(capsuleId);
         received[_beneficiary].add(capsuleId);
         emit CapsuleCreated(capsuleId);
@@ -239,7 +242,8 @@ contract CryptoCapsule is Ownable{
 
     function _updateCapsuleReward(uint256 capsuleId) private {
         uint256 rewardTime = block.timestamp < rewardEnd ? block.timestamp : rewardEnd;
-        rewardPerUsd += ((rewardTime - lastUpdate) * rewardRate * 1e18) / usd;
+        rewardPerUsd += (rewardTime - lastUpdate) * rewardRate;
+        rewardPerUsd += ((rewardTime - lastUpdate) * rewardRate * 1e18) / totalUsd;
         capsules[capsuleId].reward = getRewardsEarned(lastUpdate);
         capsules[capsuleId].rewardPerUsdPaid = rewardPerUsd;
         lastUpdate = block.timestamp;
