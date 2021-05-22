@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "hardhat/console.sol";
+
 import "./utils/EnumerableSet.sol";
 import "./utils/Ownable.sol";
 
@@ -10,6 +12,7 @@ import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 contract CryptoCapsule is Ownable{
     using EnumerableSet for EnumerableSet.UintSet;
+
 
     // Capsule Data
     struct Capsule {
@@ -25,9 +28,6 @@ contract CryptoCapsule is Ownable{
         uint256 value;
         address[] tokens;
         uint256[] amounts;
-        uint256 usd;
-        uint256 rewardPerUsdPaid;
-        uint256 reward;
     }
 
     Capsule[] capsules;
@@ -38,13 +38,6 @@ contract CryptoCapsule is Ownable{
     AggregatorV3Interface private ethOracle;
     IERC20 private capsuleCoin; 
 
-    // Capsule Coin Reward Data
-    uint256 private rewardDuration = 60 * 60 * 24 * 356 * 4;
-    uint256 public rewardRate = (7000000 * 10 ** 18) / rewardDuration;
-    uint256 private lastUpdate = block.timestamp;
-    uint256 private rewardEnd = block.timestamp + rewardDuration;
-    uint256 private rewardPerUsd = 0;
-    uint256 private totalUsd = 0;
 
     // Constructor 
     constructor(address[] memory _tokens, address[] memory _oracles, address _ethOracle, address _capsuleCoin) Ownable() {
@@ -83,17 +76,9 @@ contract CryptoCapsule is Ownable{
                 false,
                 msg.value,
                 _tokens,
-                _values,
-                0,
-                0,
-                0
+                _values
             )
         );
-
-        uint256 capsuleUsd = getUsdValue(capsuleId);
-        capsules[capsuleId].usd = capsuleUsd;
-        totalUsd += capsuleUsd;
-        _updateCapsuleReward(capsuleId);
 
         sent[msg.sender].add(capsuleId);
         received[_beneficiary].add(capsuleId);
@@ -119,8 +104,6 @@ contract CryptoCapsule is Ownable{
             IERC20 erc20Token = IERC20(capsule.tokens[i]);
             erc20Token.transfer(capsule.beneficiary, capsule.amounts[i] * claimablePeriods / capsule.periodCount);
         }
-        uint256 reward = getRewardsEarned(capsuleId);
-        if (reward > 0) capsuleCoin.transfer(capsule.beneficiary, reward);
 
         capsules[capsuleId].claimedPeriods = capsule.claimedPeriods + claimablePeriods;
         capsules[capsuleId].opened = capsule.claimedPeriods + claimablePeriods == capsule.periodCount;
@@ -185,11 +168,6 @@ contract CryptoCapsule is Ownable{
         return usds;
     }
 
-    function getRewardsEarned(uint256 capsuleId) public view returns (uint256) {
-        Capsule memory capsule = capsules[capsuleId];
-        return (capsule.usd * (rewardPerUsd - capsule.rewardPerUsdPaid)) / 1e18 + capsule.reward;
-    }
-
 
     // Admin
     function setOracle(address token, address oracle) public onlyOwner() {
@@ -238,14 +216,6 @@ contract CryptoCapsule is Ownable{
             uint80 answeredInRound
         ) = oracle.latestRoundData();
         return uint256(price);
-    }
-
-    function _updateCapsuleReward(uint256 capsuleId) private {
-        uint256 rewardTime = block.timestamp < rewardEnd ? block.timestamp : rewardEnd;
-        rewardPerUsd += ((rewardTime - lastUpdate) * rewardRate * 1e18) / totalUsd;
-        capsules[capsuleId].reward = getRewardsEarned(capsuleId);
-        capsules[capsuleId].rewardPerUsdPaid = rewardPerUsd;
-        lastUpdate = block.timestamp;
     }
 
 
