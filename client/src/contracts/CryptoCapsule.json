@@ -124,19 +124,6 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "c__0x86ac2662",
-        "type": "bytes32"
-      }
-    ],
-    "name": "c_0x86ac2662",
-    "outputs": [],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address payable",
         "name": "_beneficiary",
         "type": "address"
