@@ -11,7 +11,7 @@ const StyledPopup = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(6px);
   z-index: 1;
 `;
@@ -28,7 +28,7 @@ const Container = styled.div`
   position: relative;
   width: 600px;
   padding: 4rem;
-  border-radius: 3rem;
+  /* border-radius: 3rem; */
   background-color: var(--bg);
   border: 2px solid var(--bg);
   font-size: 1.4rem;
@@ -37,6 +37,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: solid 2px var(--main);
 
   @media (max-width: 768px) {
     width: 90vw;
