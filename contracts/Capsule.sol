@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "hardhat/console.sol";
-
 import "./utils/EnumerableSet.sol";
 import "./utils/Ownable.sol";
 
@@ -155,7 +153,7 @@ contract CryptoCapsule is Ownable{
         return usd;
     }
 
-    function getUsdValues(uint256[] memory capsuleIds) public view returns(uint256[] memory) { //Test
+    function getUsdValues(uint256[] memory capsuleIds) public view returns(uint256[] memory) {
         require(capsuleIds.length > 0, "Must provide at least one capsule id");
 
         uint256[] memory usds = new uint256[](capsuleIds.length); 
