@@ -20,7 +20,7 @@ const Left = styled.div`
 `;
 
 const Header = styled.h1`
-  font-size: 80px;
+  font-size: 11rem;
   font-weight: 700;
   color: var(--main);
 `;
@@ -51,7 +51,7 @@ const Landing = (): JSX.Element => {
   return (
     <StyledLanding>
       <Left>
-        <Header>Crypto Capsule The Blockchain Time Capsule</Header>
+        <Header>Crypto Capsule</Header>
         <SubHeader>
           Send crytocurrencies into the future, safely and securely using
           Ethereum smart contracts
