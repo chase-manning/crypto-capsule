@@ -242,9 +242,8 @@ contract CryptoCapsule is Ownable{
 
     function _updateCapsuleReward(uint256 capsuleId) private {
         uint256 rewardTime = block.timestamp < rewardEnd ? block.timestamp : rewardEnd;
-        rewardPerUsd += (rewardTime - lastUpdate) * rewardRate;
         rewardPerUsd += ((rewardTime - lastUpdate) * rewardRate * 1e18) / totalUsd;
-        capsules[capsuleId].reward = getRewardsEarned(lastUpdate);
+        capsules[capsuleId].reward = getRewardsEarned(capsuleId);
         capsules[capsuleId].rewardPerUsdPaid = rewardPerUsd;
         lastUpdate = block.timestamp;
     }
