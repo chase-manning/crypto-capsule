@@ -4,7 +4,7 @@ import dateformat from "dateformat";
 import countdown from "countdown";
 import { useSelector } from "react-redux";
 
-import Button from "../styles/Button";
+import Button from "./Button";
 import CapsuleType, { Asset } from "../types/CapsuleType";
 import { openCapsule } from "../services/contracthelper";
 import { selectTokens } from "../state/tokenSlice";
@@ -171,9 +171,7 @@ const Capsule = (props: Props): JSX.Element => {
         </Crypto>
       </ValueContainer>
       {isOpen && !props.capsule.opened && (
-        <Button primary onClick={() => open()}>
-          Open
-        </Button>
+        <Button primary text="Open" click={() => open()} />
       )}
     </StyledCapsule>
   );

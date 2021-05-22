@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "../styles/Button";
+import Button from "./Button";
 import Block from "./Block";
 
 const StyledPopup = styled.div`
@@ -108,21 +108,19 @@ const Popup: React.FC<Props> = (props) => {
               {props.buttonText && (
                 <Button
                   primary
-                  onClick={() => {
+                  text={props.buttonText}
+                  click={() => {
                     if (props.buttonAction) props.buttonAction();
                   }}
-                >
-                  {props.buttonText}
-                </Button>
+                />
               )}
               {props.secondButtonText && (
                 <Button
-                  onClick={() => {
+                  text={props.secondButtonText}
+                  click={() => {
                     if (props.secondButtonAction) props.secondButtonAction();
                   }}
-                >
-                  {props.secondButtonText}
-                </Button>
+                />
               )}
             </ButtonContainer>
           )}

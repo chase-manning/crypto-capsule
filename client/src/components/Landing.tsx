@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import landing from "../assets/capsule.jpg";
-import Button from "../styles/Button";
+import Button from "./Button";
 import CreateCapsule from "./CreateCapsule";
 
 const StyledLanding = styled.div`
@@ -57,9 +57,11 @@ const Landing = (): JSX.Element => {
           Ethereum smart contracts
         </SubHeader>
         <div>
-          <Button primary onClick={() => setCreatingCapsule(true)}>
-            Create Capsule
-          </Button>
+          <Button
+            primary
+            text="Create Capsule"
+            click={() => setCreatingCapsule(true)}
+          />
         </div>
       </Left>
       <Image src={landing} />

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAddress, setAddress } from "../state/userSlice";
-import Button from "../styles/Button";
+import Button from "./Button";
 import { getAddress } from "../services/contracthelper";
 
 const Connector = (): JSX.Element => {
@@ -19,9 +19,10 @@ const Connector = (): JSX.Element => {
   };
 
   return (
-    <Button onClick={() => connect()}>
-      {address ? formattedAddress() : "Connect"}
-    </Button>
+    <Button
+      text={address ? formattedAddress() : "Connect"}
+      click={() => connect()}
+    />
   );
 };
 
