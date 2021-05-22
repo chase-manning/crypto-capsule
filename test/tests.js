@@ -53,6 +53,8 @@ describe("Capsule", () => {
       oracleEth.address,
       capsuleCoin.address
     );
+
+    await capsuleCoin.transfer(capsuleContract.address, BASE.mul(7_000_000));
   });
 
   it("Should have no Capsules on creation", async () => {
@@ -107,6 +109,12 @@ describe("Capsule", () => {
     expect(capsule.amounts[0]).to.equal(BASE);
     expect(capsule.tokens.length).to.equal(1);
     expect(capsule.amounts.length).to.equal(1);
+  });
+
+  it("Should have a reward rate set", async () => {
+    const rewardRate = await capsuleContract.rewardRate();
+    console.log(rewardRate);
+    expect(rewardRate).to.equal(REWARD_RATE);
   });
 
   it("Should fail on distribution date in past", async () => {
@@ -244,9 +252,19 @@ describe("Capsule", () => {
     ).to.be.revertedWith("Capsule has not matured yet");
   });
 
+  it("Should have no rewards before time passing", async () => {
+    const rewards = await capsuleContract.getRewardsEarned(testCapsule.id);
+    expect(rewards).to.equal(0);
+  });
+
   it("Should pass the time 1 months", async () => {
     await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 7 * 4 * 1]);
     await network.provider.send("evm_mine");
+  });
+
+  it("Should have rewards after time passing", async () => {
+    const rewards = await capsuleContract.getRewardsEarned(testCapsule.id);
+    expect(rewards).to.equal(REWARD_RATE.mul(60 * 60 * 24 * 7 * 4 * 1));
   });
 
   it("Should not open before distribution date", async () => {
@@ -259,6 +277,8 @@ describe("Capsule", () => {
     await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 7 * 4 * 2]);
     await network.provider.send("evm_mine");
   });
+
+  it("Should throw error for invalid capsule for reward earned", async () => {});
 
   it("Should have 3 million Capsule Coins before opening", async () => {
     const expectedBalance = BASE.mul(3_000_000);
@@ -277,11 +297,13 @@ describe("Capsule", () => {
     expect(balanceAfter).to.equal(balanceBefore + Number(BASE));
   });
 
-  it("Should have 3 million Capsule Coins before opening", async () => {
-    const expectedBalance = BASE.mul(3_000_000);
-    const balance = await capsuleCoin.balanceOf(walletA.address);
-    expect(balance).to.equal(expectedBalance);
-  });
+  it("Should receive Capsule Coin rewards after opening", async () => {});
+
+  // TODO rewards for split accounts
+  // TODO rewards going to another address
+  // TODO rewards for end of periods
+  // TODO stop accululating after capsule end
+  // TODO stops impacting total after capsule end
 
   it("Should not open already opened Capsule", async () => {
     await expect(
