@@ -27,12 +27,15 @@ type Props = {
 };
 
 const Selector = (props: Props): JSX.Element => {
+  const options = [...props.options];
+  options.reverse();
+
   return (
     <StyledSelector>
       <Label text={props.label} tooltip={props.tooltip} />
       <Container>
         <OptionsContainer>
-          {props.options.map((option: string, index: number) => (
+          {options.map((option: string, index: number) => (
             <Button
               small
               key={option}
