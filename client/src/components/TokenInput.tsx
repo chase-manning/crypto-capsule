@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ethBalance, tokenBalance } from "../services/contracthelper";
 import { toCents } from "../services/web3Service";
 import Input from "../styles/Input";
+import { ValidationError } from "../styles/ValidationError";
 import Token from "../types/Token";
 import TokenSelector from "./TokenSelector";
 
@@ -21,6 +22,7 @@ const Container = styled.div`
   width: 13rem;
   position: relative;
   margin-right: 3rem;
+  height: 4.2rem;
 `;
 
 const OpenButton = styled.button`
@@ -60,7 +62,7 @@ const Arrow = styled.div`
 const InputContainer = styled.div`
   position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   flex: 1;
 `;
 
@@ -71,8 +73,7 @@ const MaxButton = styled.button`
   font-weight: 600;
   position: absolute;
   right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 1rem;
   cursor: pointer;
   height: 2rem;
   background-color: var(--bg);
@@ -103,6 +104,7 @@ const TokenInput = (props: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("0");
   const [balance, setBalance] = useState(0);
+  const [error, setError] = useState("");
 
   const updateBalance = async (token: Token) => {
     if (token.address === "ETH") {
@@ -112,6 +114,26 @@ const TokenInput = (props: Props): JSX.Element => {
       const _balance = await tokenBalance(token);
       setBalance(_balance);
     }
+  };
+
+  const setToken = (token: Token, valueString: string) => {
+    setError("");
+    let number = "0";
+    try {
+      number = toCents(Number.parseFloat(valueString), token);
+    } catch {
+      setError("Not a valid number");
+      return;
+    }
+    if (Number.parseFloat(number) === 0) {
+      setError("Value must be greater than 0");
+      return;
+    }
+    if (Number.parseFloat(valueString) > balance) {
+      setError("Value must be less than or equal to balance");
+      return;
+    }
+    props.setToken(token, toCents(Number.parseFloat(valueString), token));
   };
 
   useEffect(() => {
@@ -129,7 +151,7 @@ const TokenInput = (props: Props): JSX.Element => {
           open={open}
           token={props.token}
           setToken={(token: Token) => {
-            props.setToken(token, toCents(Number.parseFloat(value), token));
+            setToken(token, value);
             updateBalance(token);
             setOpen(false);
           }}
@@ -141,13 +163,11 @@ const TokenInput = (props: Props): JSX.Element => {
           value={value}
           onChange={(e: any) => {
             setValue(e.target.value);
-            props.setToken(
-              props.token,
-              toCents(Number.parseFloat(e.target.value), props.token)
-            );
+            setToken(props.token, e.target.value);
           }}
         />
         <MaxButton onClick={() => setValue(balance.toString())}>max</MaxButton>
+        {error && <ValidationError spacing>{error}</ValidationError>}
       </InputContainer>
       {props.removable && (
         <RemoveAsset onClick={() => props.removeToken()}>Remove</RemoveAsset>
