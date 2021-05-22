@@ -1,7 +1,8 @@
 const { expect } = require("chai");
 const { network } = require("hardhat");
+const { BigNumber } = require("@ethersproject/bignumber");
 
-const amount = "1000000000000000000";
+const BASE = BigNumber.from(10).pow(18);
 
 let capsuleContract;
 let capsuleCoin;
@@ -31,17 +32,17 @@ describe("Capsule", () => {
     const TokenA = await ethers.getContractFactory("TestERC20");
     tokenA = await TokenA.deploy();
     tokenA.__ERC20_init("tokena", "tokena");
-    tokenA.mint(walletA.address, "10000000000000000000");
+    tokenA.mint(walletA.address, BASE.mul(10));
 
     const TokenB = await ethers.getContractFactory("TestERC20");
     tokenB = await TokenB.deploy();
     tokenB.__ERC20_init("tokenb", "tokenb");
-    tokenB.mint(walletA.address, "10000000000000000000");
+    tokenB.mint(walletA.address, BASE.mul(10));
 
     const TokenC = await ethers.getContractFactory("TestERC20");
     tokenC = await TokenC.deploy();
     tokenC.__ERC20_init("tokenc", "tokenc");
-    tokenC.mint(walletA.address, "10000000000000000000");
+    tokenC.mint(walletA.address, BASE.mul(10));
 
     const Capsule = await ethers.getContractFactory("CryptoCapsule");
     capsuleContract = await Capsule.deploy(
@@ -68,18 +69,18 @@ describe("Capsule", () => {
 
     const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
 
-    await tokenA.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
     await capsuleContract.createCapsule(
       walletB.address,
       distributionDate,
       1,
       1,
       [tokenA.address],
-      [amount]
+      [BASE]
     );
 
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
-    expect(balanceAfter).to.equal(balanceBefore - Number(amount));
+    expect(balanceAfter).to.equal(balanceBefore - Number(BASE));
 
     const sentA = await capsuleContract.getSentCapsules(walletA.address);
     expect(sentA.length).to.equal(1);
@@ -101,7 +102,7 @@ describe("Capsule", () => {
     expect(capsule.opened).to.equal(false);
     expect(capsule.value).to.equal(0);
     expect(capsule.tokens[0]).to.equal(tokenA.address);
-    expect(capsule.amounts[0]).to.equal(amount);
+    expect(capsule.amounts[0]).to.equal(BASE);
     expect(capsule.tokens.length).to.equal(1);
     expect(capsule.amounts.length).to.equal(1);
   });
@@ -111,7 +112,7 @@ describe("Capsule", () => {
     const lastMonth = new Date(now.setMonth(now.getMonth() - 1));
     const distributionDate = dateToUnix(lastMonth);
 
-    await tokenA.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
 
     await expect(
       capsuleContract.createCapsule(
@@ -120,7 +121,7 @@ describe("Capsule", () => {
         1,
         1,
         [tokenA.address],
-        [amount]
+        [BASE]
       )
     ).to.be.revertedWith("Distribution Date must be in future");
   });
@@ -130,7 +131,7 @@ describe("Capsule", () => {
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
-    await tokenA.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
 
     await expect(
       capsuleContract.createCapsule(
@@ -149,7 +150,7 @@ describe("Capsule", () => {
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
-    await tokenA.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
 
     await expect(
       capsuleContract.createCapsule(
@@ -158,7 +159,7 @@ describe("Capsule", () => {
         1,
         1,
         [tokenA.address, tokenB.address],
-        [amount]
+        [BASE]
       )
     ).to.be.revertedWith("Tokens and Values must be same length");
 
@@ -169,7 +170,7 @@ describe("Capsule", () => {
         1,
         1,
         [tokenA.address],
-        [amount, amount]
+        [BASE, BASE]
       )
     ).to.be.revertedWith("Tokens and Values must be same length");
   });
@@ -179,7 +180,7 @@ describe("Capsule", () => {
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
-    await tokenA.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
 
     await expect(
       capsuleContract.createCapsule(
@@ -188,7 +189,7 @@ describe("Capsule", () => {
         0,
         1,
         [tokenA.address],
-        [amount]
+        [BASE]
       )
     ).to.be.revertedWith("Period Size must greater than or equal to 1");
   });
@@ -198,7 +199,7 @@ describe("Capsule", () => {
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
     const distributionDate = dateToUnix(nextMonth);
 
-    await tokenA.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
 
     await expect(
       capsuleContract.createCapsule(
@@ -207,7 +208,7 @@ describe("Capsule", () => {
         1,
         0,
         [tokenA.address],
-        [amount]
+        [BASE]
       )
     ).to.be.revertedWith("Period Count must greater than or equal to 1");
   });
@@ -231,7 +232,7 @@ describe("Capsule", () => {
       1,
       1,
       [tokenA.address],
-      [amount]
+      [BASE]
     );
 
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
@@ -270,7 +271,13 @@ describe("Capsule", () => {
     expect(testCapsule.opened).to.equal(true);
 
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
-    expect(balanceAfter).to.equal(balanceBefore + Number(amount));
+    expect(balanceAfter).to.equal(balanceBefore + Number(BASE));
+  });
+
+  it("Should have 3 million Capsule Coins before opening", async () => {
+    const expectedBalance = BASE.mul(3_000_000);
+    const balance = await capsuleCoin.balanceOf(walletA.address);
+    expect(balance).to.equal(expectedBalance);
   });
 
   it("Should not open already opened Capsule", async () => {
@@ -289,14 +296,14 @@ describe("Capsule", () => {
 
     const capsuleCount = await capsuleContract.getCapsuleCount();
 
-    await tokenA.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
     await capsuleContract.createCapsule(
       walletA.address,
       distributionStartDate,
       periodSize,
       5,
       [tokenA.address],
-      [amount]
+      [BASE]
     );
 
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
@@ -319,9 +326,7 @@ describe("Capsule", () => {
     const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
     await capsuleContract.openCapsule(testCapsule.id);
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
-    expect(balanceAfter).to.equal(
-      balanceBefore + Math.trunc(Number(amount) / 5)
-    );
+    expect(balanceAfter).to.equal(balanceBefore + Math.trunc(Number(BASE) / 5));
   });
 
   it("Should require there are periods to claim to open", async () => {
@@ -339,9 +344,7 @@ describe("Capsule", () => {
     const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
     await capsuleContract.openCapsule(testCapsule.id);
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
-    expect(balanceAfter).to.equal(
-      balanceBefore + Math.trunc(Number(amount) / 5)
-    );
+    expect(balanceAfter).to.equal(balanceBefore + Math.trunc(Number(BASE) / 5));
   });
 
   it("Should pass 15 days", async () => {
@@ -354,7 +357,7 @@ describe("Capsule", () => {
     await capsuleContract.openCapsule(testCapsule.id);
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
     expect(balanceAfter).to.equal(
-      balanceBefore + Math.trunc((Number(amount) / 5) * 2)
+      balanceBefore + Math.trunc((Number(BASE) / 5) * 2)
     );
   });
 
@@ -367,9 +370,7 @@ describe("Capsule", () => {
     const balanceBefore = Number(await tokenA.balanceOf(walletA.address));
     await capsuleContract.openCapsule(testCapsule.id);
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
-    expect(balanceAfter).to.equal(
-      balanceBefore + Math.trunc(Number(amount) / 5)
-    );
+    expect(balanceAfter).to.equal(balanceBefore + Math.trunc(Number(BASE) / 5));
   });
 
   it("Should have opened status", async () => {
@@ -386,16 +387,16 @@ describe("Capsule", () => {
 
     const capsuleCount = await capsuleContract.getCapsuleCount();
 
-    await tokenA.approve(capsuleContract.address, amount);
-    await tokenB.approve(capsuleContract.address, amount);
-    await tokenC.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
+    await tokenB.approve(capsuleContract.address, BASE);
+    await tokenC.approve(capsuleContract.address, BASE);
     await capsuleContract.createCapsule(
       walletA.address,
       distributionStartDate,
       1,
       1,
       [tokenA.address, tokenB.address, tokenC.address],
-      [amount, amount, amount],
+      [BASE, BASE, BASE],
       { value: ethers.utils.parseEther("1") }
     );
 
@@ -411,14 +412,14 @@ describe("Capsule", () => {
 
   it("Should get USD of multiple Capsules", async () => {
     const capsuleCount = await capsuleContract.getCapsuleCount();
-    await tokenA.approve(capsuleContract.address, amount);
+    await tokenA.approve(capsuleContract.address, BASE);
     await capsuleContract.createCapsule(
       walletA.address,
       10 ** 10,
       1,
       1,
       [tokenA.address],
-      [amount],
+      [BASE],
       { value: ethers.utils.parseEther("1") }
     );
 
