@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../styles/Button";
+import Block from "./Block";
 
 const StyledPopup = styled.div`
   position: fixed;
@@ -28,20 +29,22 @@ const Container = styled.div`
   position: relative;
   width: 600px;
   padding: 4rem;
-  /* border-radius: 3rem; */
-  background-color: var(--bg);
-  border: 2px solid var(--bg);
   font-size: 1.4rem;
   font-weight: 500;
   color: var(--plain-dark);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: solid 2px var(--main);
 
   @media (max-width: 768px) {
     width: 90vw;
   }
+`;
+
+const Content = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Header = styled.h3`
@@ -95,32 +98,35 @@ const Popup: React.FC<Props> = (props) => {
     <StyledPopup>
       <Background onClick={() => props.close()} />
       <Container>
-        {props.header && <Header>{props.header}</Header>}
-        {props.body && <Body>{props.body}</Body>}
-        {props.content && props.content}
-        {(props.buttonText || props.secondButtonText) && (
-          <ButtonContainer>
-            {props.buttonText && (
-              <Button
-                primary
-                onClick={() => {
-                  if (props.buttonAction) props.buttonAction();
-                }}
-              >
-                {props.buttonText}
-              </Button>
-            )}
-            {props.secondButtonText && (
-              <Button
-                onClick={() => {
-                  if (props.secondButtonAction) props.secondButtonAction();
-                }}
-              >
-                {props.secondButtonText}
-              </Button>
-            )}
-          </ButtonContainer>
-        )}
+        <Block />
+        <Content>
+          {props.header && <Header>{props.header}</Header>}
+          {props.body && <Body>{props.body}</Body>}
+          {props.content && props.content}
+          {(props.buttonText || props.secondButtonText) && (
+            <ButtonContainer>
+              {props.buttonText && (
+                <Button
+                  primary
+                  onClick={() => {
+                    if (props.buttonAction) props.buttonAction();
+                  }}
+                >
+                  {props.buttonText}
+                </Button>
+              )}
+              {props.secondButtonText && (
+                <Button
+                  onClick={() => {
+                    if (props.secondButtonAction) props.secondButtonAction();
+                  }}
+                >
+                  {props.secondButtonText}
+                </Button>
+              )}
+            </ButtonContainer>
+          )}
+        </Content>
       </Container>
     </StyledPopup>
   );
