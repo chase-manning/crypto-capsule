@@ -3,6 +3,8 @@ const { network } = require("hardhat");
 const { BigNumber } = require("@ethersproject/bignumber");
 
 const BASE = BigNumber.from(10).pow(18);
+const REWARD_DURATION = 60 * 60 * 24 * 356 * 4;
+const REWARD_RATE = BASE.mul(7_000_000).div(REWARD_DURATION);
 
 let capsuleContract;
 let capsuleCoin;
@@ -259,8 +261,9 @@ describe("Capsule", () => {
   });
 
   it("Should have 3 million Capsule Coins before opening", async () => {
+    const expectedBalance = BASE.mul(3_000_000);
     const balance = await capsuleCoin.balanceOf(walletA.address);
-    expect(balance).to.equal("3000000000000000000000000");
+    expect(balance).to.equal(expectedBalance);
   });
 
   it("Should open Capsule", async () => {
