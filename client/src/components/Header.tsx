@@ -1,15 +1,40 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import Button from "./Button";
 import Connector from "./Connector";
+
+type NavItem = {
+  label: string;
+  route: string;
+};
+
+const NAV_ITEMS: NavItem[] = [
+  {
+    label: "Home",
+    route: "",
+  },
+  {
+    label: "Sent",
+    route: "sent",
+  },
+  {
+    label: "Received",
+    route: "received",
+  },
+  {
+    label: "About",
+    route: "about",
+  },
+];
 
 const StyledHeader = styled.div`
   width: 100%;
+  height: 13rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 60px;
-  margin-bottom: 3rem;
 `;
 
 const Logo = styled.button`
@@ -21,77 +46,27 @@ const Logo = styled.button`
 
 const NavContainer = styled.div`
   display: flex;
-`;
-
-type NavProps = {
-  active: boolean;
-};
-
-const Nav = styled.button`
-  width: 100px;
-  transition: color 0.3s;
-
-  color: ${(props: NavProps) => (props.active ? "var(--main)" : "var(--sub)")};
-  :hover {
-    color: var(--main);
-  }
-  cursor: pointer;
-`;
-
-const NavText = styled.div`
-  width: 100%;
-  text-align: center;
-  margin-bottom: 35px;
-  font-size: 14px;
-`;
-
-const Selection = styled.div`
-  width: 100%;
-  font-size: 12px;
-  height: 4px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  margin-bottom: 30px;
-  background-color: ${(props: NavProps) =>
-    props.active ? "var(--primary)" : "rgba(0,0,0,0)"};
+  flex-direction: row-reverse;
 `;
 
 const Header = (): JSX.Element => {
   const location = useLocation();
   const history = useHistory();
 
+  const navItems = [...NAV_ITEMS];
+  navItems.reverse();
+
   return (
     <StyledHeader>
       <Logo onClick={() => history.push("/")}>Crypto Capsule</Logo>
       <NavContainer>
-        <Nav
-          active={location.pathname === "/"}
-          onClick={() => history.push("/")}
-        >
-          <Selection active={location.pathname === "/"} />
-          <NavText>Home</NavText>
-        </Nav>
-        <Nav
-          active={location.pathname === "/sent"}
-          onClick={() => history.push("/sent")}
-        >
-          <Selection active={location.pathname === "/sent"} />
-          <NavText>Sent</NavText>
-        </Nav>
-        <Nav
-          active={location.pathname === "/received"}
-          onClick={() => history.push("/received")}
-        >
-          <Selection active={location.pathname === "/received"} />
-          <NavText>Received</NavText>
-        </Nav>
-        <Nav
-          active={location.pathname === "/about"}
-          onClick={() => history.push("/about")}
-        >
-          <Selection active={location.pathname === "/about"} />
-          <NavText>About</NavText>
-        </Nav>
+        {navItems.map((navItem: NavItem) => (
+          <Button
+            text={navItem.label}
+            click={() => history.push(`/${navItem.route}`)}
+            selected={location.pathname === `/${navItem.route}`}
+          />
+        ))}
       </NavContainer>
       <Connector />
     </StyledHeader>
