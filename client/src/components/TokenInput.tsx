@@ -16,9 +16,8 @@ const StyledTokenInput = styled.div`
 const Container = styled.div`
   display: flex;
   padding: 1rem;
-  border: solid 1px var(--sub);
+  border: solid 2px var(--main);
   align-items: center;
-  border-radius: 0.5rem;
   width: 13rem;
   position: relative;
   margin-right: 3rem;
@@ -50,7 +49,7 @@ const Name = styled.div`
 
 const Arrow = styled.div`
   font-size: 2rem;
-  color: var(--sub);
+  color: var(--main);
   position: absolute;
   font-weight: 200;
   font-family: Arial, Helvetica, sans-serif;
