@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectTokens } from "../state/tokenSlice";
-import Input from "../styles/Input";
+import Input from "./Input";
 import Token from "../types/Token";
 
 type DisplayProps = {
@@ -88,7 +88,7 @@ const TokenSelector = (props: Props): JSX.Element => {
         <Input
           placeholder="Search name"
           value={search}
-          onChange={(e: any) => setSearch(e.target.value)}
+          setValue={(value: string) => setSearch(value)}
         />
         <Tokens>
           {tokens

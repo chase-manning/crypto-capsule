@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ethBalance, tokenBalance } from "../services/contracthelper";
 import { toCents } from "../services/web3Service";
-import Input from "../styles/Input";
+import Input from "./Input";
 import { ValidationError } from "../styles/ValidationError";
 import Token from "../types/Token";
 import TokenSelector from "./TokenSelector";
@@ -161,9 +161,9 @@ const TokenInput = (props: Props): JSX.Element => {
         <Input
           placeholder="0.0"
           value={value}
-          onChange={(e: any) => {
-            setValue(e.target.value);
-            setToken(props.token, e.target.value);
+          setValue={(v: string) => {
+            setValue(v);
+            setToken(props.token, v);
           }}
         />
         <MaxButton onClick={() => setValue(balance.toString())}>max</MaxButton>

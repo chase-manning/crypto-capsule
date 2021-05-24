@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Input from "../styles/Input";
+import Input from "./Input";
 import Label from "./Label";
 
 const StyledTextInput = styled.div`
@@ -26,7 +26,7 @@ const TextInput = (props: Props): JSX.Element => {
         placeholder={props.placeholder}
         maxWidth={props.maxWidth}
         value={props.value}
-        onChange={(e: any) => props.setValue(e.target.value)}
+        setValue={(value: string) => props.setValue(value)}
       />
     </StyledTextInput>
   );
