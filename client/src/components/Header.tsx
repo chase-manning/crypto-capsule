@@ -22,10 +22,6 @@ const NAV_ITEMS: NavItem[] = [
     label: "Received",
     route: "received",
   },
-  {
-    label: "About",
-    route: "about",
-  },
 ];
 
 const StyledHeader = styled.div`
