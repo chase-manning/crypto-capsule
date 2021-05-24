@@ -9,8 +9,14 @@ const StyledReceivedPage = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 77vh;
+`;
+
+const Loading = styled.div`
+  color: var(--main);
+  font-size: 2rem;
 `;
 
 const ReceivedPage = (): JSX.Element => {
@@ -29,7 +35,7 @@ const ReceivedPage = (): JSX.Element => {
 
   return (
     <StyledReceivedPage>
-      {loading && <div>Loading</div>}
+      {loading && <Loading>Loading...</Loading>}
       {!loading && capsules.length === 0 && <NoCapsules isReceived />}
       <Capsules capsules={capsules} />
     </StyledReceivedPage>
