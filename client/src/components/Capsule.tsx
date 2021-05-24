@@ -9,24 +9,25 @@ import CapsuleType, { Asset } from "../types/CapsuleType";
 import { openCapsule } from "../services/contracthelper";
 import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
-
-type CapsuleProps = {
-  last: boolean;
-};
+import Block from "./Block";
 
 const StyledCapsule = styled.div`
+  position: relative;
   width: 100%;
-  height: 140px;
-  padding: 30px;
+  margin: 2rem 0;
+`;
+
+const Content = styled.div`
+  position: relative;
+  width: 100%;
+  padding: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid 1px
-    ${(props: CapsuleProps) => (props.last ? "rgba(0,0,0,0)" : "var(--sub)")};
 `;
 
 const Image = styled.div`
-  height: 100%;
+  height: 80px;
   width: 120px;
   display: flex;
   justify-content: center;
@@ -103,7 +104,6 @@ const CryptoIcon = styled.img`
 
 type Props = {
   capsule: CapsuleType;
-  last: boolean;
 };
 
 const Capsule = (props: Props): JSX.Element => {
@@ -133,45 +133,48 @@ const Capsule = (props: Props): JSX.Element => {
     nowRef.current.getTime();
 
   return (
-    <StyledCapsule last={props.last}>
-      {isOpen && props.capsule.opened && <OpenImage>asset 2</OpenImage>}
-      {isOpen && !props.capsule.opened && <ReadyImage>asset 3</ReadyImage>}
-      {!isOpen && <ClosedImage>asset 4</ClosedImage>}
-      <CountdownContainer>
-        <Countdown>
-          {isOpen
-            ? "0 hours, 0 minutes, 0 seconds"
-            : countdown(
-                new Date(),
-                props.capsule.distributionDate,
-                ~countdown.MILLISECONDS,
-                3
-              ).toString()}
-        </Countdown>
-        <OpenDate>
-          {dateformat(props.capsule.distributionDate, "mm/dd/yyyy")}
-        </OpenDate>
-      </CountdownContainer>
-      <ValueContainer>
-        {/* TODO: Get usd */}
-        <Dollars>{`$${Number(100).toFixed(2).toLocaleString()}`}</Dollars>
-        <Crypto>
-          {props.capsule.assets.map((asset: Asset) => (
-            <CyptoIconContainer key={asset.token}>
-              <CryptoIcon
-                src={
-                  tokens.filter(
-                    (token: Token) => token.address === asset.token
-                  )[0].logoURI
-                }
-              />
-            </CyptoIconContainer>
-          ))}
-        </Crypto>
-      </ValueContainer>
-      {isOpen && !props.capsule.opened && (
-        <Button primary text="Open" click={() => open()} />
-      )}
+    <StyledCapsule>
+      <Block />
+      <Content>
+        {isOpen && props.capsule.opened && <OpenImage>asset 2</OpenImage>}
+        {isOpen && !props.capsule.opened && <ReadyImage>asset 3</ReadyImage>}
+        {!isOpen && <ClosedImage>asset 4</ClosedImage>}
+        <CountdownContainer>
+          <Countdown>
+            {isOpen
+              ? "0 hours, 0 minutes, 0 seconds"
+              : countdown(
+                  new Date(),
+                  props.capsule.distributionDate,
+                  countdown.MILLISECONDS,
+                  3
+                ).toString()}
+          </Countdown>
+          <OpenDate>
+            {dateformat(props.capsule.distributionDate, "mm/dd/yyyy")}
+          </OpenDate>
+        </CountdownContainer>
+        <ValueContainer>
+          {/* TODO: Get usd */}
+          <Dollars>{`$${Number(100).toFixed(2).toLocaleString()}`}</Dollars>
+          <Crypto>
+            {props.capsule.assets.map((asset: Asset) => (
+              <CyptoIconContainer key={asset.token}>
+                <CryptoIcon
+                  src={
+                    tokens.filter(
+                      (token: Token) => token.address === asset.token
+                    )[0].logoURI
+                  }
+                />
+              </CyptoIconContainer>
+            ))}
+          </Crypto>
+        </ValueContainer>
+        {isOpen && !props.capsule.opened && (
+          <Button primary text="Open" click={() => open()} />
+        )}
+      </Content>
     </StyledCapsule>
   );
 };

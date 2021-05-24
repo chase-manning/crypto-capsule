@@ -18,11 +18,7 @@ const GetCapsules = (capsuleList: CapsuleType[]) =>
         new Date(b.distributionDate).getTime()
     )
     .map((capsule: CapsuleType, index: number) => (
-      <Capsule
-        key={index}
-        capsule={capsule}
-        last={index === capsuleList.length - 1}
-      />
+      <Capsule key={index} capsule={capsule} />
     ));
 
 type Props = {
