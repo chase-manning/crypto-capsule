@@ -3,12 +3,9 @@ const { network } = require("hardhat");
 const { BigNumber } = require("@ethersproject/bignumber");
 
 const BASE = BigNumber.from(10).pow(18);
-const REWARD_DURATION = 60 * 60 * 24 * 356 * 4;
-const REWARD_RATE = BASE.mul(7_000_000).div(REWARD_DURATION);
 
 let capsuleContract;
-let capsuleCoin;
-let walletA, walletB, walletC;
+let walletA, walletB;
 let tokenA, tokenB, tokenC;
 let testCapsule;
 
@@ -21,12 +18,6 @@ describe("Capsule", () => {
     let signers = await ethers.getSigners();
     walletA = signers[0];
     walletB = signers[1];
-    walletC = signers[2];
-
-    const OracleEth = await ethers.getContractFactory("Oracle");
-    const oracleEth = await OracleEth.deploy();
-    const oracleA = await OracleEth.deploy();
-    const oracleB = await OracleEth.deploy();
 
     const TokenA = await ethers.getContractFactory("TestERC20");
     tokenA = await TokenA.deploy();
@@ -44,11 +35,7 @@ describe("Capsule", () => {
     tokenC.mint(walletA.address, BASE.mul(10));
 
     const Capsule = await ethers.getContractFactory("CryptoCapsule");
-    capsuleContract = await Capsule.deploy(
-      [tokenA.address, tokenB.address],
-      [oracleA.address, oracleB.address],
-      oracleEth.address
-    );
+    capsuleContract = await Capsule.deploy();
   });
 
   it("Should have no Capsules on creation", async () => {
@@ -390,86 +377,5 @@ describe("Capsule", () => {
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
     expect(testCapsule.tokens.length).to.equal(3);
     expect(testCapsule.amounts.length).to.equal(3);
-  });
-
-  it("Should get Capsule USD value", async () => {
-    const usd = await capsuleContract.getUsdValue(testCapsule.id);
-    expect(usd).to.equal(6);
-  });
-
-  it("Should get USD of multiple Capsules", async () => {
-    const capsuleCount = await capsuleContract.getCapsuleCount();
-    await tokenA.approve(capsuleContract.address, BASE);
-    await capsuleContract.createCapsule(
-      walletA.address,
-      10 ** 10,
-      1,
-      1,
-      [tokenA.address],
-      [BASE],
-      { value: ethers.utils.parseEther("1") }
-    );
-
-    const usd = await capsuleContract.getUsdValues([
-      capsuleCount - 1,
-      capsuleCount,
-    ]);
-    expect(usd[0]).to.equal(6);
-    expect(usd[1]).to.equal(4);
-  });
-
-  it("Should get USD of multiple Capsules with just one Capsule", async () => {
-    const usd = await capsuleContract.getUsdValues([testCapsule.id]);
-    expect(usd[0]).to.equal(6);
-  });
-
-  it("Should add new Oracle", async () => {
-    const NewOracleC = await ethers.getContractFactory("Oracle");
-    const newOracleC = await NewOracleC.deploy();
-    await capsuleContract.setOracle(tokenC.address, newOracleC.address);
-  });
-
-  it("Should get USD from new tokenOracle", async () => {
-    const usd = await capsuleContract.getUsdValue(testCapsule.id);
-    expect(usd).to.equal(8);
-  });
-
-  it("Should remove token Oracle", async () => {
-    await capsuleContract.removeOracle(tokenC.address);
-  });
-
-  it("Should get USD without new token Oracle", async () => {
-    const usd = await capsuleContract.getUsdValue(testCapsule.id);
-    expect(usd).to.equal(6);
-  });
-
-  it("Should remove all token Oracles", async () => {
-    await capsuleContract.removeOracle(tokenB.address);
-    await capsuleContract.removeOracle(tokenA.address);
-  });
-
-  it("Should get USD with no token oracles", async () => {
-    const usd = await capsuleContract.getUsdValue(testCapsule.id);
-    expect(usd).to.equal(2);
-  });
-
-  it("Should change ETH Oracle", async () => {
-    const NewEthOracle = await ethers.getContractFactory("Oracle");
-    const newEthOracle = await NewEthOracle.deploy();
-    await capsuleContract.setEthOracle(newEthOracle.address);
-  });
-
-  it("Should get USD with new ETH Oracle", async () => {
-    const usd = await capsuleContract.getUsdValue(testCapsule.id);
-    expect(usd).to.equal(2);
-  });
-
-  it("Should remove ETH Oracle", async () => {
-    await capsuleContract.removeEthOracle();
-  });
-
-  it("Should get USD with no ETH Oracle", async () => {
-    const usd = await capsuleContract.getUsdValue(testCapsule.id);
-    expect(usd).to.equal(0);
   });
 });

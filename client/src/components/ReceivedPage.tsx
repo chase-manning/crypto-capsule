@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getReceivedCapsules } from "../services/contracthelper";
 import CapsuleType from "../types/CapsuleType";
 import Capsules from "./Capsules";
+import NoCapsules from "./NoCapsules";
 
 const StyledReceivedPage = styled.div`
   width: 100%;
@@ -13,11 +14,13 @@ const StyledReceivedPage = styled.div`
 `;
 
 const ReceivedPage = (): JSX.Element => {
+  const [loading, setLoading] = useState(true);
   const [capsules, setCapsules] = useState<CapsuleType[]>([]);
 
   const updateCapsules = async () => {
     const _capsules = await getReceivedCapsules();
     setCapsules(_capsules);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -26,6 +29,8 @@ const ReceivedPage = (): JSX.Element => {
 
   return (
     <StyledReceivedPage>
+      {loading && <div>Loading</div>}
+      {!loading && capsules.length === 0 && <NoCapsules isReceived />}
       <Capsules capsules={capsules} />
     </StyledReceivedPage>
   );

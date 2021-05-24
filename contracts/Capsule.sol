@@ -6,7 +6,6 @@ import "./utils/Ownable.sol";
 
 import "./interfaces/IERC20.sol";
 import "./extensions/IERC20Metadata.sol";
-import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 contract CryptoCapsule is Ownable{
     using EnumerableSet for EnumerableSet.UintSet;
@@ -31,17 +30,10 @@ contract CryptoCapsule is Ownable{
     Capsule[] capsules;
     mapping (address => EnumerableSet.UintSet) private sent;
     mapping (address => EnumerableSet.UintSet) private received;
-    mapping (address => AggregatorV3Interface) private oracles;
-    AggregatorV3Interface private ethOracle;
 
 
     // Constructor 
-    constructor(address[] memory _tokens, address[] memory _oracles, address _ethOracle) Ownable() {
-        ethOracle = AggregatorV3Interface(_ethOracle);
-        for (uint256 i = 0; i < _tokens.length; i++) {
-            oracles[_tokens[i]] = AggregatorV3Interface(_oracles[i]);
-        }
-    }
+    constructor() Ownable() { }
 
 
     // Functions
@@ -107,6 +99,7 @@ contract CryptoCapsule is Ownable{
 
 
     // Views
+    // TODO create function to get all capsules
     function getCapsuleCount() public view returns(uint256) {
         return capsules.length;
     }
@@ -134,91 +127,8 @@ contract CryptoCapsule is Ownable{
         return _capsules;
     }
 
-    function getUsdValue(uint256 capsuleId) public view returns(uint256) {
-        require(capsules.length > capsuleId, "Capsule does not exist");
-
-        Capsule memory capsule = capsules[capsuleId];
-
-        uint256 usd = 0;
-        for (uint256 i = 0; i < capsule.tokens.length; i++) {
-            if (address(oracles[capsule.tokens[i]]) != address(0)) {
-                usd += _getAssetInUsd(capsule.tokens[i], capsule.amounts[i]);
-            }
-        }
-
-        if (address(ethOracle) != address(0)) {
-            usd += _getEthInUsd(capsule.value);
-        }
-
-        return usd;
-    }
-
-    function getUsdValues(uint256[] memory capsuleIds) public view returns(uint256[] memory) {
-        require(capsuleIds.length > 0, "Must provide at least one capsule id");
-
-        uint256[] memory usds = new uint256[](capsuleIds.length); 
-        for (uint256 i = 0; i < capsuleIds.length; i++) {
-            usds[i] = getUsdValue(capsuleIds[i]);
-        }
-        return usds;
-    }
-
-
-    // Admin
-    function setOracle(address token, address oracle) public onlyOwner() {
-        oracles[token] = AggregatorV3Interface(oracle);
-        emit OracleSet(token, oracle);
-    }
-
-    function setEthOracle(address oracle) public onlyOwner() {
-        ethOracle = AggregatorV3Interface(oracle);
-        emit EthOracleSet(oracle);
-    }
-
-    function removeOracle(address token) public onlyOwner() {
-        oracles[token] = AggregatorV3Interface(address(0));
-        emit OracleRemoved(token);
-    }
-
-    function removeEthOracle() public onlyOwner() {
-        ethOracle = AggregatorV3Interface(address(0));
-        emit EthOracleRemoved();
-    }
-
-
-    // Internals
-    function _getAssetInUsd(address token, uint256 amount) private view returns(uint256) {
-        uint256 tokenDecimals = IERC20Metadata(token).decimals();
-        return _getUsd(oracles[token], tokenDecimals, amount);
-    }
-
-    function _getEthInUsd(uint256 eth) private view returns(uint256) {
-        return _getUsd(ethOracle, 18, eth);
-    }
-
-    function _getUsd(AggregatorV3Interface oracle, uint256 tokenDecimals, uint256 amount) private view returns(uint256) {
-        uint256 price = _getOraclePrice(oracle);
-        uint256 oracleDecimals = oracle.decimals();
-        return (price / 10 ** oracleDecimals) * (amount / 10 ** tokenDecimals);
-    }
-
-    function _getOraclePrice(AggregatorV3Interface oracle) private view returns(uint256) {
-        (
-            uint80 roundID, 
-            int price,
-            uint startedAt,
-            uint timeStamp,
-            uint80 answeredInRound
-        ) = oracle.latestRoundData();
-        return uint256(price);
-    }
-
 
     // Events
     event CapsuleOpened(uint256 capsuleId);
     event CapsuleCreated(uint256 capsuleId);
-    event OracleSet(address token, address oracle);
-    event EthOracleSet(address oracle);
-    event OracleRemoved(address token);
-    event EthOracleRemoved();
 }

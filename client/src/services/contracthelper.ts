@@ -77,9 +77,8 @@ export const getSentCapsules = async (): Promise<CapsuleType[]> => {
     .getSentCapsules(address)
     .call();
   const capsuleIds = response.map((r: ContractCapsuleType) => r.id);
-  const usds: string[] = await getUsdValues(capsuleIds);
   return response.map((rc: ContractCapsuleType, index: number) =>
-    responseToCapsule(rc, usds[index])
+    responseToCapsule(rc)
   );
 };
 
@@ -90,21 +89,14 @@ export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
     .getReceivedCapsules(address)
     .call();
   const capsuleIds = response.map((r: ContractCapsuleType) => r.id);
-  const usds: string[] = await getUsdValues(capsuleIds);
   return response.map((rc: ContractCapsuleType, index: number) =>
-    responseToCapsule(rc, usds[index])
+    responseToCapsule(rc)
   );
-};
-
-export const getUsdValues = async (capsuleIds: string[]): Promise<string[]> => {
-  const capsuleContract = await getCapsuleContract();
-  return capsuleContract.methods.getUsdValues(capsuleIds).call();
 };
 
 // Utils
 export const responseToCapsule = (
-  capsule: ContractCapsuleType,
-  usd: string
+  capsule: ContractCapsuleType
 ): CapsuleType => {
   const assets: Asset[] = [];
   const eth = toEthUnit(new BN(capsule.value));
@@ -127,7 +119,6 @@ export const responseToCapsule = (
     periodCount: Number(capsule.periodCount),
     claimedPeriods: Number(capsule.claimedPeriods),
     assets,
-    usd,
   };
 };
 
