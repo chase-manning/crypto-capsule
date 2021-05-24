@@ -11,15 +11,14 @@ const StyledDropdown = styled.div`
 const Select = styled.select`
   text-transform: capitalize;
   width: 100%;
-  border: solid 1px var(--sub);
-  border-radius: 5px;
+  border: solid 2px var(--main);
   padding: 10px;
   color: var(--main);
   font-size: 16px;
   background-color: rgba(0, 0, 0, 0);
 
   :active {
-    border: solid 1px var(--primary);
+    border: solid 2px var(--primary);
   }
 `;
 
