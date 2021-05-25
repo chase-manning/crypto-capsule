@@ -30,7 +30,7 @@ type Props = {
   maxWidth?: string;
 };
 
-const Input = (props: Props) => {
+const Input = (props: Props): JSX.Element => {
   return (
     <StyledInput
       value={props.value}
