@@ -32,10 +32,6 @@ const links: Link[] = [
     label: "GitHub",
     link: "xxx",
   },
-  {
-    label: "Contact",
-    link: "mailto: me@chasemanning.co.nz",
-  },
 ];
 
 const StyledFooter = styled.div`
@@ -53,7 +49,7 @@ const Section = styled.div`
 
 const Link = styled.a`
   text-decoration: none;
-  color: var(--sub);
+  color: var(--main);
   font-size: 1.4rem;
   margin: 0 2rem;
 
@@ -64,7 +60,7 @@ const Link = styled.a`
 
 const Button = styled.button`
   text-decoration: none;
-  color: var(--sub);
+  color: var(--main);
   font-size: 1.4rem;
   margin: 0 2rem;
 
@@ -75,7 +71,7 @@ const Button = styled.button`
 
 const Text = styled.div`
   font-size: 1.4rem;
-  color: var(--sub);
+  color: var(--main);
   position: absolute;
   top: 50%;
   left: 50%;
