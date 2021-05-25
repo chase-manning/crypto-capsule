@@ -21,7 +21,7 @@ const buttons: ButtonType[][] = [
     },
     {
       label: "GitHub",
-      link: "xxx",
+      link: "https://github.com/chase-manning/crypto-capsule",
     },
   ],
 ];
