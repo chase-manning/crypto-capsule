@@ -15,7 +15,7 @@ const StyledLanding = styled.div`
 const Left = styled.div`
   display: flex;
   flex-direction: column;
-  width: 600px;
+  width: 700px;
   margin-left: 4rem;
 `;
 
@@ -23,16 +23,25 @@ const Header = styled.h1`
   font-size: 11rem;
   font-weight: 700;
   color: var(--main);
+  transform: rotate(-6deg);
+  margin-bottom: 2rem;
 `;
 
 const SubHeader = styled.div`
   color: var(--sub);
   margin-top: 25px;
   margin-bottom: 35px;
-  margin-left: 10px;
-  font-size: 21px;
+  margin-left: 12rem;
+  font-size: 3rem;
   width: 75%;
   line-height: 1.4;
+  transform: rotate(-6deg);
+  margin-bottom: 14rem;
+`;
+
+const ButtonContainer = styled.div`
+  margin-left: 30rem;
+  transform: rotate(-6deg);
 `;
 
 const Image = styled.img`
@@ -58,13 +67,13 @@ const Landing = (): JSX.Element => {
           Send crytocurrencies into the future, safely and securely using
           Ethereum smart contracts
         </SubHeader>
-        <div>
+        <ButtonContainer>
           <Button
             primary
             text="Create Capsule"
             click={() => setCreatingCapsule(true)}
           />
-        </div>
+        </ButtonContainer>
       </Left>
       <Image src={landing} />
       <CreateCapsule
