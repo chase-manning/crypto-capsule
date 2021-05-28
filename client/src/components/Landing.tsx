@@ -7,45 +7,52 @@ import CreateCapsule from "./CreateCapsule";
 const StyledLanding = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-bottom: 10rem;
+`;
+
+const Header = styled.h1`
+  font-size: 17rem;
+  font-weight: 700;
+  color: var(--main);
+  transform: rotate(-10deg) translateY(-9rem);
+  height: 10rem;
+  margin-left: 10rem;
+`;
+
+const Content = styled.div`
+  display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 10rem 0;
 `;
 
 const Left = styled.div`
   display: flex;
   flex-direction: column;
-  width: 700px;
+  align-items: center;
+  width: 75rem;
   margin-left: 4rem;
-`;
-
-const Header = styled.h1`
-  font-size: 11rem;
-  font-weight: 700;
-  color: var(--main);
-  transform: rotate(-6deg);
-  margin-bottom: 2rem;
+  margin-top: 20rem;
+  transform: rotate(-4deg);
 `;
 
 const SubHeader = styled.div`
   color: var(--sub);
   margin-top: 25px;
-  margin-bottom: 35px;
-  margin-left: 12rem;
   font-size: 3rem;
   width: 75%;
   line-height: 1.4;
-  transform: rotate(-6deg);
-  margin-bottom: 14rem;
+  margin-bottom: 5rem;
+  margin-left: 10rem;
 `;
 
 const ButtonContainer = styled.div`
-  margin-left: 30rem;
-  transform: rotate(-6deg);
+  margin-bottom: 13rem;
 `;
 
 const Image = styled.img`
-  width: 53vw;
+  width: 56vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,21 +68,23 @@ const Landing = (): JSX.Element => {
 
   return (
     <StyledLanding>
-      <Left>
-        <Header>Crypto Capsule</Header>
-        <SubHeader>
-          Send crytocurrencies into the future, safely and securely using
-          Ethereum smart contracts
-        </SubHeader>
-        <ButtonContainer>
-          <Button
-            primary
-            text="Create Capsule"
-            click={() => setCreatingCapsule(true)}
-          />
-        </ButtonContainer>
-      </Left>
-      <Image src={landing} />
+      <Header>Crypto Capsule</Header>
+      <Content>
+        <Left>
+          <SubHeader>
+            Send crytocurrencies into the future, safely and securely using
+            Ethereum smart contracts
+          </SubHeader>
+          <ButtonContainer>
+            <Button
+              primary
+              text="Create Capsule"
+              click={() => setCreatingCapsule(true)}
+            />
+          </ButtonContainer>
+        </Left>
+        <Image src={landing} />
+      </Content>
       <CreateCapsule
         show={creatingCapsule}
         close={() => setCreatingCapsule(false)}
