@@ -47,6 +47,11 @@ describe("Capsule", () => {
     );
   });
 
+  it("Should return no Capsules for getCapsules", async () => {
+    const capsules = await capsuleContract.getCapsules();
+    expect(capsules.length).to.equal(0);
+  });
+
   it("Should create Capsule", async () => {
     const now = new Date();
     const nextMonth = new Date(now.setMonth(now.getMonth() + 1));
@@ -90,6 +95,13 @@ describe("Capsule", () => {
     expect(capsule.amounts[0]).to.equal(BASE);
     expect(capsule.tokens.length).to.equal(1);
     expect(capsule.amounts.length).to.equal(1);
+  });
+
+  it("Should return a single capsule for getCapsules", async () => {
+    const capsules = await capsuleContract.getCapsules();
+    expect(capsules.length).to.equal(1);
+    expect(capsules[0].id).to.equal(0);
+    expect(capsules[0].grantor).to.equal(walletA.address);
   });
 
   it("Should fail on distribution date in past", async () => {
@@ -227,6 +239,11 @@ describe("Capsule", () => {
     ).to.be.revertedWith("Capsule has not matured yet");
   });
 
+  it("Should return two capsules with getCapsules", async () => {
+    const capsules = await capsuleContract.getCapsules();
+    expect(capsules.length).to.equal(2);
+  });
+
   it("Should pass the time 1 months", async () => {
     await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 7 * 4 * 1]);
     await network.provider.send("evm_mine");
@@ -283,6 +300,12 @@ describe("Capsule", () => {
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
     expect(testCapsule.periodSize).to.equal(periodSize);
     expect(testCapsule.periodCount).to.equal(5);
+  });
+
+  it("Should return three capsules with getCapsules", async () => {
+    const capsules = await capsuleContract.getCapsules();
+    expect(capsules.length).to.equal(3);
+    expect(capsules[2].periodCount).to.equal(5);
   });
 
   it("Should not open Staggered Capsule before Distribution Start Date", async () => {

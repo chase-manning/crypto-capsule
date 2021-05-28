@@ -99,7 +99,6 @@ contract CryptoCapsule is Ownable{
 
 
     // Views
-    // TODO create function to get all capsules
     function getCapsuleCount() public view returns(uint256) {
         return capsules.length;
     }
@@ -107,6 +106,10 @@ contract CryptoCapsule is Ownable{
     function getCapsule(uint256 capsuleId) public view returns(Capsule memory) {
         require(capsules.length > capsuleId, "Capsule does not exist");
         return capsules[capsuleId];
+    }
+
+    function getCapsules() public view returns(Capsule[] memory) {
+        return capsules;
     }
 
     function getSentCapsules(address grantor) public view returns(Capsule[] memory) {
