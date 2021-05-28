@@ -11,16 +11,19 @@ const StyledNoCapsules = styled.div`
 `;
 
 const Image = styled.img`
-  width: 40rem;
+  width: 38rem;
 `;
 
 const Text = styled.h4`
   color: var(--main);
-  font-size: 2rem;
+  font-size: 2.9rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 `;
 
 type Props = {
-  isReceived: boolean;
+  isReceived?: boolean;
 };
 
 const NoCapsules = (props: Props): JSX.Element => {
