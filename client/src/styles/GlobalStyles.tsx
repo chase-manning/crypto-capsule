@@ -17,7 +17,6 @@ const GlobalStyle = createGlobalStyle`
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      /* font-family: 'Audiowide', cursive; */
       font-family: 'Reenie Beanie', cursive;
       /* font-family: 'Indie Flower', cursive; */
       /* font-family: 'Caveat', cursive; */
