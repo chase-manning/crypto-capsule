@@ -11,7 +11,7 @@ const StyledNoCapsules = styled.div`
 `;
 
 const Image = styled.img`
-  width: 30rem;
+  width: 40rem;
 `;
 
 const Text = styled.h4`
