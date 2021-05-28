@@ -22,11 +22,8 @@ const GlobalStyle = createGlobalStyle`
       /* font-family: 'Zen Dots', cursive; */
       /* font-family: 'Audiowide', cursive; */
       /* font-family: 'Reenie Beanie', cursive; */
-      /* font-family: 'Fredericka the Great', cursive; */
       /* font-family: 'Indie Flower', cursive; */
       /* font-family: 'Caveat', cursive; */
-      /* font-family: 'Amatic SC', cursive; */
-      /* font-family: 'Satisfy', cursive; */
       font-size: 10px;
     }
   
