@@ -16,7 +16,7 @@ const Image = styled.img`
 
 const Text = styled.h4`
   color: var(--main);
-  font-size: 2.9rem;
+  font-size: 2.7rem;
   font-weight: 500;
   margin-top: 1rem;
   margin-bottom: 3rem;
