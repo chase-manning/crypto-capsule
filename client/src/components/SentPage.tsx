@@ -36,7 +36,7 @@ const SentPage = (): JSX.Element => {
   return (
     <StyledSentPage>
       {loading && <Loading>Loading...</Loading>}
-      {!loading && capsules.length === 0 && <NoCapsules isReceived />}
+      {!loading && capsules.length === 0 && <NoCapsules />}
       <Capsules capsules={capsules} />
     </StyledSentPage>
   );
