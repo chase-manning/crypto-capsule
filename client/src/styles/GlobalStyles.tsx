@@ -17,8 +17,7 @@ const GlobalStyle = createGlobalStyle`
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Indie Flower', cursive;
-      /* font-family: 'Caveat', cursive; */
+      font-family: 'Caveat', cursive;
       font-size: 10px;
     }
   
