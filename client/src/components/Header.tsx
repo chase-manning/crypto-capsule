@@ -33,13 +33,6 @@ const StyledHeader = styled.div`
   padding: 0 60px;
 `;
 
-const Logo = styled.button`
-  color: var(--main);
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-`;
-
 const NavContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
@@ -54,7 +47,6 @@ const Header = (): JSX.Element => {
 
   return (
     <StyledHeader>
-      <Logo onClick={() => history.push("/")}>Crypto Capsule</Logo>
       <NavContainer>
         {navItems.map((navItem: NavItem) => (
           <Button
