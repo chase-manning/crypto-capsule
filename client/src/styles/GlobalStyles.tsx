@@ -17,11 +17,8 @@ const GlobalStyle = createGlobalStyle`
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: "Roboto", sans-serif;
-      /* font-family: 'Orbitron', sans-serif; */
-      /* font-family: 'Zen Dots', cursive; */
       /* font-family: 'Audiowide', cursive; */
-      /* font-family: 'Reenie Beanie', cursive; */
+      font-family: 'Reenie Beanie', cursive;
       /* font-family: 'Indie Flower', cursive; */
       /* font-family: 'Caveat', cursive; */
       font-size: 10px;
