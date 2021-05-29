@@ -71,6 +71,27 @@ export const openCapsule = async (capsuleId: number): Promise<void> => {
   await capsuleContract.methods.openCapsule(new BN(capsuleId)).send();
 };
 
+export const addAssets = async (capsuleId: number, assets: Asset[]) => {
+  const address = await getAddress();
+  const capsuleContract = await getCapsuleContract();
+
+  const ethAssets = assets.filter((a: Asset) => a.token === "ETH");
+  const eth = ethAssets.length === 1 ? ethAssets[0].value : 0;
+  const otherAssets = assets.filter((a: Asset) => a.token !== "ETH");
+
+  const tx = {
+    from: address,
+    value: eth,
+  };
+  await capsuleContract.methods
+    .addAssets(
+      capsuleId,
+      otherAssets.map((a: Asset) => a.token),
+      otherAssets.map((a: Asset) => a.value)
+    )
+    .send(tx);
+};
+
 // Views
 export const getSentCapsules = async (): Promise<CapsuleType[]> => {
   const address = await getAddress();
