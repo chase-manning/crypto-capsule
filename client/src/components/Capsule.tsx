@@ -179,11 +179,9 @@ const Capsule = (props: Props): JSX.Element => {
         {props.capsule.beneficiary === address &&
           isOpen &&
           !props.capsule.opened && <Button text="Open" click={() => open()} />}
-        {!isOpen &&
-          props.capsule.addingAssetsAllowed &&
-          !props.capsule.opened && (
-            <Button text="Add Assets" click={() => setAddingAssets(true)} />
-          )}
+        {!isOpen && props.capsule.addingAssetsAllowed && !isOpen && (
+          <Button text="Add Assets" click={() => setAddingAssets(true)} />
+        )}
       </Content>
       <AddAssets
         capsuleId={props.capsule.id}
