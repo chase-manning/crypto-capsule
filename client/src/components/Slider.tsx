@@ -38,6 +38,7 @@ const Container = styled.div`
   position: relative;
   width: 60vw;
   padding: 5rem;
+  transform: rotate(-3deg);
 `;
 
 const Content = styled.div`
@@ -50,7 +51,7 @@ const Content = styled.div`
 
 const Header = styled.h2`
   color: var(--main);
-  font-size: 7rem;
+  font-size: 8rem;
   font-weight: 600;
   width: 100%;
   text-align: center;
@@ -59,7 +60,7 @@ const Header = styled.h2`
 
 const Body = styled.p`
   color: var(--sub);
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 500;
   width: 100%;
 `;
@@ -87,9 +88,6 @@ const Slider = (): JSX.Element => {
             someone else that can only be accessed at a specified time in the
             future. When creating a Capsule you can choose several options to
             customise when the Capsule opens and how the crypto is distributed.
-            Crypto Capsule uses an Ethereum Smart Contract to store the crypto
-            while it is in the Capsule and for retrieving the crypto when it is
-            opened.
           </Body>
           <ButtonContainer>
             <Button
