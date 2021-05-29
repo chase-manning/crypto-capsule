@@ -27,8 +27,8 @@ const Content = styled.div`
       ? "0.7rem 1.2rem"
       : props.primary
       ? "1.5rem 3rem"
-      : "1.3rem 2.7rem"};
-  font-size: ${(props: StyledProps) => (props.primary ? "2.6rem" : "1.5rem")};
+      : "1.1rem 2.1rem"};
+  font-size: ${(props: StyledProps) => (props.primary ? "2.6rem" : "2rem")};
   position: relative;
   transform: ${(props: StyledProps) =>
     props.flatten
