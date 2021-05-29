@@ -66,13 +66,13 @@ const InputContainer = styled.div`
 `;
 
 const MaxButton = styled.button`
-  font-size: 2.1rem;
+  font-size: 1.9rem;
   text-transform: uppercase;
   color: var(--primary);
   font-weight: 600;
   position: absolute;
   right: 1rem;
-  top: 1.3rem;
+  top: 1.4rem;
   cursor: pointer;
   height: 2rem;
   background-color: var(--bg);
