@@ -105,15 +105,15 @@ contract CryptoCapsule is Ownable{
         emit CapsuleOpened(capsuleId);
     }
 
-    function addAssets(uint256 capsuleId, address[] calldata _tokens, uint256[] calldata _values) public payable { // Test
-        require(capsules.length > capsuleId, "Capsule does not exist"); // Test
-        require(_tokens.length == _values.length, "Tokens and Values must be same length"); // Test
+    function addAssets(uint256 capsuleId, address[] calldata _tokens, uint256[] calldata _values) public payable {
+        require(capsules.length > capsuleId, "Capsule does not exist");
+        require(_tokens.length == _values.length, "Tokens and Values must be same length");
         Capsule memory capsule = capsules[capsuleId];
-        require(msg.sender == capsule.grantor, "You are not the grantor of this Capsule"); // Test
-        require(!capsule.opened, "Capsule has already been opened"); // Test
+        require(msg.sender == capsule.grantor, "You are not the grantor of this Capsule");
+        require(!capsule.opened, "Capsule has already been opened");
 
         for (uint256 i = 0; i < _tokens.length; i++) {
-            require(_values[i] > 0, "Token value must be greater than 0"); // Test
+            require(_values[i] > 0, "Token value must be greater than 0");
             IERC20 erc20Token = IERC20(_tokens[i]);
             erc20Token.transferFrom(msg.sender, address(this), _values[i]);
 
