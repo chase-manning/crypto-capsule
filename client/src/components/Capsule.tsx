@@ -11,6 +11,7 @@ import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
 import Block from "./Block";
 import { selectAddress } from "../state/userSlice";
+import AddAssets from "./AddAssets";
 
 const StyledCapsule = styled.div`
   position: relative;
@@ -111,6 +112,8 @@ const Capsule = (props: Props): JSX.Element => {
   const tokens = useSelector(selectTokens);
   const address = useSelector(selectAddress);
 
+  const [addingAssets, setAddingAssets] = useState(false);
+
   const [now, setNow] = useState(new Date());
   const nowRef = useRef(now);
   nowRef.current = now;
@@ -184,10 +187,15 @@ const Capsule = (props: Props): JSX.Element => {
             <Button
               primary
               text="Add Assets"
-              click={() => console.log("Meow")}
+              click={() => setAddingAssets(true)}
             />
           )}
       </Content>
+      <AddAssets
+        capsuleId={props.capsule.id}
+        show={addingAssets}
+        close={() => setAddingAssets(false)}
+      />
     </StyledCapsule>
   );
 };
