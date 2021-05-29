@@ -6,6 +6,7 @@ import Label from "./Label";
 const StyledSelector = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 1rem;
 `;
 
 const Container = styled.div`
