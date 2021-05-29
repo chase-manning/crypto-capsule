@@ -9,7 +9,7 @@ const StyledLanding = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  padding-bottom: 10rem;
+  padding-bottom: 7rem;
 `;
 
 const Header = styled.h1`
@@ -17,7 +17,7 @@ const Header = styled.h1`
   font-weight: 700;
   color: var(--main);
   transform: rotate(-10deg) translateY(-9rem);
-  height: 10rem;
+  height: 13rem;
   margin-left: 10rem;
 `;
 
