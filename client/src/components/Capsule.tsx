@@ -178,17 +178,11 @@ const Capsule = (props: Props): JSX.Element => {
         </ValueContainer>
         {props.capsule.beneficiary === address &&
           isOpen &&
-          !props.capsule.opened && (
-            <Button primary text="Open" click={() => open()} />
-          )}
+          !props.capsule.opened && <Button text="Open" click={() => open()} />}
         {!isOpen &&
           props.capsule.addingAssetsAllowed &&
           !props.capsule.opened && (
-            <Button
-              primary
-              text="Add Assets"
-              click={() => setAddingAssets(true)}
-            />
+            <Button text="Add Assets" click={() => setAddingAssets(true)} />
           )}
       </Content>
       <AddAssets
