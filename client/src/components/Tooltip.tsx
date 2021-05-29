@@ -30,6 +30,7 @@ const HelpIcon = styled.button`
   color: var(--primary);
   outline: none;
   cursor: pointer;
+  padding-right: 0.4rem;
 `;
 
 const Indicator = styled.div`
