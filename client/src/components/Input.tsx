@@ -8,9 +8,9 @@ type StyledInputProps = {
 const StyledInput = styled.input`
   width: 100%;
   border: solid 2px var(--main);
-  padding: 10px;
+  padding: 1rem;
   color: var(--main);
-  font-size: 16px;
+  font-size: 1.9rem;
   background-color: var(--bg);
   max-width: ${(props: StyledInputProps) => props.maxWidth};
 
