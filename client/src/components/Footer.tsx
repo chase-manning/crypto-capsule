@@ -49,6 +49,7 @@ const Footer = (): JSX.Element => {
         <Section>
           {section.map((button: ButtonType) => (
             <Button
+              small
               text={button.label}
               click={() => (window as any).open(button.link, "_blank").focus()}
             />
