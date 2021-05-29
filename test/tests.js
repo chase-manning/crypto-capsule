@@ -513,7 +513,7 @@ describe("Capsule", () => {
     expect(testCapsule.amounts[0]).to.equal(BASE.mul(3));
     expect(testCapsule.amounts[1]).to.equal(BASE.mul(3));
     expect(testCapsule.amounts[2]).to.equal(BASE.mul(3));
-    expect(testCapsule.value).to.equal(6);
+    expect(testCapsule.value).to.equal(BASE.mul(6));
   });
 
   it("Opening should return all added values as well", async () => {

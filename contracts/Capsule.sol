@@ -120,7 +120,7 @@ contract CryptoCapsule is Ownable{
             bool tokenExists = false;
             for (uint256 j = 0; j < capsule.tokens.length; j++) {
                 if (capsule.tokens[j] == _tokens[i]) {
-                    capsules[capsuleId].amounts[j] != _values[i];
+                    capsules[capsuleId].amounts[j] += _values[i];
                     tokenExists = true;
                     break;
                 }
