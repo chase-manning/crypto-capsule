@@ -48,10 +48,11 @@ const Content = styled.div`
 `;
 
 const Header = styled.h3`
-  font-size: 3.5rem;
+  font-size: 5.3rem;
   font-weight: 700;
   margin-bottom: 3rem;
   color: var(--main);
+  transform: rotate(-4deg);
 `;
 
 const Body = styled.p`
