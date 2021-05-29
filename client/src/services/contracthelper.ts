@@ -71,7 +71,10 @@ export const openCapsule = async (capsuleId: number): Promise<void> => {
   await capsuleContract.methods.openCapsule(new BN(capsuleId)).send();
 };
 
-export const addAssets = async (capsuleId: number, assets: Asset[]) => {
+export const addAssets = async (
+  capsuleId: number,
+  assets: Asset[]
+): Promise<void> => {
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
 
