@@ -107,7 +107,6 @@ const Popup: React.FC<Props> = (props) => {
             <ButtonContainer>
               {props.buttonText && (
                 <Button
-                  primary
                   text={props.buttonText}
                   click={() => {
                     if (props.buttonAction) props.buttonAction();
