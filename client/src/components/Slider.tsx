@@ -2,12 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import dots from "../assets/dots.png";
 import Block from "./Block";
-import Button from "./Button";
 
 const StyledSlider = styled.div`
   position: relative;
   width: 100%;
-  padding: 13rem;
+  padding: 12rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,6 +37,7 @@ const Container = styled.div`
   position: relative;
   width: 60vw;
   padding: 5rem;
+  padding-top: 4rem;
   transform: rotate(-3deg);
 `;
 
@@ -65,15 +65,6 @@ const Body = styled.p`
   width: 100%;
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  margin-top: 5rem;
-
-  button {
-    margin: 0 2rem;
-  }
-`;
-
 const Slider = (): JSX.Element => {
   return (
     <StyledSlider>
@@ -89,30 +80,6 @@ const Slider = (): JSX.Element => {
             future. When creating a Capsule you can choose several options to
             customise when the Capsule opens and how the crypto is distributed.
           </Body>
-          <ButtonContainer>
-            <Button
-              text="View Smart Contract"
-              click={() =>
-                (window as any)
-                  .open(
-                    "https://etherscan.io/address/0x07d48bdba7975f0daf73bd5b85a2e3ff87ffb24e",
-                    "_blank"
-                  )
-                  .focus()
-              }
-            />
-            <Button
-              text="View Source Code"
-              click={() =>
-                (window as any)
-                  .open(
-                    "https://github.com/chase-manning/crypto-capsule/blob/master/contracts/Capsule.sol",
-                    "_blank"
-                  )
-                  .focus()
-              }
-            />
-          </ButtonContainer>
         </Content>
       </Container>
     </StyledSlider>
