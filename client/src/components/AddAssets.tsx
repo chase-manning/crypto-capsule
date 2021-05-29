@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import BN from "bn.js";
+import styled from "styled-components";
 
 import {
   addAssets,
@@ -13,6 +14,10 @@ import Token from "../types/Token";
 import GLOBALS from "../utils/globals";
 import Assets from "./Assets";
 import Popup from "./Popup";
+
+const StyledAddAssets = styled.div`
+  width: 100%;
+`;
 
 type Approval = {
   asset: Asset;
@@ -94,13 +99,15 @@ const AddAssets = (props: Props): JSX.Element => {
         else tokenApprove(unapproved[0].asset.token);
       }}
       content={
-        <Assets
-          assets={assets}
-          setAssets={(assets: Asset[]) => {
-            setAssets(assets);
-            updateApprovals(assets);
-          }}
-        />
+        <StyledAddAssets>
+          <Assets
+            assets={assets}
+            setAssets={(assets: Asset[]) => {
+              setAssets(assets);
+              updateApprovals(assets);
+            }}
+          />
+        </StyledAddAssets>
       }
     />
   );
