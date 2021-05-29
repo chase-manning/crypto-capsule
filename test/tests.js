@@ -517,14 +517,19 @@ describe("Capsule", () => {
     expect(testCapsule.value).to.equal(BASE.mul(6));
   });
 
+  it("Should pass 2 days", async () => {
+    await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 2]);
+    await network.provider.send("evm_mine");
+  });
+
   it("Opening should return all added values as well", async () => {
-    const tokenABalanceBefore = await tokenA.balanceOf(walletA);
-    const tokenBBalanceBefore = await tokenB.balanceOf(walletA);
-    const tokenCBalanceBefore = await tokenC.balanceOf(walletA);
-    await openCapsule(testCapsule.id);
-    const tokenABalanceAfter = await tokenA.balanceOf(walletA);
-    const tokenBBalanceAfter = await tokenB.balanceOf(walletA);
-    const tokenCBalanceAfter = await tokenC.balanceOf(walletA);
+    const tokenABalanceBefore = await tokenA.balanceOf(walletA.address);
+    const tokenBBalanceBefore = await tokenB.balanceOf(walletA.address);
+    const tokenCBalanceBefore = await tokenC.balanceOf(walletA.address);
+    await capsuleContract.openCapsule(testCapsule.id);
+    const tokenABalanceAfter = await tokenA.balanceOf(walletA.address);
+    const tokenBBalanceAfter = await tokenB.balanceOf(walletA.address);
+    const tokenCBalanceAfter = await tokenC.balanceOf(walletA.address);
     expect(tokenABalanceAfter).to.equal(BASE.mul(3).add(tokenABalanceBefore));
     expect(tokenBBalanceAfter).to.equal(BASE.mul(3).add(tokenBBalanceBefore));
     expect(tokenCBalanceAfter).to.equal(BASE.mul(3).add(tokenCBalanceBefore));
