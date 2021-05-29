@@ -16,7 +16,7 @@ const Header = styled.h1`
   font-size: 17rem;
   font-weight: 700;
   color: var(--main);
-  transform: rotate(-10deg) translateY(-9rem);
+  transform: rotate(-10deg) translateY(-8rem);
   height: 13rem;
   margin-left: 10rem;
 `;
