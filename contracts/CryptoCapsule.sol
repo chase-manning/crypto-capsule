@@ -5,7 +5,6 @@ import "./utils/EnumerableSet.sol";
 import "./utils/Ownable.sol";
 
 import "./interfaces/IERC20.sol";
-import "./extensions/IERC20Metadata.sol";
 
 contract CryptoCapsule is Ownable{
     using EnumerableSet for EnumerableSet.UintSet;
