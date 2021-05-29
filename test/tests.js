@@ -470,7 +470,7 @@ describe("Capsule", () => {
     expect(testCapsule.tokens.length).to.equal(1);
     expect(testCapsule.tokens[0]).to.equal(tokenA.address);
     expect(testCapsule.amounts[0]).to.equal(BASE);
-    expect(testCapsule.value).to.equal(1);
+    expect(testCapsule.value).to.equal(BASE);
   });
 
   it("Should add eth", async () => {
