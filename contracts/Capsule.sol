@@ -25,6 +25,7 @@ contract CryptoCapsule is Ownable{
         uint256 value;
         address[] tokens;
         uint256[] amounts;
+        bool addingAssetsAllowed;
     }
 
     Capsule[] capsules;
@@ -43,7 +44,8 @@ contract CryptoCapsule is Ownable{
         uint256 _periodSize,
         uint256 _periodCount,
         address[] calldata _tokens,
-        uint256[] calldata _values
+        uint256[] calldata _values,
+        bool addingAssetsAllowed
     ) public payable returns(Capsule memory) {
 
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
@@ -71,7 +73,8 @@ contract CryptoCapsule is Ownable{
                 false,
                 msg.value,
                 _tokens,
-                _values
+                _values,
+                addingAssetsAllowed
             )
         );
 
@@ -109,6 +112,7 @@ contract CryptoCapsule is Ownable{
         require(capsules.length > capsuleId, "Capsule does not exist");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
         Capsule memory capsule = capsules[capsuleId];
+        require(capsule.addingAssetsAllowed, "Adding assets not allowed for this Capsule");
         require(msg.sender == capsule.grantor, "You are not the grantor of this Capsule");
         require(!capsule.opened, "Capsule has already been opened");
 

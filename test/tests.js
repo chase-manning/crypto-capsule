@@ -66,7 +66,8 @@ describe("Capsule", () => {
       1,
       1,
       [tokenA.address],
-      [BASE]
+      [BASE],
+      true
     );
 
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
@@ -118,7 +119,8 @@ describe("Capsule", () => {
         1,
         1,
         [tokenA.address],
-        [BASE]
+        [BASE],
+        false
       )
     ).to.be.revertedWith("Distribution Date must be in future");
   });
@@ -137,7 +139,8 @@ describe("Capsule", () => {
         1,
         1,
         [tokenA.address],
-        [0]
+        [0],
+        true
       )
     ).to.be.revertedWith("Token value must be greater than 0");
   });
@@ -156,7 +159,8 @@ describe("Capsule", () => {
         1,
         1,
         [tokenA.address, tokenB.address],
-        [BASE]
+        [BASE],
+        true
       )
     ).to.be.revertedWith("Tokens and Values must be same length");
 
@@ -167,7 +171,8 @@ describe("Capsule", () => {
         1,
         1,
         [tokenA.address],
-        [BASE, BASE]
+        [BASE, BASE],
+        false
       )
     ).to.be.revertedWith("Tokens and Values must be same length");
   });
@@ -186,7 +191,8 @@ describe("Capsule", () => {
         0,
         1,
         [tokenA.address],
-        [BASE]
+        [BASE],
+        true
       )
     ).to.be.revertedWith("Period Size must greater than or equal to 1");
   });
@@ -205,7 +211,8 @@ describe("Capsule", () => {
         1,
         0,
         [tokenA.address],
-        [BASE]
+        [BASE],
+        false
       )
     ).to.be.revertedWith("Period Count must greater than or equal to 1");
   });
@@ -229,7 +236,8 @@ describe("Capsule", () => {
       1,
       1,
       [tokenA.address],
-      [BASE]
+      [BASE],
+      true
     );
 
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
@@ -294,7 +302,8 @@ describe("Capsule", () => {
       periodSize,
       5,
       [tokenA.address],
-      [BASE]
+      [BASE],
+      false
     );
 
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
@@ -394,6 +403,7 @@ describe("Capsule", () => {
       1,
       [tokenA.address, tokenB.address, tokenC.address],
       [BASE, BASE, BASE],
+      true,
       { value: ethers.utils.parseEther("1") }
     );
 
@@ -405,7 +415,7 @@ describe("Capsule", () => {
     expect(testCapsule.tokens[2]).to.equal(tokenC.address);
   });
 
-  it("Should create Capsule", async () => {
+  it("Should create Capsule with adding assets not allowed", async () => {
     const now = new Date();
     now.setMonth(now.getMonth() + 26);
     await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
@@ -422,6 +432,47 @@ describe("Capsule", () => {
       1,
       [tokenA.address],
       [BASE],
+      false,
+      { value: ethers.utils.parseEther("1") }
+    );
+
+    testCapsule = await capsuleContract.getCapsule(capsuleCount);
+  });
+
+  it("Should fail when adding eth if not allowed", async () => {
+    await tokenA.approve(capsuleContract.address, BASE);
+    await expect(
+      capsuleContract.addAssets(testCapsule.id, [], [], {
+        value: ethers.utils.parseEther("1"),
+      })
+    ).to.be.revertedWith("Adding assets not allowed for this Capsule");
+  });
+
+  it("Should fail when adding tokens if not allowed", async () => {
+    await tokenA.approve(capsuleContract.address, BASE);
+    await expect(
+      capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE])
+    ).to.be.revertedWith("Adding assets not allowed for this Capsule");
+  });
+
+  it("Should create Capsule with adding assets allowed", async () => {
+    const now = new Date();
+    now.setMonth(now.getMonth() + 27);
+    await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
+    const nextMonth = new Date(now.setDate(now.getDate() + 1));
+    const distributionStartDate = dateToUnix(nextMonth);
+
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+
+    await tokenA.approve(capsuleContract.address, BASE);
+    await capsuleContract.createCapsule(
+      walletA.address,
+      distributionStartDate,
+      1,
+      1,
+      [tokenA.address],
+      [BASE],
+      true,
       { value: ethers.utils.parseEther("1") }
     );
 

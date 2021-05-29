@@ -147,6 +147,11 @@
         "internalType": "uint256[]",
         "name": "_values",
         "type": "uint256[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "addingAssetsAllowed",
+        "type": "bool"
       }
     ],
     "name": "createCapsule",
@@ -212,6 +217,11 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "addingAssetsAllowed",
+            "type": "bool"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule",
@@ -293,6 +303,11 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "addingAssetsAllowed",
+            "type": "bool"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule",
@@ -381,6 +396,11 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "addingAssetsAllowed",
+            "type": "bool"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule[]",
@@ -462,6 +482,11 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "addingAssetsAllowed",
+            "type": "bool"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule[]",
@@ -543,6 +568,11 @@
             "internalType": "uint256[]",
             "name": "amounts",
             "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "addingAssetsAllowed",
+            "type": "bool"
           }
         ],
         "internalType": "struct CryptoCapsule.Capsule[]",
