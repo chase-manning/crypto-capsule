@@ -10,7 +10,7 @@ const LabelContainter = styled.div`
 
 const StyledLabel = styled.label`
   color: var(--main);
-  font-size: 17px;
+  font-size: 2.1rem;
   text-transform: capitalize;
 `;
 
