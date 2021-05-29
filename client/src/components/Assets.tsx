@@ -14,7 +14,7 @@ const StyledAssetAdder = styled.div`
 `;
 
 const AddAsset = styled.button`
-  font-size: 1.4rem;
+  font-size: 1.9rem;
   font-weight: 500;
   color: var(--primary);
   text-decoration: underline;
