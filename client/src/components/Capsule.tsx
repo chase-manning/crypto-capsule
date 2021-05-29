@@ -148,7 +148,7 @@ const Capsule = (props: Props): JSX.Element => {
               : countdown(
                   new Date(),
                   props.capsule.distributionDate,
-                  countdown.MILLISECONDS,
+                  countdown.ALL,
                   3
                 ).toString()}
           </Countdown>
