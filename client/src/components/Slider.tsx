@@ -37,7 +37,7 @@ const Container = styled.div`
   position: relative;
   width: 60vw;
   padding: 5rem;
-  padding-top: 4rem;
+  padding-top: 3.3rem;
   transform: rotate(-3deg);
 `;
 
