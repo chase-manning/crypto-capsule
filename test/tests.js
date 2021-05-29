@@ -452,15 +452,6 @@ describe("Capsule", () => {
     ).to.be.revertedWith("Tokens and Values must be same length");
   });
 
-  it("Should fail adding if user is not grantor", async () => {
-    await tokenA.approve(capsuleContract.address, BASE);
-    await expect(
-      capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE], {
-        from: walletB.address,
-      })
-    ).to.be.revertedWith("You are not the grantor of this Capsule");
-  });
-
   it("Should fail adding for 0 token value", async () => {
     await tokenA.approve(capsuleContract.address, BASE);
     await tokenB.approve(capsuleContract.address, BASE);
