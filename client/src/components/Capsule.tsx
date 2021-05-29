@@ -10,6 +10,7 @@ import { openCapsule } from "../services/contracthelper";
 import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
 import Block from "./Block";
+import { selectAddress } from "../state/userSlice";
 
 const StyledCapsule = styled.div`
   position: relative;
@@ -108,6 +109,7 @@ type Props = {
 
 const Capsule = (props: Props): JSX.Element => {
   const tokens = useSelector(selectTokens);
+  const address = useSelector(selectAddress);
 
   const [now, setNow] = useState(new Date());
   const nowRef = useRef(now);
@@ -171,9 +173,11 @@ const Capsule = (props: Props): JSX.Element => {
             ))}
           </Crypto>
         </ValueContainer>
-        {isOpen && !props.capsule.opened && (
-          <Button primary text="Open" click={() => open()} />
-        )}
+        {props.capsule.beneficiary === address &&
+          isOpen &&
+          !props.capsule.opened && (
+            <Button primary text="Open" click={() => open()} />
+          )}
         {!isOpen &&
           props.capsule.addingAssetsAllowed &&
           !props.capsule.opened && (
