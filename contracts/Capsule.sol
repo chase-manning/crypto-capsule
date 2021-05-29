@@ -37,7 +37,15 @@ contract CryptoCapsule is Ownable{
 
 
     // Functions
-    function createCapsule(address payable _beneficiary, uint256 _distributionDate, uint256 _periodSize, uint256 _periodCount,  address[] calldata _tokens, uint256[] calldata _values) public payable returns(Capsule memory){
+    function createCapsule(
+        address payable _beneficiary,
+        uint256 _distributionDate,
+        uint256 _periodSize,
+        uint256 _periodCount,
+        address[] calldata _tokens,
+        uint256[] calldata _values
+    ) public payable returns(Capsule memory) {
+
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
         require(_periodSize >= 1, "Period Size must greater than or equal to 1");
@@ -97,6 +105,37 @@ contract CryptoCapsule is Ownable{
         emit CapsuleOpened(capsuleId);
     }
 
+    function addAssets(uint256 capsuleId, address[] calldata _tokens, uint256[] calldata _values) public payable { // Test
+        require(capsules.length > capsuleId, "Capsule does not exist"); // Test
+        require(_tokens.length == _values.length, "Tokens and Values must be same length"); // Test
+        Capsule memory capsule = capsules[capsuleId];
+        require(msg.sender == capsule.grantor, "You are not the grantor of this Capsule"); // Test
+        require(!capsule.opened, "Capsule has already been opened"); // Test
+
+        for (uint256 i = 0; i < _tokens.length; i++) {
+            require(_values[i] > 0, "Token value must be greater than 0"); // Test
+            IERC20 erc20Token = IERC20(_tokens[i]);
+            erc20Token.transferFrom(msg.sender, address(this), _values[i]);
+
+            bool tokenExists = false;
+            for (uint256 j = 0; j < capsule.tokens.length; j++) {
+                if (capsule.tokens[j] == _tokens[i]) {
+                    capsules[capsuleId].amounts[j] != _values[i];
+                    tokenExists = true;
+                    break;
+                }
+            }
+            if (!tokenExists) {
+                capsules[capsuleId].tokens.push(_tokens[i]);
+                capsules[capsuleId].amounts.push(_values[i]);
+            }
+        }
+
+        capsules[capsuleId].value += msg.value; 
+
+        emit AddedAssets(capsuleId, _tokens, _values, msg.value);
+    }
+
 
     // Views
     function getCapsuleCount() public view returns(uint256) {
@@ -134,4 +173,5 @@ contract CryptoCapsule is Ownable{
     // Events
     event CapsuleOpened(uint256 capsuleId);
     event CapsuleCreated(uint256 capsuleId);
+    event AddedAssets(uint256 capsuleId, address[] tokens, uint256[] values, uint256 eth);
 }

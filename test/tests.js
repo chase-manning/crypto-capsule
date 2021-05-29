@@ -400,5 +400,147 @@ describe("Capsule", () => {
     testCapsule = await capsuleContract.getCapsule(capsuleCount);
     expect(testCapsule.tokens.length).to.equal(3);
     expect(testCapsule.amounts.length).to.equal(3);
+    expect(testCapsule.tokens[0]).to.equal(tokenA.address);
+    expect(testCapsule.tokens[1]).to.equal(tokenB.address);
+    expect(testCapsule.tokens[2]).to.equal(tokenC.address);
+  });
+
+  it("Should create Capsule", async () => {
+    const now = new Date();
+    now.setMonth(now.getMonth() + 26);
+    await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
+    const nextMonth = new Date(now.setDate(now.getDate() + 1));
+    const distributionStartDate = dateToUnix(nextMonth);
+
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+
+    await tokenA.approve(capsuleContract.address, BASE);
+    await capsuleContract.createCapsule(
+      walletA.address,
+      distributionStartDate,
+      1,
+      1,
+      [tokenA.address],
+      [BASE],
+      { value: ethers.utils.parseEther("1") }
+    );
+
+    testCapsule = await capsuleContract.getCapsule(capsuleCount);
+  });
+
+  it("Should fail adding to non existant Capsule", async () => {
+    await tokenA.approve(capsuleContract.address, BASE);
+    await expect(
+      capsuleContract.addAssets(testCapsule.id + 1, [tokenA.address], [BASE])
+    ).to.be.revertedWith("Capsule does not exist");
+  });
+
+  it("Should fail adding inconsistant token and values", async () => {
+    await tokenA.approve(capsuleContract.address, BASE);
+    await expect(
+      capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE, BASE])
+    ).to.be.revertedWith("Tokens and Values must be same length");
+
+    await tokenA.approve(capsuleContract.address, BASE);
+    await tokenB.approve(capsuleContract.address, BASE);
+    await expect(
+      capsuleContract.addAssets(
+        testCapsule.id,
+        [tokenA.address, tokenB.address],
+        [BASE]
+      )
+    ).to.be.revertedWith("Tokens and Values must be same length");
+  });
+
+  it("Should fail adding if user is not grantor", async () => {
+    await tokenA.approve(capsuleContract.address, BASE);
+    await expect(
+      capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE], {
+        from: walletB.address,
+      })
+    ).to.be.revertedWith("You are not the grantor of this Capsule");
+  });
+
+  it("Should fail adding for 0 token value", async () => {
+    await tokenA.approve(capsuleContract.address, BASE);
+    await tokenB.approve(capsuleContract.address, BASE);
+    await tokenC.approve(capsuleContract.address, BASE);
+    await expect(
+      capsuleContract.addAssets(
+        testCapsule.id,
+        [tokenA.address, tokenB.address, tokenC.address],
+        [BASE, 0, BASE]
+      )
+    ).to.be.revertedWith("Token value must be greater than 0");
+  });
+
+  it("Should have no additional values before adding", async () => {
+    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    expect(testCapsule.tokens.length).to.equal(1);
+    expect(testCapsule.tokens[0]).to.equal(tokenA.address);
+    expect(testCapsule.amounts[0]).to.equal(BASE);
+    expect(testCapsule.value).to.equal(1);
+  });
+
+  it("Should add eth", async () => {
+    await capsuleContract.addAssets(testCapsule.id, [], [], {
+      value: ethers.utils.parseEther("1"),
+    });
+    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    expect(testCapsule.value).to.equal(2);
+  });
+
+  it("Should add existing token value", async () => {
+    await tokenA.approve(capsuleContract.address, BASE);
+    await capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE]);
+    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    expect(testCapsule.tokens.length).to.equal(1);
+    expect(testCapsule.amounts[0]).to.equal(BASE.mul(2));
+  });
+
+  it("Should add new token value", async () => {
+    await tokenB.approve(capsuleContract.address, BASE);
+    await capsuleContract.addAssets(testCapsule.id, [tokenB.address], [BASE]);
+    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    expect(testCapsule.tokens.length).to.equal(2);
+    expect(testCapsule.amounts[0]).to.equal(BASE.mul(2));
+    expect(testCapsule.amounts[1]).to.equal(BASE);
+  });
+
+  it("Should add all options at once", async () => {
+    await tokenA.approve(capsuleContract.address, BASE);
+    await tokenB.approve(capsuleContract.address, BASE);
+    await capsuleContract.addAssets(
+      testCapsule.id,
+      [tokenA.address, tokenB.address, tokenC.address],
+      [BASE, BASE.mul(2), BASE.mul(3)],
+
+      { value: ethers.utils.parseEther("4") }
+    );
+    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    expect(testCapsule.tokens.length).to.equal(3);
+    expect(testCapsule.amounts[0]).to.equal(BASE.mul(3));
+    expect(testCapsule.amounts[1]).to.equal(BASE.mul(3));
+    expect(testCapsule.amounts[2]).to.equal(BASE.mul(3));
+    expect(testCapsule.value).to.equal(6);
+  });
+
+  it("Opening should return all added values as well", async () => {
+    const tokenABalanceBefore = await tokenA.balanceOf(walletA);
+    const tokenBBalanceBefore = await tokenB.balanceOf(walletA);
+    const tokenCBalanceBefore = await tokenC.balanceOf(walletA);
+    await openCapsule(testCapsule.id);
+    const tokenABalanceAfter = await tokenA.balanceOf(walletA);
+    const tokenBBalanceAfter = await tokenB.balanceOf(walletA);
+    const tokenCBalanceAfter = await tokenC.balanceOf(walletA);
+    expect(tokenABalanceAfter).to.equal(BASE.mul(3).add(tokenABalanceBefore));
+    expect(tokenBBalanceAfter).to.equal(BASE.mul(3).add(tokenBBalanceBefore));
+    expect(tokenCBalanceAfter).to.equal(BASE.mul(3).add(tokenCBalanceBefore));
+  });
+
+  it("Should fail adding to opened capsule", async () => {
+    await expect(
+      capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE])
+    ).to.be.revertedWith("Capsule has already been opened");
   });
 });
