@@ -90,7 +90,7 @@ const AddAssets = (props: Props): JSX.Element => {
         loading
           ? "Loading"
           : unapproved.length === 0
-          ? "Create"
+          ? "Add Assets"
           : `Approve ${addressSymbol(unapproved[0].asset.token)}`
       }
       buttonAction={() => {
