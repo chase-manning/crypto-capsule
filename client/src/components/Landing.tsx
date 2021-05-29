@@ -40,15 +40,16 @@ const Left = styled.div`
 const SubHeader = styled.div`
   color: var(--sub);
   margin-top: 25px;
-  font-size: 3rem;
+  font-size: 3.3rem;
   width: 75%;
   line-height: 1.4;
-  margin-bottom: 5rem;
+  margin-bottom: 7rem;
   margin-left: 10rem;
 `;
 
 const ButtonContainer = styled.div`
   margin-bottom: 13rem;
+  transform: rotate(2deg);
 `;
 
 const Image = styled.img`
