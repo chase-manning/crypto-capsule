@@ -14,6 +14,7 @@ type CapsuleType = {
   createdDate: Date;
   opened: boolean;
   assets: Asset[];
+  addingAssetsAllowed: boolean;
 };
 
 export default CapsuleType;

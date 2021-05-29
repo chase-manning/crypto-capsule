@@ -142,6 +142,7 @@ export const responseToCapsule = (
     periodCount: Number(capsule.periodCount),
     claimedPeriods: Number(capsule.claimedPeriods),
     assets,
+    addingAssetsAllowed: capsule.addingAssetsAllowed,
   };
 };
 

@@ -11,6 +11,7 @@ type ContractCapsuleType = {
   value: string;
   tokens: string[];
   amounts: string[];
+  addingAssetsAllowed: boolean;
 };
 
 export default ContractCapsuleType;
