@@ -3,12 +3,10 @@ pragma solidity ^0.8.0;
 
 import "./utils/EnumerableSet.sol";
 import "./utils/Ownable.sol";
-
 import "./interfaces/IERC20.sol";
 
 contract CryptoCapsule is Ownable{
     using EnumerableSet for EnumerableSet.UintSet;
-
 
     // Capsule Data
     struct Capsule {
