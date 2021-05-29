@@ -39,7 +39,8 @@ export const createCapsule = async (
   distributionDate: Date,
   periodSize: number,
   periodCount: number,
-  assets: Asset[]
+  assets: Asset[],
+  addingAssetsAllowed: boolean
 ): Promise<void> => {
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
@@ -59,7 +60,8 @@ export const createCapsule = async (
       periodSize,
       periodCount,
       otherAssets.map((a: Asset) => a.token),
-      otherAssets.map((a: Asset) => a.value)
+      otherAssets.map((a: Asset) => a.value),
+      addingAssetsAllowed
     )
     .send(tx);
 };

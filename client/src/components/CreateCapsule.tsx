@@ -53,6 +53,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
   const [distributionFrequency, setDistributionFrequency] = useState("monthly");
   const [distributionPeriods, setDistributionPeriods] = useState("");
   const [distributionDateError, setDistributionDateError] = useState("");
+  const [addingAssetsAllowed, setAddingAssetsAllowed] = useState("yes");
   const [addressError, setAddressError] = useState("");
   const [distributionPeriodsError, setDistributionPeriodsError] = useState("");
   const [assets, setAssets] = useState<Asset[]>([ethAsset]);
@@ -103,7 +104,8 @@ const CreateCapsule = (props: Props): JSX.Element => {
       date,
       getPeriodSize(distributionFrequency),
       periodType === "immediate" ? 1 : Number(distributionPeriods),
-      assets
+      assets,
+      addingAssetsAllowed === "yes"
     );
     // TODO Confirmation Screen
     props.close();
@@ -214,6 +216,13 @@ const CreateCapsule = (props: Props): JSX.Element => {
               }}
             />
             {addressError && <ValidationError>{addressError}</ValidationError>}
+            <Selector
+              options={["yes", "no"]}
+              activeOption={addingAssetsAllowed}
+              setOption={(option: string) => setAddingAssetsAllowed(option)}
+              label="Adding Assets Allowed"
+              tooltip="Controls if you are able to continue to add assets to the capsule after it has been created. 'Yes' will mean you can keep adding assets after it has been created. 'No' means that you can only add assets once when it is created."
+            />
             <Assets
               assets={assets}
               setAssets={(assets: Asset[]) => {
