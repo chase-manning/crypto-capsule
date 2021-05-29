@@ -174,6 +174,15 @@ const Capsule = (props: Props): JSX.Element => {
         {isOpen && !props.capsule.opened && (
           <Button primary text="Open" click={() => open()} />
         )}
+        {!isOpen &&
+          props.capsule.addingAssetsAllowed &&
+          !props.capsule.opened && (
+            <Button
+              primary
+              text="Add Assets"
+              click={() => console.log("Meow")}
+            />
+          )}
       </Content>
     </StyledCapsule>
   );
