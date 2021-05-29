@@ -466,7 +466,7 @@ describe("Capsule", () => {
   });
 
   it("Should have no additional values before adding", async () => {
-    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
     expect(testCapsule.tokens.length).to.equal(1);
     expect(testCapsule.tokens[0]).to.equal(tokenA.address);
     expect(testCapsule.amounts[0]).to.equal(BASE);
@@ -477,14 +477,14 @@ describe("Capsule", () => {
     await capsuleContract.addAssets(testCapsule.id, [], [], {
       value: ethers.utils.parseEther("1"),
     });
-    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
     expect(testCapsule.value).to.equal(2);
   });
 
   it("Should add existing token value", async () => {
     await tokenA.approve(capsuleContract.address, BASE);
     await capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE]);
-    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
     expect(testCapsule.tokens.length).to.equal(1);
     expect(testCapsule.amounts[0]).to.equal(BASE.mul(2));
   });
@@ -492,7 +492,7 @@ describe("Capsule", () => {
   it("Should add new token value", async () => {
     await tokenB.approve(capsuleContract.address, BASE);
     await capsuleContract.addAssets(testCapsule.id, [tokenB.address], [BASE]);
-    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
     expect(testCapsule.tokens.length).to.equal(2);
     expect(testCapsule.amounts[0]).to.equal(BASE.mul(2));
     expect(testCapsule.amounts[1]).to.equal(BASE);
@@ -508,7 +508,7 @@ describe("Capsule", () => {
 
       { value: ethers.utils.parseEther("4") }
     );
-    testCapsule = capsuleContract.getCapsule(testCapsule.id);
+    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
     expect(testCapsule.tokens.length).to.equal(3);
     expect(testCapsule.amounts[0]).to.equal(BASE.mul(3));
     expect(testCapsule.amounts[1]).to.equal(BASE.mul(3));
