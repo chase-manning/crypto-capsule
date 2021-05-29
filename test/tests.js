@@ -500,7 +500,8 @@ describe("Capsule", () => {
 
   it("Should add all options at once", async () => {
     await tokenA.approve(capsuleContract.address, BASE);
-    await tokenB.approve(capsuleContract.address, BASE);
+    await tokenB.approve(capsuleContract.address, BASE.mul(2));
+    await tokenC.approve(capsuleContract.address, BASE.mul(3));
     await capsuleContract.addAssets(
       testCapsule.id,
       [tokenA.address, tokenB.address, tokenC.address],
