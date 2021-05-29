@@ -74,7 +74,7 @@ const Landing = (): JSX.Element => {
         <Left>
           <SubHeader>
             Send crytocurrencies into the future, safely and securely using
-            Ethereum smart contracts
+            smart contracts
           </SubHeader>
           <ButtonContainer>
             <Button
