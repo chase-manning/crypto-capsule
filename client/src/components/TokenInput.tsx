@@ -83,7 +83,7 @@ const MaxButton = styled.button`
 `;
 
 const RemoveAsset = styled.button`
-  font-size: 1.4rem;
+  font-size: 1.9rem;
   font-weight: 500;
   color: var(--primary);
   text-decoration: underline;
