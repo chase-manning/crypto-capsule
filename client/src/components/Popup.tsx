@@ -45,6 +45,8 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: calc(90vh - 8rem);
+  overflow-y: auto;
 `;
 
 const Header = styled.h3`
