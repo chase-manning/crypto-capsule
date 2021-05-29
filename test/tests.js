@@ -478,7 +478,7 @@ describe("Capsule", () => {
       value: ethers.utils.parseEther("1"),
     });
     testCapsule = await capsuleContract.getCapsule(testCapsule.id);
-    expect(testCapsule.value).to.equal(2);
+    expect(testCapsule.value).to.equal(BASE.mul(2));
   });
 
   it("Should add existing token value", async () => {
