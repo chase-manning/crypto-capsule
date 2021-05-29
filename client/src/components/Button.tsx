@@ -24,7 +24,7 @@ const Content = styled.div`
     props.selected ? "var(--bg)" : "var(--main)"};
   padding: ${(props: StyledProps) =>
     props.small
-      ? "0.7rem 1.2rem"
+      ? "0.7rem 1.8rem"
       : props.primary
       ? "1.5rem 3rem"
       : "1.1rem 2.1rem"};
@@ -37,6 +37,7 @@ const Content = styled.div`
         : "translate(-3px, -3px)"
       : "translate(0,0)"};
   transition: transform 0.3s;
+  text-transform: capitalize;
 `;
 
 type Props = {
