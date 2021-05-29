@@ -50,12 +50,12 @@ const Popup = styled.div`
   top: 200%;
   left: 0;
   transform: translateX(-50%);
-  width: 400px;
+  width: 500px;
   padding: 1.7rem;
   border-radius: 1rem;
   background-color: var(--bg);
   color: var(--main);
-  font-size: 1.5rem;
+  font-size: 2.1rem;
   z-index: 2;
 `;
 
