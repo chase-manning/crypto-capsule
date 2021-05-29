@@ -93,7 +93,6 @@ const Slider = (): JSX.Element => {
           </Body>
           <ButtonContainer>
             <Button
-              primary
               text="View Smart Contract"
               click={() =>
                 (window as any)
@@ -105,7 +104,6 @@ const Slider = (): JSX.Element => {
               }
             />
             <Button
-              primary
               text="View Source Code"
               click={() =>
                 (window as any)
