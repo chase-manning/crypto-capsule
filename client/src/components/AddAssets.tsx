@@ -79,6 +79,7 @@ const AddAssets = (props: Props): JSX.Element => {
     setLoading(true);
     await addAssets(props.capsuleId, assets);
     setLoading(false);
+    props.close();
   };
 
   return (
