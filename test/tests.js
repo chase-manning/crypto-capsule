@@ -573,6 +573,12 @@ describe("Capsule", () => {
     await network.provider.send("evm_mine");
   });
 
+  it("Should fail adding to Capsule past distribution date", async () => {
+    await expect(
+      capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE])
+    ).to.be.revertedWith("Capsule is past distribution date");
+  });
+
   it("Opening should return all added values as well", async () => {
     const tokenABalanceBefore = await tokenA.balanceOf(walletA.address);
     const tokenBBalanceBefore = await tokenB.balanceOf(walletA.address);
@@ -584,11 +590,5 @@ describe("Capsule", () => {
     expect(tokenABalanceAfter).to.equal(BASE.mul(3).add(tokenABalanceBefore));
     expect(tokenBBalanceAfter).to.equal(BASE.mul(3).add(tokenBBalanceBefore));
     expect(tokenCBalanceAfter).to.equal(BASE.mul(3).add(tokenCBalanceBefore));
-  });
-
-  it("Should fail adding to opened capsule", async () => {
-    await expect(
-      capsuleContract.addAssets(testCapsule.id, [tokenA.address], [BASE])
-    ).to.be.revertedWith("Capsule has already been opened");
   });
 });

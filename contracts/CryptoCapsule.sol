@@ -111,7 +111,7 @@ contract CryptoCapsule is Ownable{
         Capsule memory capsule = capsules[capsuleId];
         require(capsule.addingAssetsAllowed, "Adding assets not allowed for this Capsule");
         require(msg.sender == capsule.grantor, "You are not the grantor of this Capsule");
-        require(!capsule.opened, "Capsule has already been opened");
+        require(block.timestamp < capsule.distributionDate, "Capsule is past distribution date");
 
         for (uint256 i = 0; i < _tokens.length; i++) {
             require(_values[i] > 0, "Token value must be greater than 0");
