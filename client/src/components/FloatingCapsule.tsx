@@ -6,6 +6,7 @@ import capsuleLandingShadow from "../assets/capsule-landing-shadow.png";
 import capsuleLandingTokenEther from "../assets/capsule-landing-token-ether.png";
 import capsuleLandingTokenBitcoin from "../assets/capsule-landing-token-bitcoin.png";
 import capsuleLandingTokenTether from "../assets/capsule-landing-token-tether.png";
+import capsuleLandingTokenChainlink from "../assets/capsule-landing-token-chainlink.png";
 
 const StyledFloatingCapsule = styled.div`
   position: relative;
@@ -58,6 +59,15 @@ const TokenTether = styled.img`
   user-select: none;
 `;
 
+const TokenChainlink = styled.img`
+  position: absolute;
+  top: 19%;
+  left: 65%;
+  width: 11%;
+  user-drag: none;
+  user-select: none;
+`;
+
 const FloatingCapsule = (): JSX.Element => {
   return (
     <StyledFloatingCapsule>
@@ -66,6 +76,7 @@ const FloatingCapsule = (): JSX.Element => {
       <TokenEther src={capsuleLandingTokenEther} />
       <TokenBitcoin src={capsuleLandingTokenBitcoin} />
       <TokenTether src={capsuleLandingTokenTether} />
+      <TokenChainlink src={capsuleLandingTokenChainlink} />
     </StyledFloatingCapsule>
   );
 };
