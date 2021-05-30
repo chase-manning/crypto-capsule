@@ -646,19 +646,37 @@ describe("Capsule", () => {
     ).to.be.revertedWith("You are not the beneficiary of this Capsule");
   });
 
+  it("Should create Capsule", async () => {
+    const now = new Date();
+    now.setMonth(now.getMonth() + 29);
+    await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
+    const nextMonth = new Date(now.setDate(now.getDate() + 1));
+    const distributionStartDate = dateToUnix(nextMonth);
+
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+
+    await tokenA.approve(capsuleContract.address, BASE);
+    await capsuleContract.createCapsule(
+      walletA.address,
+      distributionStartDate,
+      1,
+      1,
+      [tokenA.address],
+      [BASE],
+      true,
+      { value: ethers.utils.parseEther("1") }
+    );
+
+    testCapsule = await capsuleContract.getCapsule(capsuleCount);
+  });
+
   it("Should pass 2 days", async () => {
     await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 2]);
     await network.provider.send("evm_mine");
   });
 
-  it("Should open capsule and send crypto to new beneficiary", async () => {
-    const walletAOldBalance = await tokenA.balanceOf(walletA.address);
-    const walletBOldBalance = await tokenA.balanceOf(walletB.address);
+  it("Should open capsule", async () => {
     await capsuleContract.openCapsule(testCapsule.id);
-    const walletANewBalance = await tokenA.balanceOf(walletA.address);
-    const walletBNewBalance = await tokenA.balanceOf(walletB.address);
-    expect(walletANewBalance).to.equal(walletAOldBalance);
-    expect(walletBNewBalance).to.equal(BASE.add(walletBOldBalance));
   });
 
   it("Should fail for changing beneficiary for open Capsule", async () => {
