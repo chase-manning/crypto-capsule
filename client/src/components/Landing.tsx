@@ -3,6 +3,7 @@ import styled from "styled-components";
 import landing from "../assets/capsule.jpg";
 import Button from "./Button";
 import CreateCapsule from "./CreateCapsule";
+import FloatingCapsule from "./FloatingCapsule";
 
 const StyledLanding = styled.div`
   width: 100%;
@@ -52,18 +53,6 @@ const ButtonContainer = styled.div`
   transform: rotate(2deg);
 `;
 
-const Image = styled.img`
-  width: 56vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3rem;
-  color: var(--main);
-  text-transform: uppercase;
-  user-drag: none;
-  user-select: none;
-`;
-
 const Landing = (): JSX.Element => {
   const [creatingCapsule, setCreatingCapsule] = useState(false);
 
@@ -84,7 +73,7 @@ const Landing = (): JSX.Element => {
             />
           </ButtonContainer>
         </Left>
-        <Image src={landing} />
+        <FloatingCapsule />
       </Content>
       <CreateCapsule
         show={creatingCapsule}
