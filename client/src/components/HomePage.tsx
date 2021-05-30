@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Landing from "./Landing";
-import Slider from "./Slider";
+import Slider from "./WhatIsSlide";
 
 const StyledHomePage = styled.div`
   display: flex;
