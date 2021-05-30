@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Landing from "./Landing";
 import WhatIsSlide from "./WhatIsSlide";
+import WhyUseSlide from "./WhyUseSlide";
 
 const StyledHomePage = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const HomePage = (): JSX.Element => {
     <StyledHomePage>
       <Landing />
       <WhatIsSlide />
+      <WhyUseSlide />
     </StyledHomePage>
   );
 };
