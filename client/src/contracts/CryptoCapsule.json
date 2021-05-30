@@ -125,37 +125,6 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "c__0x4cfd8904",
-        "type": "bytes32"
-      }
-    ],
-    "name": "c_0x4cfd8904",
-    "outputs": [],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "capsuleId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address payable",
-        "name": "beneficiary",
-        "type": "address"
-      }
-    ],
-    "name": "changeBeneficiary",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address payable",
         "name": "_beneficiary",
         "type": "address"
@@ -662,6 +631,24 @@
       }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "capsuleId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address payable",
+        "name": "beneficiary",
+        "type": "address"
+      }
+    ],
+    "name": "updateBeneficiary",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

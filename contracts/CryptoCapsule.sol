@@ -137,7 +137,7 @@ contract CryptoCapsule is Ownable{
         emit AddedAssets(capsuleId, _tokens, _values, msg.value);
     }
 
-    function changeBeneficiary(uint256 capsuleId, address payable beneficiary) public {
+    function updateBeneficiary(uint256 capsuleId, address payable beneficiary) public {
         require(capsules.length > capsuleId, "Capsule does not exist");
         Capsule memory capsule = capsules[capsuleId];
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");

@@ -619,20 +619,20 @@ describe("Capsule", () => {
 
   it("Should fail on changing beneficiary for invalid capsuleId", async () => {
     await expect(
-      capsuleContract.changeBeneficiary(testCapsule.id + 1, walletA.address)
+      capsuleContract.updateBeneficiary(testCapsule.id + 1, walletA.address)
     ).to.be.revertedWith("Capsule does not exist");
   });
 
   it("Should fail changing beneficiary to current value", async () => {
     await expect(
-      capsuleContract.changeBeneficiary(testCapsule.id, walletA.address)
+      capsuleContract.updateBeneficiary(testCapsule.id, walletA.address)
     ).to.be.revertedWith("Beneficiary is not different to curret");
   });
 
   it("Should change beneficiary", async () => {
     const oldCapsule = await capsuleContract.getCapsule(testCapsule.id);
     const oldBeneficiary = oldCapsule.beneficiary;
-    await capsuleContract.changeBeneficiary(testCapsule.id, walletB.address);
+    await capsuleContract.updateBeneficiary(testCapsule.id, walletB.address);
     const newCapsule = await capsuleContract.getCapsule(testCapsule.id);
     const newBeneficiary = newCapsule.beneficiary;
     expect(oldBeneficiary).to.equal(walletA.address);
@@ -642,7 +642,7 @@ describe("Capsule", () => {
 
   it("Should fail for chaning beneficiary when not beneficiary", async () => {
     await expect(
-      capsuleContract.changeBeneficiary(testCapsule.id, walletC.address)
+      capsuleContract.updateBeneficiary(testCapsule.id, walletC.address)
     ).to.be.revertedWith("You are not the beneficiary of this Capsule");
   });
 
@@ -681,7 +681,7 @@ describe("Capsule", () => {
 
   it("Should fail for changing beneficiary for open Capsule", async () => {
     await expect(
-      capsuleContract.changeBeneficiary(testCapsule.id, walletA.address)
+      capsuleContract.updateBeneficiary(testCapsule.id, walletA.address)
     ).to.be.revertedWith("Capsule has already been opened");
   });
 });
