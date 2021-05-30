@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import capsuleLandingMain from "../assets/capsule-landing-main.png";
 import capsuleLandingShadow from "../assets/capsule-landing-shadow.png";
@@ -16,12 +16,45 @@ const StyledFloatingCapsule = styled.div`
   border: solid 1px pink;
 `;
 
+const mainAnimation = keyframes`
+    0% {
+        transform: translateY(-3%);
+    }
+    50% {
+        transform: translateY(3%);
+    }
+    100% {
+        transform: translateY(-3%);
+    }
+`;
+
+const MainContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: ${mainAnimation} 15s ease-in-out 0s infinite;
+`;
+
 const Main = styled.img`
   position: absolute;
   left: 7%;
   width: 83%;
   user-drag: none;
   user-select: none;
+`;
+
+const shadowAnimation = keyframes`
+    0% {
+        transform: translateY(9%);
+    }
+    50% {
+        transform: translateY(-9%);
+    }
+    100% {
+        transform: translateY(9%);
+    }
 `;
 
 const Shadow = styled.img`
@@ -31,6 +64,7 @@ const Shadow = styled.img`
   width: 70%;
   user-drag: none;
   user-select: none;
+  animation: ${shadowAnimation} 15s ease-in-out 0s infinite;
 `;
 
 const TokenCapsuleCoin = styled.img`
@@ -81,13 +115,15 @@ const TokenChainlink = styled.img`
 const FloatingCapsule = (): JSX.Element => {
   return (
     <StyledFloatingCapsule>
-      <Main src={capsuleLandingMain} />
+      <MainContainer>
+        <Main src={capsuleLandingMain} />
+        <TokenCapsuleCoin src={capsuleLandingTokenCapsuleCoin} />
+        <TokenEther src={capsuleLandingTokenEther} />
+        <TokenBitcoin src={capsuleLandingTokenBitcoin} />
+        <TokenTether src={capsuleLandingTokenTether} />
+        <TokenChainlink src={capsuleLandingTokenChainlink} />
+      </MainContainer>
       <Shadow src={capsuleLandingShadow} />
-      <TokenCapsuleCoin src={capsuleLandingTokenCapsuleCoin} />
-      <TokenEther src={capsuleLandingTokenEther} />
-      <TokenBitcoin src={capsuleLandingTokenBitcoin} />
-      <TokenTether src={capsuleLandingTokenTether} />
-      <TokenChainlink src={capsuleLandingTokenChainlink} />
     </StyledFloatingCapsule>
   );
 };
