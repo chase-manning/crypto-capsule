@@ -49,9 +49,9 @@ const UpdateBeneficiary = (props: Props): JSX.Element => {
       content={
         <StyledUpdateBeneficiary>
           <TextInput
-            label="Beneficiary"
+            label="New Beneficiary"
             placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
-            tooltip="This is the wallet address that your crypto will be sent to on the distribution date"
+            tooltip="This is the new wallet address that the crypto will be sent to on the distribution date"
             value={beneficiary}
             setValue={(value: string) => {
               validateAddress(value);
