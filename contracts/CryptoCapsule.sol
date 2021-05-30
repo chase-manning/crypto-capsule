@@ -137,6 +137,16 @@ contract CryptoCapsule is Ownable{
         emit AddedAssets(capsuleId, _tokens, _values, msg.value);
     }
 
+    function changeBeneficiary(uint256 capsuleId, address payable beneficiary) public {
+        require(capsules.length > capsuleId, "Capsule does not exist");
+        Capsule memory capsule = capsules[capsuleId];
+        require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
+        require(!capsule.opened, "Capsule has already been opened");
+        require(capsule.beneficiary != beneficiary, "Beneficiary is not different to curret");
+        capsules[capsuleId].beneficiary = beneficiary;
+        emit UpdatedBeneficiary(capsuleId, beneficiary);
+    }
+
 
     // Views
     function getCapsuleCount() public view returns(uint256) {
@@ -175,4 +185,5 @@ contract CryptoCapsule is Ownable{
     event CapsuleOpened(uint256 capsuleId);
     event CapsuleCreated(uint256 capsuleId);
     event AddedAssets(uint256 capsuleId, address[] tokens, uint256[] values, uint256 eth);
+    event UpdatedBeneficiary(uint256 capsuleId, address payable beneficiary);
 }

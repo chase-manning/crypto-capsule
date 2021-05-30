@@ -591,4 +591,78 @@ describe("Capsule", () => {
     expect(tokenBBalanceAfter).to.equal(BASE.mul(3).add(tokenBBalanceBefore));
     expect(tokenCBalanceAfter).to.equal(BASE.mul(3).add(tokenCBalanceBefore));
   });
+
+  it("Should create Capsule", async () => {
+    const now = new Date();
+    now.setMonth(now.getMonth() + 28);
+    await network.provider.send("evm_setNextBlockTimestamp", [dateToUnix(now)]);
+    const nextMonth = new Date(now.setDate(now.getDate() + 1));
+    const distributionStartDate = dateToUnix(nextMonth);
+
+    const capsuleCount = await capsuleContract.getCapsuleCount();
+
+    await tokenA.approve(capsuleContract.address, BASE);
+    await capsuleContract.createCapsule(
+      walletA.address,
+      distributionStartDate,
+      1,
+      1,
+      [tokenA.address],
+      [BASE],
+      true,
+      { value: ethers.utils.parseEther("1") }
+    );
+
+    testCapsule = await capsuleContract.getCapsule(capsuleCount);
+  });
+
+  it("Should fail on changing beneficiary for invalid capsuleId", async () => {
+    await expect(
+      capsuleContract.changeBeneficiary(testCapsule.id + 1, walletA.address)
+    ).to.be.revertedWith("Capsule does not exist");
+  });
+
+  it("Should fail changing beneficiary to current value", async () => {
+    await expect(
+      capsuleContract.changeBeneficiary(testCapsule.id, walletA.address)
+    ).to.be.revertedWith("Beneficiary is not different to curret");
+  });
+
+  it("Should change beneficiary", async () => {
+    const oldCapsule = await capsuleContract.getCapsule(testCapsule.id);
+    const oldBeneficiary = oldCapsule.beneficiary;
+    await capsuleContract.changeBeneficiary(testCapsule.id, walletB.address);
+    const newCapsule = await capsuleContract.getCapsule(testCapsule.id);
+    const newBeneficiary = newCapsule.beneficiary;
+    expect(oldBeneficiary).to.equal(walletA.address);
+    expect(newBeneficiary).to.equal(walletB.address);
+    expect(newBeneficiary).to.not.equal(oldBeneficiary);
+  });
+
+  it("Should fail for chaning beneficiary when not beneficiary", async () => {
+    await expect(
+      capsuleContract.changeBeneficiary(testCapsule.id, walletC.address)
+    ).to.be.revertedWith("You are not the beneficiary of this Capsule");
+  });
+
+  it("Should pass 2 days", async () => {
+    await network.provider.send("evm_increaseTime", [60 * 60 * 24 * 2]);
+    await network.provider.send("evm_mine");
+  });
+
+  it("Should open capsule and send crypto to new beneficiary", async () => {
+    const walletAOldBalance = await tokenA.balanceOf(walletA.address);
+    const walletBOldBalance = await tokenA.balanceOf(walletB.address);
+    await capsuleContract.openCapsule(testCapsule.id);
+    const walletANewBalance = await tokenA.balanceOf(walletA.address);
+    const walletBNewBalance = await tokenA.balanceOf(walletB.address);
+    expect(walletANewBalance).to.equal(walletAOldBalance);
+    expect(walletBNewBalance).to.equal(BASE.add(walletBOldBalance));
+  });
+
+  it("Should fail for changing beneficiary for open Capsule", async () => {
+    await expect(
+      capsuleContract.changeBeneficiary(testCapsule.id, walletA.address)
+    ).to.be.revertedWith("Capsule has already been opened");
+  });
 });
