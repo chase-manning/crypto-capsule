@@ -13,7 +13,6 @@ const StyledFloatingCapsule = styled.div`
   position: relative;
   width: 56vw;
   height: 30vw;
-  border: solid 1px pink;
 `;
 
 const mainAnimation = keyframes`
@@ -67,6 +66,18 @@ const Shadow = styled.img`
   animation: ${shadowAnimation} 15s ease-in-out 0s infinite;
 `;
 
+const tokenAnimationUp = keyframes`
+    0% {
+        transform: translateY(0%) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-40%) rotate(30deg);
+    }
+    100% {
+        transform: translateY(0%) rotate(0deg);
+    }
+`;
+
 const TokenCapsuleCoin = styled.img`
   position: absolute;
   top: 21.5%;
@@ -74,6 +85,19 @@ const TokenCapsuleCoin = styled.img`
   width: 14.5%;
   user-drag: none;
   user-select: none;
+  animation: ${tokenAnimationUp} 17s ease-in-out 0s infinite;
+`;
+
+const tokenAnimationDown = keyframes`
+    0% {
+        transform: translateY(0%) rotate(0deg);
+    }
+    50% {
+        transform: translateY(15%) rotate(-10deg);
+    }
+    100% {
+        transform: translateY(0%) rotate(0deg);
+    }
 `;
 
 const TokenBitcoin = styled.img`
@@ -83,6 +107,7 @@ const TokenBitcoin = styled.img`
   width: 11%;
   user-drag: none;
   user-select: none;
+  animation: ${tokenAnimationDown} 11s ease-in-out 3s infinite;
 `;
 
 const TokenEther = styled.img`
@@ -92,6 +117,7 @@ const TokenEther = styled.img`
   width: 11%;
   user-drag: none;
   user-select: none;
+  animation: ${tokenAnimationUp} 22s ease-in-out 2s infinite;
 `;
 
 const TokenTether = styled.img`
@@ -101,6 +127,7 @@ const TokenTether = styled.img`
   width: 11%;
   user-drag: none;
   user-select: none;
+  animation: ${tokenAnimationDown} 12s ease-in-out 1s infinite;
 `;
 
 const TokenChainlink = styled.img`
@@ -110,6 +137,7 @@ const TokenChainlink = styled.img`
   width: 11%;
   user-drag: none;
   user-select: none;
+  animation: ${tokenAnimationUp} 19s ease-in-out 0s infinite;
 `;
 
 const FloatingCapsule = (): JSX.Element => {
