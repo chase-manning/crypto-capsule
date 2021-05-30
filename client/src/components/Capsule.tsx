@@ -6,12 +6,13 @@ import { useSelector } from "react-redux";
 
 import Button from "./Button";
 import CapsuleType, { Asset } from "../types/CapsuleType";
-import { openCapsule } from "../services/contracthelper";
+import { openCapsule, updateBeneficiary } from "../services/contracthelper";
 import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
 import Block from "./Block";
 import { selectAddress } from "../state/userSlice";
 import AddAssets from "./AddAssets";
+import UpdateBeneficiary from "./UpdateBeneficiary";
 
 const StyledCapsule = styled.div`
   position: relative;
@@ -105,6 +106,7 @@ const CryptoIcon = styled.img`
 `;
 
 type Props = {
+  isReceived: boolean;
   capsule: CapsuleType;
 };
 
@@ -113,6 +115,7 @@ const Capsule = (props: Props): JSX.Element => {
   const address = useSelector(selectAddress);
 
   const [addingAssets, setAddingAssets] = useState(false);
+  const [updatingBeneficiary, setUpdatingBeneficiary] = useState(false);
 
   const [now, setNow] = useState(new Date());
   const nowRef = useRef(now);
@@ -176,17 +179,28 @@ const Capsule = (props: Props): JSX.Element => {
             ))}
           </Crypto>
         </ValueContainer>
-        {props.capsule.beneficiary === address &&
-          isOpen &&
-          !props.capsule.opened && <Button text="Open" click={() => open()} />}
-        {!isOpen && props.capsule.addingAssetsAllowed && !isOpen && (
+        {props.isReceived && isOpen && !props.capsule.opened && (
+          <Button text="Open" click={() => open()} />
+        )}
+        {!props.isReceived && props.capsule.addingAssetsAllowed && !isOpen && (
           <Button text="Add Assets" click={() => setAddingAssets(true)} />
+        )}
+        {props.isReceived && !props.capsule.opened && !isOpen && (
+          <Button
+            text="Update Beneficiary"
+            click={() => setUpdatingBeneficiary(true)}
+          />
         )}
       </Content>
       <AddAssets
         capsuleId={props.capsule.id}
         show={addingAssets}
         close={() => setAddingAssets(false)}
+      />
+      <UpdateBeneficiary
+        show={updatingBeneficiary}
+        close={() => setUpdatingBeneficiary(false)}
+        capsuleId={props.capsule.id}
       />
     </StyledCapsule>
   );
