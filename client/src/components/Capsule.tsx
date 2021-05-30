@@ -25,28 +25,29 @@ const StyledCapsule = styled.div`
 const Content = styled.div`
   position: relative;
   width: 100%;
-  padding: 3rem;
+  height: 14rem;
+  padding: 3rem 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 const Image = styled.img`
-  height: 80px;
-  width: 120px;
+  height: 120%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
   color: var(--main);
   text-transform: uppercase;
+  transform: translateX(-1rem);
 `;
 
 const CountdownContainer = styled.div`
   flex: 1;
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-direction: column;
   padding: 0 30px;
 `;
@@ -65,7 +66,7 @@ const OpenDate = styled.div`
 const ValueContainer = styled.div`
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-direction: column;
   padding: 0 30px;
 `;
