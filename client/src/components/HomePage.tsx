@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Landing from "./Landing";
-import Slider from "./WhatIsSlide";
+import WhatIsSlide from "./WhatIsSlide";
 
 const StyledHomePage = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const HomePage = (): JSX.Element => {
   return (
     <StyledHomePage>
       <Landing />
-      <Slider />
+      <WhatIsSlide />
     </StyledHomePage>
   );
 };

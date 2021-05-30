@@ -65,7 +65,7 @@ const Body = styled.p`
   width: 100%;
 `;
 
-const Slider = (): JSX.Element => {
+const WhatIsSlide = (): JSX.Element => {
   return (
     <StyledSlider>
       <Dots />
@@ -86,4 +86,4 @@ const Slider = (): JSX.Element => {
   );
 };
 
-export default Slider;
+export default WhatIsSlide;
