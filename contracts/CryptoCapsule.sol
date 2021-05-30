@@ -143,7 +143,9 @@ contract CryptoCapsule is Ownable{
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
         require(!capsule.opened, "Capsule has already been opened");
         require(capsule.beneficiary != beneficiary, "Beneficiary is not different to curret");
+        received[capsule.beneficiary].remove(capsuleId);
         capsules[capsuleId].beneficiary = beneficiary;
+        received[beneficiary].add(capsuleId);
         emit UpdatedBeneficiary(capsuleId, beneficiary);
     }
 
