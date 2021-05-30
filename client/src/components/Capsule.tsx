@@ -3,6 +3,9 @@ import styled from "styled-components";
 import dateformat from "dateformat";
 import countdown from "countdown";
 import { useSelector } from "react-redux";
+import capsuleOpenSmall from "../assets/capsule-open-small.png";
+import capsuleLockedSmall from "../assets/capsule-locked-small.png";
+import capsuleReadySmall from "../assets/capsule-ready-small.png";
 
 import Button from "./Button";
 import CapsuleType, { Asset } from "../types/CapsuleType";
@@ -10,7 +13,6 @@ import { openCapsule } from "../services/contracthelper";
 import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
 import Block from "./Block";
-import { selectAddress } from "../state/userSlice";
 import AddAssets from "./AddAssets";
 import UpdateBeneficiary from "./UpdateBeneficiary";
 
@@ -29,7 +31,7 @@ const Content = styled.div`
   align-items: center;
 `;
 
-const Image = styled.div`
+const Image = styled.img`
   height: 80px;
   width: 120px;
   display: flex;
@@ -38,18 +40,6 @@ const Image = styled.div`
   font-size: 1rem;
   color: var(--main);
   text-transform: uppercase;
-`;
-
-const OpenImage = styled(Image)`
-  background-color: pink;
-`;
-
-const ClosedImage = styled(Image)`
-  background-color: lightgreen;
-`;
-
-const ReadyImage = styled(Image)`
-  background-color: lightblue;
 `;
 
 const CountdownContainer = styled.div`
@@ -144,9 +134,9 @@ const Capsule = (props: Props): JSX.Element => {
     <StyledCapsule>
       <Block />
       <Content>
-        {isOpen && props.capsule.opened && <OpenImage>asset 2</OpenImage>}
-        {isOpen && !props.capsule.opened && <ReadyImage>asset 3</ReadyImage>}
-        {!isOpen && <ClosedImage>asset 4</ClosedImage>}
+        {isOpen && props.capsule.opened && <Image src={capsuleOpenSmall} />}
+        {isOpen && !props.capsule.opened && <Image src={capsuleReadySmall} />}
+        {!isOpen && <Image src={capsuleLockedSmall} />}
         <CountdownContainer>
           <Countdown>
             {isOpen
