@@ -629,6 +629,22 @@ describe("Capsule", () => {
     ).to.be.revertedWith("Beneficiary is not different to curret");
   });
 
+  it("Should return accurate Capsules for Received", async () => {
+    const walletAReceived = await capsuleContract.getReceivedCapsules(
+      walletA.address
+    );
+    const walletAHasCapsule =
+      walletAReceived.filter((c) => c.id.eq(testCapsule.id)).length === 1;
+    expect(walletAHasCapsule).to.be.true;
+
+    const walletBReceived = await capsuleContract.getReceivedCapsules(
+      walletB.address
+    );
+    const walletBHasCapsule =
+      walletBReceived.filter((c) => c.id.eq(testCapsule.id)).length === 1;
+    expect(walletBHasCapsule).to.be.false;
+  });
+
   it("Should change beneficiary", async () => {
     const oldCapsule = await capsuleContract.getCapsule(testCapsule.id);
     const oldBeneficiary = oldCapsule.beneficiary;
@@ -638,6 +654,22 @@ describe("Capsule", () => {
     expect(oldBeneficiary).to.equal(walletA.address);
     expect(newBeneficiary).to.equal(walletB.address);
     expect(newBeneficiary).to.not.equal(oldBeneficiary);
+  });
+
+  it("Should return accurate Capsules for Received", async () => {
+    const walletAReceived = await capsuleContract.getReceivedCapsules(
+      walletA.address
+    );
+    const walletAHasCapsule =
+      walletAReceived.filter((c) => c.id.eq(testCapsule.id)).length === 1;
+    expect(walletAHasCapsule).to.be.false;
+
+    const walletBReceived = await capsuleContract.getReceivedCapsules(
+      walletB.address
+    );
+    const walletBHasCapsule =
+      walletBReceived.filter((c) => c.id.eq(testCapsule.id)).length === 1;
+    expect(walletBHasCapsule).to.be.true;
   });
 
   it("Should fail for chaning beneficiary when not beneficiary", async () => {
