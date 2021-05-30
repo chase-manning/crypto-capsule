@@ -95,6 +95,14 @@ export const addAssets = async (
     .send(tx);
 };
 
+export const updateBeneficiary = async (
+  capsuleId: number,
+  beneficiary: string
+): Promise<void> => {
+  const capsuleContract = await getCapsuleContract();
+  await capsuleContract.methods.addAssets(capsuleId, beneficiary).send();
+};
+
 // Views
 export const getSentCapsules = async (): Promise<CapsuleType[]> => {
   const address = await getAddress();
