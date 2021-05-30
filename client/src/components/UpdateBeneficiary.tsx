@@ -5,7 +5,9 @@ import { ValidationError } from "../styles/ValidationError";
 import Popup from "./Popup";
 import TextInput from "./TextInput";
 
-const StyledUpdateBeneficiary = styled.div``;
+const StyledUpdateBeneficiary = styled.div`
+  width: 100%;
+`;
 
 type Props = {
   show: boolean;
@@ -18,12 +20,17 @@ const UpdateBeneficiary = (props: Props): JSX.Element => {
   const [beneficiary, setBeneficiary] = useState("");
   const [addressError, setAddressError] = useState("");
 
-  const validateAddress = (value: string) => {
-    if (value.length !== 42) setAddressError("Invalid Address");
-    else setAddressError("");
+  const validateAddress = (value: string): boolean => {
+    if (value.length !== 42) {
+      setAddressError("Invalid Address");
+      return false;
+    }
+    setAddressError("");
+    return true;
   };
 
-  const click = async (): Promise<void> => {
+  const click = async () => {
+    if (!validateAddress(beneficiary)) return;
     setLoading(true);
     await updateBeneficiary(props.capsuleId, beneficiary);
     setLoading(false);
@@ -40,7 +47,7 @@ const UpdateBeneficiary = (props: Props): JSX.Element => {
         if (!loading) click();
       }}
       content={
-        <>
+        <StyledUpdateBeneficiary>
           <TextInput
             label="Beneficiary"
             placeholder="e.g. 0x07d48BDBA7975f0DAF73BD5b85A2E3Ff87ffb24e"
@@ -52,7 +59,7 @@ const UpdateBeneficiary = (props: Props): JSX.Element => {
             }}
           />
           {addressError && <ValidationError>{addressError}</ValidationError>}
-        </>
+        </StyledUpdateBeneficiary>
       }
     />
   );
