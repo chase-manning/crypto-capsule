@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import capsule from "../assets/capsule.jpg";
+import noCapsulesImage from "../assets/capsule-open-large.png";
 import Button from "./Button";
 import CreateCapsule from "./CreateCapsule";
 
@@ -10,16 +10,22 @@ const StyledNoCapsules = styled.div`
   align-items: center;
 `;
 
-const Image = styled.img`
-  width: 38rem;
-`;
-
 const Text = styled.h4`
   color: var(--main);
-  font-size: 2.7rem;
+  font-size: 4.3rem;
   font-weight: 500;
   margin-top: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
+  transform: rotate(-6deg);
+`;
+
+const Image = styled.img`
+  width: 20rem;
+  margin-bottom: 3.5rem;
+`;
+
+const ButtonContainter = styled.div`
+  transform: rotate(-2deg);
 `;
 
 type Props = {
@@ -31,9 +37,11 @@ const NoCapsules = (props: Props): JSX.Element => {
 
   return (
     <StyledNoCapsules>
-      <Image src={capsule} />
       <Text>{`No ${props.isReceived ? "Received" : "Sent"} Capsules`}</Text>
-      <Button primary text="Create Capsule" click={() => setOpen(true)} />
+      <Image src={noCapsulesImage} />
+      <ButtonContainter>
+        <Button text="Create Capsule" click={() => setOpen(true)} />
+      </ButtonContainter>
       <CreateCapsule show={open} close={() => setOpen(false)} />
     </StyledNoCapsules>
   );
