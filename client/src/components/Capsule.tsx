@@ -108,11 +108,11 @@ const CryptoIcon = styled.img`
 type Props = {
   isReceived: boolean;
   capsule: CapsuleType;
+  updateCapsules: () => void;
 };
 
 const Capsule = (props: Props): JSX.Element => {
   const tokens = useSelector(selectTokens);
-  const address = useSelector(selectAddress);
 
   const [addingAssets, setAddingAssets] = useState(false);
   const [updatingBeneficiary, setUpdatingBeneficiary] = useState(false);
@@ -196,11 +196,13 @@ const Capsule = (props: Props): JSX.Element => {
         capsuleId={props.capsule.id}
         show={addingAssets}
         close={() => setAddingAssets(false)}
+        updateCapsules={() => props.updateCapsules()}
       />
       <UpdateBeneficiary
         show={updatingBeneficiary}
         close={() => setUpdatingBeneficiary(false)}
         capsuleId={props.capsule.id}
+        updateCapsules={() => props.updateCapsules()}
       />
     </StyledCapsule>
   );

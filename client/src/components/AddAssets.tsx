@@ -28,6 +28,7 @@ type Props = {
   capsuleId: number;
   show: boolean;
   close: () => void;
+  updateCapsules: () => void;
 };
 
 const AddAssets = (props: Props): JSX.Element => {
@@ -79,6 +80,7 @@ const AddAssets = (props: Props): JSX.Element => {
     setLoading(true);
     await addAssets(props.capsuleId, assets);
     setLoading(false);
+    props.updateCapsules();
     props.close();
   };
 

@@ -13,6 +13,7 @@ type Props = {
   show: boolean;
   close: () => void;
   capsuleId: number;
+  updateCapsules: () => void;
 };
 
 const UpdateBeneficiary = (props: Props): JSX.Element => {
@@ -33,6 +34,7 @@ const UpdateBeneficiary = (props: Props): JSX.Element => {
     if (!validateAddress(beneficiary)) return;
     setLoading(true);
     await updateBeneficiary(props.capsuleId, beneficiary);
+    props.updateCapsules();
     setLoading(false);
     props.close();
   };

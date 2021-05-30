@@ -24,6 +24,7 @@ const ReceivedPage = (): JSX.Element => {
   const [capsules, setCapsules] = useState<CapsuleType[]>([]);
 
   const updateCapsules = async () => {
+    setLoading(true);
     const _capsules = await getReceivedCapsules();
     setCapsules(_capsules);
     setLoading(false);
@@ -37,7 +38,11 @@ const ReceivedPage = (): JSX.Element => {
     <StyledReceivedPage>
       {loading && <Loading>Loading...</Loading>}
       {!loading && capsules.length === 0 && <NoCapsules isReceived />}
-      <Capsules capsules={capsules} isReceived />
+      <Capsules
+        capsules={capsules}
+        isReceived
+        updateCapsules={() => updateCapsules()}
+      />
     </StyledReceivedPage>
   );
 };
