@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import capsuleLandingMain from "../assets/capsule-landing-main.png";
 import capsuleLandingShadow from "../assets/capsule-landing-shadow.png";
+import capsuleLandingTokenCapsuleCoin from "../assets/capsule-landing-token-capsule-coin.png";
 import capsuleLandingTokenEther from "../assets/capsule-landing-token-ether.png";
 import capsuleLandingTokenBitcoin from "../assets/capsule-landing-token-bitcoin.png";
 import capsuleLandingTokenTether from "../assets/capsule-landing-token-tether.png";
@@ -32,19 +33,28 @@ const Shadow = styled.img`
   user-select: none;
 `;
 
-const TokenEther = styled.img`
+const TokenCapsuleCoin = styled.img`
   position: absolute;
-  top: 19%;
-  left: 20%;
-  width: 11%;
+  top: 21.5%;
+  left: 14.6%;
+  width: 14.5%;
   user-drag: none;
   user-select: none;
 `;
 
 const TokenBitcoin = styled.img`
   position: absolute;
-  top: 19%;
-  left: 35%;
+  top: 16%;
+  left: 30.5%;
+  width: 11%;
+  user-drag: none;
+  user-select: none;
+`;
+
+const TokenEther = styled.img`
+  position: absolute;
+  top: 23.7%;
+  left: 44.7%;
   width: 11%;
   user-drag: none;
   user-select: none;
@@ -52,8 +62,8 @@ const TokenBitcoin = styled.img`
 
 const TokenTether = styled.img`
   position: absolute;
-  top: 19%;
-  left: 50%;
+  top: 11%;
+  left: 57.7%;
   width: 11%;
   user-drag: none;
   user-select: none;
@@ -61,8 +71,8 @@ const TokenTether = styled.img`
 
 const TokenChainlink = styled.img`
   position: absolute;
-  top: 19%;
-  left: 65%;
+  top: 18.5%;
+  left: 71%;
   width: 11%;
   user-drag: none;
   user-select: none;
@@ -73,6 +83,7 @@ const FloatingCapsule = (): JSX.Element => {
     <StyledFloatingCapsule>
       <Main src={capsuleLandingMain} />
       <Shadow src={capsuleLandingShadow} />
+      <TokenCapsuleCoin src={capsuleLandingTokenCapsuleCoin} />
       <TokenEther src={capsuleLandingTokenEther} />
       <TokenBitcoin src={capsuleLandingTokenBitcoin} />
       <TokenTether src={capsuleLandingTokenTether} />
