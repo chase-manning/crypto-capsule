@@ -5,7 +5,7 @@ const { BigNumber } = require("@ethersproject/bignumber");
 const BASE = BigNumber.from(10).pow(18);
 
 let capsuleContract;
-let walletA, walletB;
+let walletA, walletB, walletC;
 let tokenA, tokenB, tokenC;
 let testCapsule;
 
@@ -18,6 +18,7 @@ describe("Capsule", () => {
     let signers = await ethers.getSigners();
     walletA = signers[0];
     walletB = signers[1];
+    walletC = signers[2];
 
     const TokenA = await ethers.getContractFactory("TestERC20");
     tokenA = await TokenA.deploy();
