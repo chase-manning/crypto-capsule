@@ -4,6 +4,7 @@ import styled from "styled-components";
 import capsuleLandingMain from "../assets/capsule-landing-main.png";
 import capsuleLandingShadow from "../assets/capsule-landing-shadow.png";
 import capsuleLandingTokenEther from "../assets/capsule-landing-token-ether.png";
+import capsuleLandingTokenBitcoin from "../assets/capsule-landing-token-bitcoin.png";
 
 const StyledFloatingCapsule = styled.div`
   position: relative;
@@ -38,12 +39,22 @@ const TokenEther = styled.img`
   user-select: none;
 `;
 
+const TokenBitcoin = styled.img`
+  position: absolute;
+  top: 19%;
+  left: 35%;
+  width: 11%;
+  user-drag: none;
+  user-select: none;
+`;
+
 const FloatingCapsule = (): JSX.Element => {
   return (
     <StyledFloatingCapsule>
       <Main src={capsuleLandingMain} />
       <Shadow src={capsuleLandingShadow} />
       <TokenEther src={capsuleLandingTokenEther} />
+      <TokenBitcoin src={capsuleLandingTokenBitcoin} />
     </StyledFloatingCapsule>
   );
 };
