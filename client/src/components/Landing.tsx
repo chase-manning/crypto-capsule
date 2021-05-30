@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import landing from "../assets/capsule.jpg";
 import Button from "./Button";
 import CreateCapsule from "./CreateCapsule";
 import FloatingCapsule from "./FloatingCapsule";
