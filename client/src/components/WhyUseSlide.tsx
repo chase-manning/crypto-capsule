@@ -6,7 +6,7 @@ import noise from "../assets/noise.png";
 const StyledWhyUseSlide = styled.div`
   position: relative;
   width: 100%;
-  padding: 12rem;
+  padding: 13rem;
   display: flex;
   justify-content: center;
   align-items: center;
