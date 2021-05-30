@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import Button from "./Button";
 import CapsuleType, { Asset } from "../types/CapsuleType";
-import { openCapsule, updateBeneficiary } from "../services/contracthelper";
+import { openCapsule } from "../services/contracthelper";
 import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
 import Block from "./Block";
