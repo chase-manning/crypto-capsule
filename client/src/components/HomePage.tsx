@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Landing from "./Landing";
+import TokenSlide from "./TokenSlide";
 import WhatIsSlide from "./WhatIsSlide";
 import WhyUseSlide from "./WhyUseSlide";
 
@@ -14,6 +15,7 @@ const HomePage = (): JSX.Element => {
     <StyledHomePage>
       <Landing />
       <WhatIsSlide />
+      <TokenSlide />
       <WhyUseSlide />
     </StyledHomePage>
   );
