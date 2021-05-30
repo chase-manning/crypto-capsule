@@ -100,7 +100,9 @@ export const updateBeneficiary = async (
   beneficiary: string
 ): Promise<void> => {
   const capsuleContract = await getCapsuleContract();
-  await capsuleContract.methods.addAssets(capsuleId, beneficiary).send();
+  await capsuleContract.methods
+    .updateBeneficiary(capsuleId, beneficiary)
+    .send();
 };
 
 // Views
