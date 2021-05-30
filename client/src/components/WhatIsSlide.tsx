@@ -35,7 +35,7 @@ const Dots = styled.div`
 
 const WhatIsSlide = (): JSX.Element => {
   return (
-    <StyledSlider>
+    <StyledWhatIsSlide>
       <Dots />
       <Gradient />
       <Note
@@ -45,7 +45,7 @@ const WhatIsSlide = (): JSX.Element => {
             future. When creating a Capsule you can choose several options to
             customise when the Capsule opens and how the crypto is distributed."
       />
-    </StyledSlider>
+    </StyledWhatIsSlide>
   );
 };
 
