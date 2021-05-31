@@ -58,11 +58,11 @@ const Header = styled.h3`
 `;
 
 const Body = styled.p`
-  font-size: 1.4rem;
+  font-size: 2.6rem;
   font-weight: 500;
   margin-bottom: 2rem;
   text-align: center;
-  color: var(--plain-dark);
+  color: var(--sub);
 `;
 
 const ButtonContainer = styled.div`
