@@ -57,6 +57,11 @@ const Header = styled.h3`
   transform: rotate(-4deg);
 `;
 
+const Image = styled.img`
+  width: 20rem;
+  margin: 1rem 0 2rem 0;
+`;
+
 const Body = styled.p`
   font-size: 2.6rem;
   font-weight: 500;
@@ -88,6 +93,7 @@ type Props = {
   header?: string;
   body?: string;
   content?: JSX.Element;
+  image?: string;
   buttonText?: string;
   buttonAction?: () => void;
   secondButtonText?: string;
@@ -104,6 +110,7 @@ const Popup: React.FC<Props> = (props) => {
         <Block />
         <Content>
           {props.header && <Header>{props.header}</Header>}
+          {props.image && <Image src={props.image} />}
           {props.body && <Body>{props.body}</Body>}
           {props.content && props.content}
           {(props.buttonText || props.secondButtonText) && (
