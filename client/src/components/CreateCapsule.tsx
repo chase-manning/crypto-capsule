@@ -107,8 +107,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
       assets,
       addingAssetsAllowed === "yes"
     );
-    // TODO Confirmation Screen
-    props.close();
+    setComplete(true);
   };
 
   const validateDate = (value: string) => {
