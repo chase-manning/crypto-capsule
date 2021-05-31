@@ -11,7 +11,7 @@ const StyledSentPage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 77vh;
+  min-height: 77vh;
 `;
 
 const Loading = styled.div`
