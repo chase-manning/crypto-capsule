@@ -3,6 +3,7 @@ import BN from "bn.js";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import lockedCapsule from "../assets/capsule-locked-large.png";
 
 import {
   createCapsule,
@@ -248,7 +249,8 @@ const CreateCapsule = (props: Props): JSX.Element => {
         show={complete}
         close={props.close}
         header="Capsule Created!"
-        body="Your Capsule was successfully created, click below to view your capsule"
+        image={lockedCapsule}
+        body="Click below to view your capsule"
         buttonText="View Capsule"
         buttonAction={() => history.push("/sent")}
       />
