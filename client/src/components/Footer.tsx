@@ -45,10 +45,11 @@ const Section = styled.div`
 const Footer = (): JSX.Element => {
   return (
     <StyledFooter>
-      {buttons.map((section: ButtonType[]) => (
-        <Section>
+      {buttons.map((section: ButtonType[], index: number) => (
+        <Section key={index}>
           {section.map((button: ButtonType) => (
             <Button
+              key={button.label}
               small
               text={button.label}
               click={() => (window as any).open(button.link, "_blank").focus()}
