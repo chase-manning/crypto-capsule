@@ -121,8 +121,8 @@ const Capsule = (props: Props): JSX.Element => {
   };
 
   const getUsd = async () => {
-    const usd = await getCapsuleUsdValue(props.capsule);
-    setUsd(usd.toLocaleString());
+    const usdValue = await getCapsuleUsdValue(props.capsule);
+    setUsd(`$${Number(usdValue).toFixed(2).toLocaleString()}`);
   };
 
   useEffect(() => {
@@ -162,8 +162,7 @@ const Capsule = (props: Props): JSX.Element => {
           </OpenDate>
         </CountdownContainer>
         <ValueContainer>
-          {/* TODO: Get usd */}
-          <Dollars>{`$${Number(100).toFixed(2).toLocaleString()}`}</Dollars>
+          <Dollars>{`$${usd}`}</Dollars>
           <Crypto>
             {props.capsule.assets.map((asset: Asset) => (
               <CyptoIconContainer key={asset.token}>
