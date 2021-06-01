@@ -50,6 +50,7 @@ const Header = (): JSX.Element => {
       <NavContainer>
         {navItems.map((navItem: NavItem) => (
           <Button
+            key={navItem.label}
             text={navItem.label}
             click={() => history.push(`/${navItem.route}`)}
             selected={location.pathname === `/${navItem.route}`}
