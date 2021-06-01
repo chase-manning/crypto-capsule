@@ -53,14 +53,12 @@ export const getCapsuleUsdValue = async (
   capsule: CapsuleType
 ): Promise<number> => {
   console.log("getting capsule usd value");
-  let usd = 0;
-  const promises = capsule.assets.map(
-    async (asset: Asset) =>
-      (usd += await getTokenValueInUsd(
-        asset.token,
-        Number(asset.value) / 10 ** 18
-      ))
+  const usds: number[] = [];
+  const promises = capsule.assets.map(async (asset: Asset) =>
+    usds.push(
+      await getTokenValueInUsd(asset.token, Number(asset.value) / 10 ** 18)
+    )
   );
   await Promise.all(promises);
-  return usd;
+  return usds.reduce((a: number, b: number) => a + b, 0);
 };
