@@ -122,7 +122,7 @@ const Capsule = (props: Props): JSX.Element => {
 
   const getUsd = async () => {
     const usdValue = await getCapsuleUsdValue(props.capsule);
-    setUsd(`$${Number(usdValue).toFixed(2).toLocaleString()}`);
+    setUsd(`$${Number(usdValue).toFixed(0).toLocaleString()}`);
   };
 
   useEffect(() => {
