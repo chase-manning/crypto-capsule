@@ -15,6 +15,7 @@ import Token from "../types/Token";
 import Block from "./Block";
 import AddAssets from "./AddAssets";
 import UpdateBeneficiary from "./UpdateBeneficiary";
+import { getCapsuleUsdValue } from "../services/oracleService";
 
 const StyledCapsule = styled.div`
   position: relative;
@@ -107,6 +108,7 @@ const Capsule = (props: Props): JSX.Element => {
 
   const [addingAssets, setAddingAssets] = useState(false);
   const [updatingBeneficiary, setUpdatingBeneficiary] = useState(false);
+  const [usd, setUsd] = useState("----");
 
   const [now, setNow] = useState(new Date());
   const nowRef = useRef(now);
@@ -118,8 +120,14 @@ const Capsule = (props: Props): JSX.Element => {
     );
   };
 
+  const getUsd = async () => {
+    const usd = await getCapsuleUsdValue(props.capsule);
+    setUsd(usd.toLocaleString());
+  };
+
   useEffect(() => {
     setInterval(() => tick(), 1000);
+    getUsd();
   }, []);
 
   const open = async () => {
