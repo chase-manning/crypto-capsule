@@ -7,6 +7,7 @@ type StyledProps = {
   selected?: boolean;
   small?: boolean;
   flatten?: boolean;
+  disabled?: boolean;
 };
 
 const StyledButton = styled.button`
@@ -14,9 +15,11 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: ${(props: StyledProps) =>
+    props.disabled ? "not-allowed" : "pointer"};
   margin-right: -2px;
   transform: translateX(8px);
+  opacity: ${(props: StyledProps) => (props.disabled ? "0.5" : "1")};
 `;
 
 const Content = styled.div`
@@ -45,6 +48,7 @@ type Props = {
   primary?: boolean;
   selected?: boolean;
   small?: boolean;
+  disabled?: boolean;
   text: string;
   click: () => void;
 };
@@ -54,6 +58,7 @@ const Button = (props: Props): JSX.Element => {
 
   return (
     <StyledButton
+      disabled={props.disabled}
       onClick={() => props.click()}
       onMouseDown={() => setDown(true)}
       onMouseUp={() => setDown(false)}
