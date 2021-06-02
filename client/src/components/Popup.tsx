@@ -96,6 +96,7 @@ type Props = {
   image?: string;
   buttonText?: string;
   buttonAction?: () => void;
+  buttonDisabled?: boolean;
   secondButtonText?: string;
   secondButtonAction?: () => void;
 };
@@ -117,6 +118,7 @@ const Popup: React.FC<Props> = (props) => {
             <ButtonContainer>
               {props.buttonText && (
                 <Button
+                  disabled={props.buttonDisabled}
                   text={props.buttonText}
                   click={() => {
                     if (props.buttonAction) props.buttonAction();
