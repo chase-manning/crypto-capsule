@@ -99,6 +99,8 @@ const CreateCapsule = (props: Props): JSX.Element => {
 
   const create = async () => {
     setLoading(true);
+    validate();
+
     const date = inputToDate(distributionDate);
     await createCapsule(
       beneficiary,
@@ -109,6 +111,15 @@ const CreateCapsule = (props: Props): JSX.Element => {
       addingAssetsAllowed === "yes"
     );
     setComplete(true);
+  };
+
+  const isValid = (): boolean =>
+    !addressError && !distributionPeriodsError && !distributionDateError;
+
+  const validate = () => {
+    validateDate(distributionDate);
+    validateAddress(beneficiary);
+    validatePeriods(distributionPeriods);
   };
 
   const validateDate = (value: string) => {
@@ -244,6 +255,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
           if (unapproved.length === 0) create();
           else tokenApprove(unapproved[0].asset.token);
         }}
+        buttonDisabled={!isValid()}
       />
       <Popup
         show={complete}
