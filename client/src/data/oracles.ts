@@ -8,10 +8,6 @@ export type OracleType = {
 const ORACLES: OracleType[] = TEST_MODE
   ? [
       {
-        token: "btc",
-        oracle: "0xECe365B379E1dD183B20fc5f022230C044d51404",
-      },
-      {
         token: "0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735",
         oracle: "0x2bA49Aaa16E6afD2a993473cfB70Fa8559B523cF",
       },
