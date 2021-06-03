@@ -13,11 +13,11 @@ contract CryptoCapsule is Ownable{
         uint256 id;
         address grantor;
         address payable beneficiary;
-        uint256 distributionDate;
+        uint48 distributionDate;
         uint256 periodSize;
         uint256 periodCount;
         uint256 claimedPeriods;
-        uint256 createdDate;
+        uint48 createdDate;
         bool opened;
         uint256 value;
         address[] tokens;
@@ -37,14 +37,13 @@ contract CryptoCapsule is Ownable{
     // Functions
     function createCapsule(
         address payable _beneficiary,
-        uint256 _distributionDate,
+        uint48 _distributionDate,
         uint256 _periodSize,
         uint256 _periodCount,
         address[] calldata _tokens,
         uint256[] calldata _values,
         bool addingAssetsAllowed
     ) public payable returns(Capsule memory) {
-
         require(_distributionDate > block.timestamp, "Distribution Date must be in future");
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
         require(_periodSize >= 1, "Period Size must greater than or equal to 1");
@@ -66,7 +65,7 @@ contract CryptoCapsule is Ownable{
                 _periodSize,
                 _periodCount,
                 0,
-                block.timestamp,
+                uint48(block.timestamp),
                 false,
                 msg.value,
                 _tokens,
@@ -94,14 +93,15 @@ contract CryptoCapsule is Ownable{
         uint256 unclaimedPeriods = capsule.periodCount - capsule.claimedPeriods;
         claimablePeriods = claimablePeriods > unclaimedPeriods ? unclaimedPeriods : claimablePeriods;
 
+        capsules[capsuleId].claimedPeriods = capsule.claimedPeriods + claimablePeriods;
+        capsules[capsuleId].opened = capsule.claimedPeriods + claimablePeriods == capsule.periodCount;
+
         if (capsule.value > 0) capsule.beneficiary.transfer(capsule.value * claimablePeriods / capsule.periodCount);
         for (uint256 i = 0; i < capsule.tokens.length; i++) {
             IERC20 erc20Token = IERC20(capsule.tokens[i]);
             erc20Token.transfer(capsule.beneficiary, capsule.amounts[i] * claimablePeriods / capsule.periodCount);
         }
 
-        capsules[capsuleId].claimedPeriods = capsule.claimedPeriods + claimablePeriods;
-        capsules[capsuleId].opened = capsule.claimedPeriods + claimablePeriods == capsule.periodCount;
         emit CapsuleOpened(capsuleId);
     }
 
