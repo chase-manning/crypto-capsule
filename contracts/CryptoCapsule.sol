@@ -3,10 +3,12 @@ pragma solidity ^0.8.0;
 
 import "./utils/EnumerableSet.sol";
 import "./utils/Ownable.sol";
-import "./interfaces/IERC20.sol";
+import "./token/ERC20.sol";
+import "./token/SafeERC20.sol";
 
 contract CryptoCapsule is Ownable{
     using EnumerableSet for EnumerableSet.UintSet;
+    using SafeERC20 for ERC20;
 
     // Capsule Data
     struct Capsule {
@@ -51,8 +53,8 @@ contract CryptoCapsule is Ownable{
 
         for (uint256 i = 0; i < _tokens.length; i++) {
             require(_values[i] > 0, "Token value must be greater than 0");
-            IERC20 erc20Token = IERC20(_tokens[i]);
-            erc20Token.transferFrom(msg.sender, address(this), _values[i]);
+            ERC20 erc20Token = ERC20(_tokens[i]);
+            erc20Token.safeTransferFrom(msg.sender, address(this), _values[i]);
         }
 
         uint256 capsuleId = capsules.length;
@@ -98,8 +100,8 @@ contract CryptoCapsule is Ownable{
 
         if (capsule.value > 0) capsule.beneficiary.transfer(capsule.value * claimablePeriods / capsule.periodCount);
         for (uint256 i = 0; i < capsule.tokens.length; i++) {
-            IERC20 erc20Token = IERC20(capsule.tokens[i]);
-            erc20Token.transfer(capsule.beneficiary, capsule.amounts[i] * claimablePeriods / capsule.periodCount);
+            ERC20 erc20Token = ERC20(capsule.tokens[i]);
+            erc20Token.safeTransfer(capsule.beneficiary, capsule.amounts[i] * claimablePeriods / capsule.periodCount);
         }
 
         emit CapsuleOpened(capsuleId);
@@ -115,8 +117,8 @@ contract CryptoCapsule is Ownable{
 
         for (uint256 i = 0; i < _tokens.length; i++) {
             require(_values[i] > 0, "Token value must be greater than 0");
-            IERC20 erc20Token = IERC20(_tokens[i]);
-            erc20Token.transferFrom(msg.sender, address(this), _values[i]);
+            ERC20 erc20Token = ERC20(_tokens[i]);
+            erc20Token.safeTransferFrom(msg.sender, address(this), _values[i]);
 
             bool tokenExists = false;
             for (uint256 j = 0; j < capsule.tokens.length; j++) {
