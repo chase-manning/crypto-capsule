@@ -24,6 +24,6 @@ module.exports = {
     path: "./client/src/contracts",
     clear: true,
     flat: true,
-    only: ["Capsule.sol", "IERC20.sol", "CapsuleCoin.sol"],
+    only: ["Capsule.sol", "IERC20.sol"],
   },
 };
