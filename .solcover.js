@@ -8,5 +8,7 @@ module.exports = {
     "utils/Ownable.sol",
     "utils/Initializable.sol",
     "interfaces/IERC20",
+    "math/SafeMath.sol",
+    "token/SafeERC20.sol",
   ],
 };
