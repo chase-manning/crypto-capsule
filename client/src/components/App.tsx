@@ -12,6 +12,7 @@ import { getAddress } from "../services/contracthelper";
 import { setAddress } from "../state/userSlice";
 import Header from "./Header";
 import Footer from "./Footer";
+import CapsulePage from "./CapsulePage";
 
 const StyledApp = styled.div`
   min-height: 100vh;
@@ -44,6 +45,9 @@ const App = (): JSX.Element => {
           </Route>
           <Route path="/received">
             <ReceivedPage />
+          </Route>
+          <Route path="/capsule/:capsuleId">
+            <CapsulePage />
           </Route>
           <Route path="/">
             <HomePage />
