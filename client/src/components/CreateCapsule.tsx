@@ -98,9 +98,9 @@ const CreateCapsule = (props: Props): JSX.Element => {
   };
 
   const create = async () => {
-    setLoading(true);
-
     if (!validate()) return;
+
+    setLoading(true);
 
     const date = inputToDate(distributionDate);
     await createCapsule(
@@ -128,9 +128,12 @@ const CreateCapsule = (props: Props): JSX.Element => {
 
   const validateDate = (value: string): boolean => {
     try {
-      const newDate = inputToDate(value);
+      const items = value.split("/");
+      const newDate = new Date(`${items[2]}/${items[0]}/${items[1]}`);
       const now = new Date();
-      if (newDate < now) setDistributionDateError("Date must be in future");
+      if (items.length !== 3) setDistributionDateError("Incorrect Date format");
+      else if (newDate < now)
+        setDistributionDateError("Date must be in future");
       else {
         setDistributionDateError("");
         return true;
