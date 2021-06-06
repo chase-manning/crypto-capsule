@@ -30,6 +30,10 @@ const CapsulePage = () => {
 
   useEffect(() => {
     updateCapsule();
+
+    (window as any).ethereum.on("networkChanged", async () => {
+      await updateCapsule();
+    });
   });
 
   return <StyledCapsulePage>{capsule?.beneficiary}</StyledCapsulePage>;
