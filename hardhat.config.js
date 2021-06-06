@@ -1,6 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
 require("hardhat-abi-exporter");
 require("solidity-coverage");
+require("hardhat-gas-reporter");
 
 var secrets = require("./secrets");
 
@@ -25,5 +26,10 @@ module.exports = {
     clear: true,
     flat: true,
     only: ["Capsule.sol", "IERC20.sol"],
+  },
+  gasReporter: {
+    currency: "CHF",
+    gasPrice: 12,
+    excludeContracts: ["token/"],
   },
 };
