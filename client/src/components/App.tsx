@@ -28,9 +28,6 @@ const App = (): JSX.Element => {
   const init = async () => {
     const tokens = await getTokens();
     dispatch(setTokens(tokens));
-
-    const address = await getAddress();
-    dispatch(setAddress(address));
   };
 
   useEffect(() => {

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { getAddress } from "../services/contracthelper";
+import { selectAddress, setAddress } from "../state/userSlice";
 import Button from "./Button";
 import CreateCapsule from "./CreateCapsule";
 import FloatingCapsule from "./FloatingCapsule";
@@ -53,7 +56,15 @@ const ButtonContainer = styled.div`
 `;
 
 const Landing = (): JSX.Element => {
+  const dispatch = useDispatch();
+  const address = useSelector(selectAddress);
+
   const [creatingCapsule, setCreatingCapsule] = useState(false);
+
+  const connect = async () => {
+    const _address = await getAddress();
+    dispatch(setAddress(_address));
+  };
 
   return (
     <StyledLanding>
@@ -67,8 +78,11 @@ const Landing = (): JSX.Element => {
           <ButtonContainer>
             <Button
               primary
-              text="Create Capsule"
-              click={() => setCreatingCapsule(true)}
+              text={address ? "Create Capsule" : "Connect"}
+              click={() => {
+                if (address) setCreatingCapsule(true);
+                else connect();
+              }}
             />
           </ButtonContainer>
         </Left>

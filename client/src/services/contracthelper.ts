@@ -11,6 +11,9 @@ import ContractCapsuleType from "../types/ContractCapsuleType";
 import Token from "../types/Token";
 
 // Shared
+export const isConnected = (): boolean => {
+  return (window as any).web3.eth;
+};
 export const getAddress = async (): Promise<string> => {
   if ((window as any).ethereum) {
     (window as any).web3 = new Web3((window as any).ethereum);
@@ -107,6 +110,7 @@ export const updateBeneficiary = async (
 
 // Views
 export const getSentCapsules = async (): Promise<CapsuleType[]> => {
+  if (!isConnected()) return [];
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
   const response: ContractCapsuleType[] = await capsuleContract.methods
@@ -119,6 +123,7 @@ export const getSentCapsules = async (): Promise<CapsuleType[]> => {
 };
 
 export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
+  if (!isConnected()) return [];
   const address = await getAddress();
   const capsuleContract = await getCapsuleContract();
   const response: ContractCapsuleType[] = await capsuleContract.methods
