@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const { network } = require("hardhat");
 const { BigNumber } = require("@ethersproject/bignumber");
 
-const BASE = BigNumber.from(10).pow(18);
+const BASE = BigNumber.from(1).pow(18);
 
 let capsuleContract;
 let wallet;
@@ -24,7 +24,7 @@ const createToken = async (index) => {
 const createValues = (tokenCount) => {
   const values = [];
   for (let index = 0; index < tokenCount; index++) {
-    values.push(BigNumber.from(10).pow(18));
+    values.push(BASE);
   }
   return values;
 };
@@ -35,10 +35,7 @@ const createCapsule = async (tokenCount) => {
   const distributionDate = dateToUnix(nextMonth);
 
   for (let index = 0; index < tokenCount; index++) {
-    await tokens[index].approve(
-      capsuleContract.address,
-      BigNumber.from(10).pow(18)
-    );
+    await tokens[index].approve(capsuleContract.address, BASE);
   }
   await capsuleContract.createCapsule(
     wallet.address,
@@ -50,8 +47,8 @@ const createCapsule = async (tokenCount) => {
     true
   );
 
-  await capsuleContract.getCapsule(0);
-  testCapsule = capsuleContract.getCapsule(0);
+  const capsuleCount = await capsuleContract.getCapsuleCount();
+  testCapsule = await capsuleContract.getCapsule(capsuleCount - 1);
 };
 
 describe("Capsule", () => {
@@ -69,12 +66,10 @@ describe("Capsule", () => {
 
   it("Should create Capsule with 9 tokens", async () => {
     await createCapsule(9);
-    testCapsule = capsuleContract.getCapsule(testCapsule.id + 1);
   });
 
   it("Should create Capsule with 10 tokens", async () => {
     await createCapsule(10);
-    testCapsule = capsuleContract.getCapsule(testCapsule.id + 1);
   });
 
   it("Should fail to create capsule with 11 tokens", async () => {
@@ -91,7 +86,6 @@ describe("Capsule", () => {
 
   it("Should create Capsule with 9 tokens", async () => {
     await createCapsule(1);
-    testCapsule = capsuleContract.getCapsule(testCapsule.id + 1);
   });
 
   it("Should allow adding 10th new token", async () => {
@@ -99,9 +93,9 @@ describe("Capsule", () => {
     await capsuleContract.addAssets(
       testCapsule.id,
       [tokens[9].address],
-      [BigNumber.from(10).pow(18)]
+      [BASE]
     );
-    // testCapsule = await capsuleContract.getCapsule(testCapsule.id);
+    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
   });
 
   it("Should allow adding 10 existing tokens", async () => {
@@ -118,22 +112,22 @@ describe("Capsule", () => {
 
   it("Should failing adding 11th new token", async () => {
     await tokens[10].approve(capsuleContract.address, BASE);
-    await capsuleContract.addAssets(
-      testCapsule.id,
-      [tokens[10].address],
-      [BASE]
-    );
-    testCapsule = await capsuleContract.getCapsule(testCapsule.id);
+
+    await expect(
+      capsuleContract.addAssets(testCapsule.id, [tokens[10].address], [BASE])
+    ).to.be.revertedWith("Assets exceed maximum of 10 per capsule");
   });
 
   it("Should failing adding 11th new token with existing", async () => {
     for (let index = 0; index < 11; index++) {
       await tokens[index].approve(capsuleContract.address, BASE);
     }
-    await capsuleContract.addAssets(
-      testCapsule.id,
-      tokens.slice(0, 11).map((t) => t.address),
-      createValues(11)
-    );
+    await expect(
+      capsuleContract.addAssets(
+        testCapsule.id,
+        tokens.slice(0, 11).map((t) => t.address),
+        createValues(11)
+      )
+    ).to.be.revertedWith("Assets exceed maximum of 10 per capsule");
   });
 });
