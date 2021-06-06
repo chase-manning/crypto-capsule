@@ -19,6 +19,7 @@ const StyledApp = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--bg);
+  overflow-x: hidden;
 `;
 
 const App = (): JSX.Element => {
