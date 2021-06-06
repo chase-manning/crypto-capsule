@@ -51,7 +51,7 @@ const createCapsule = async (tokenCount) => {
   testCapsule = await capsuleContract.getCapsule(capsuleCount - 1);
 };
 
-describe("Capsule", () => {
+describe("Asset Limit Tests", () => {
   before(async () => {
     let signers = await ethers.getSigners();
     wallet = signers[0];
