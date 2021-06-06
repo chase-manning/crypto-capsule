@@ -37,7 +37,9 @@ const ReceivedPage = (): JSX.Element => {
   return (
     <StyledReceivedPage>
       {loading && <Loading>Loading...</Loading>}
-      {!loading && capsules.length === 0 && <NoCapsules isReceived />}
+      {!loading && capsules.length === 0 && (
+        <NoCapsules isReceived updateCapsules={() => updateCapsules()} />
+      )}
       <Capsules
         capsules={capsules}
         isReceived
