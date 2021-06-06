@@ -6,6 +6,7 @@
   "scripts": {
     "compile": "npx hardhat compile",
     "test": "npx hardhat compile && npx hardhat coverage",
+    "gas": "npx hardhat test",
     "deploy.local": "npx hardhat test && npx hardhat run --network localhost scripts/deploy.js",
     "deploy.test": "npx hardhat test && npx hardhat run --network rinkenby scripts/deploy.js"
   },
@@ -29,6 +30,7 @@
     "ethers": "^5.0.32",
     "hardhat": "^2.1.1",
     "hardhat-abi-exporter": "^2.2.0",
+    "hardhat-gas-reporter": "^1.0.4",
     "solidity-coverage": "^0.7.16"
   },
   "dependencies": {
