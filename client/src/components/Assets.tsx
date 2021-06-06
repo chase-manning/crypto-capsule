@@ -64,7 +64,9 @@ const Assets = (props: Props): JSX.Element => {
           />
         );
       })}
-      <AddAsset onClick={() => addAsset()}>+ Add Asset</AddAsset>
+      {props.assets.length < 10 && (
+        <AddAsset onClick={() => addAsset()}>+ Add Asset</AddAsset>
+      )}
     </StyledAssetAdder>
   );
 };
