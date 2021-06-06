@@ -47,6 +47,8 @@ const TokenGroup = styled.div`
 
 const Token = styled.img`
   height: 10vw;
+  user-drag: none;
+  user-select: none;
 `;
 
 const TokenSlide = (): JSX.Element => {
