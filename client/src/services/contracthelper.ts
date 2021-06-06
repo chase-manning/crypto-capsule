@@ -110,6 +110,17 @@ export const updateBeneficiary = async (
 };
 
 // Views
+export const getCapsule = async (
+  capsuleId: number
+): Promise<CapsuleType | null> => {
+  if (!isConnected()) return null;
+  const capsuleContract = await getCapsuleContract();
+  const response: ContractCapsuleType = await capsuleContract.methods
+    .getCapsule(capsuleId)
+    .call();
+  return responseToCapsule(response);
+};
+
 export const getSentCapsules = async (): Promise<CapsuleType[]> => {
   if (!isConnected()) return [];
   const address = await getAddress();
@@ -117,10 +128,7 @@ export const getSentCapsules = async (): Promise<CapsuleType[]> => {
   const response: ContractCapsuleType[] = await capsuleContract.methods
     .getSentCapsules(address)
     .call();
-  const capsuleIds = response.map((r: ContractCapsuleType) => r.id);
-  return response.map((rc: ContractCapsuleType, index: number) =>
-    responseToCapsule(rc)
-  );
+  return response.map((rc: ContractCapsuleType) => responseToCapsule(rc));
 };
 
 export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
@@ -130,10 +138,7 @@ export const getReceivedCapsules = async (): Promise<CapsuleType[]> => {
   const response: ContractCapsuleType[] = await capsuleContract.methods
     .getReceivedCapsules(address)
     .call();
-  const capsuleIds = response.map((r: ContractCapsuleType) => r.id);
-  return response.map((rc: ContractCapsuleType, index: number) =>
-    responseToCapsule(rc)
-  );
+  return response.map((rc: ContractCapsuleType) => responseToCapsule(rc));
 };
 
 // Utils
