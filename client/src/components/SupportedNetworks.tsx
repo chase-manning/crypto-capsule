@@ -4,6 +4,7 @@ import styled from "styled-components";
 import ethImage from "../assets/capsule-landing-token-ether.png";
 import bnbImage from "../assets/capsule-landing-token-bnb.png";
 import maticImage from "../assets/capsule-landing-token-matic.png";
+import arbitrumImage from "../assets/capsule-landing-token-arbitrum.png";
 
 type NetworkType = {
   image: string;
@@ -18,14 +19,14 @@ const networks: NetworkType[] = [
     live: false,
   },
   {
-    image: ethImage,
+    image: arbitrumImage,
     name: "Arbitrum",
     live: false,
   },
   {
     image: maticImage,
     name: "MATIC",
-    live: true,
+    live: false,
   },
   {
     image: bnbImage,
