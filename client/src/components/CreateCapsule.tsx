@@ -99,7 +99,8 @@ const CreateCapsule = (props: Props): JSX.Element => {
 
   const create = async () => {
     setLoading(true);
-    validate();
+
+    if (!validate()) return;
 
     const date = inputToDate(distributionDate);
     await createCapsule(
@@ -110,35 +111,46 @@ const CreateCapsule = (props: Props): JSX.Element => {
       assets,
       addingAssetsAllowed === "yes"
     );
+
     setComplete(true);
   };
 
   const isValid = (): boolean =>
     !addressError && !distributionPeriodsError && !distributionDateError;
 
-  const validate = () => {
-    validateDate(distributionDate);
-    validateAddress(beneficiary);
-    validatePeriods(distributionPeriods);
+  const validate = (): boolean => {
+    const dateValid = validateDate(distributionDate);
+    const addressValid = validateAddress(beneficiary);
+    const periodsValid =
+      periodType === "immediate" ? true : validatePeriods(distributionPeriods);
+    return dateValid && addressValid && periodsValid;
   };
 
-  const validateDate = (value: string) => {
+  const validateDate = (value: string): boolean => {
     try {
       const newDate = inputToDate(value);
       const now = new Date();
       if (newDate < now) setDistributionDateError("Date must be in future");
-      else setDistributionDateError("");
+      else {
+        setDistributionDateError("");
+        return true;
+      }
     } catch {
       setDistributionDateError("Incorrect Date format");
     }
+    return false;
   };
 
-  const validateAddress = (value: string) => {
+  const validateAddress = (value: string): boolean => {
     if (value.length !== 42) setAddressError("Invalid Address");
-    else setAddressError("");
+    else {
+      setAddressError("");
+      return true;
+    }
+    return false;
   };
 
-  const validatePeriods = (value: string) => {
+  const validatePeriods = (value: string): boolean => {
     let periods = 0;
     try {
       periods = Number(value);
@@ -148,10 +160,14 @@ const CreateCapsule = (props: Props): JSX.Element => {
         setDistributionPeriodsError(
           "For only one period, use an Immediate Capsule"
         );
-      else setDistributionPeriodsError("");
+      else {
+        setDistributionPeriodsError("");
+        return true;
+      }
     } catch {
       setDistributionPeriodsError("Invalid Number");
     }
+    return false;
   };
 
   return (
@@ -165,7 +181,10 @@ const CreateCapsule = (props: Props): JSX.Element => {
             <Selector
               options={["immediate", "staggered"]}
               activeOption={periodType}
-              setOption={(option: string) => setPeriodType(option)}
+              setOption={(option: string) => {
+                setPeriodType(option);
+                setDistributionPeriodsError("");
+              }}
               label="Distribution Type"
               tooltip="An Immediate Capsule will open completely on the distribution date, allowing all crypto to be accessed at once. A Staggered Capsule will first open on the Distribution Start Date for a portion of the crypto, and more crypto will become accessible at the defined intervals"
             />
