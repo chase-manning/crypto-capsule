@@ -20,7 +20,7 @@ contract CryptoCapsule is Ownable{
         uint256 periodCount;
         uint256 claimedPeriods;
         uint48 createdDate;
-        bool opened;
+        bool empty;
         uint256 value;
         address[] tokens;
         uint256[] amounts;
@@ -87,7 +87,7 @@ contract CryptoCapsule is Ownable{
         require(capsules.length > capsuleId, "Capsule does not exist");
         Capsule memory capsule = capsules[capsuleId];
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
-        require(!capsule.opened, "Capsule has already been opened");
+        require(!capsule.empty, "Capsule is empty");
         require(block.timestamp >= capsule.distributionDate, "Capsule has not matured yet");
         uint256 nextClaimDate = capsule.distributionDate + capsule.claimedPeriods * capsule.periodSize;
         require(block.timestamp >= nextClaimDate, "No periods available to claim"); 
@@ -97,7 +97,7 @@ contract CryptoCapsule is Ownable{
         claimablePeriods = claimablePeriods > unclaimedPeriods ? unclaimedPeriods : claimablePeriods;
 
         capsules[capsuleId].claimedPeriods = capsule.claimedPeriods + claimablePeriods;
-        capsules[capsuleId].opened = capsule.claimedPeriods + claimablePeriods == capsule.periodCount;
+        capsules[capsuleId].empty = capsule.claimedPeriods + claimablePeriods == capsule.periodCount;
 
         if (capsule.value > 0) capsule.beneficiary.transfer(capsule.value * claimablePeriods / capsule.periodCount);
         for (uint256 i = 0; i < capsule.tokens.length; i++) {
@@ -145,7 +145,7 @@ contract CryptoCapsule is Ownable{
         require(capsules.length > capsuleId, "Capsule does not exist");
         Capsule memory capsule = capsules[capsuleId];
         require(msg.sender == capsule.beneficiary, "You are not the beneficiary of this Capsule");
-        require(!capsule.opened, "Capsule has already been opened");
+        require(!capsule.empty, "Capsule is empty");
         require(capsule.beneficiary != beneficiary, "Beneficiary is not different to curret");
         received[capsule.beneficiary].remove(capsuleId);
         capsules[capsuleId].beneficiary = beneficiary;

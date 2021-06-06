@@ -219,7 +219,7 @@
           },
           {
             "internalType": "bool",
-            "name": "opened",
+            "name": "empty",
             "type": "bool"
           },
           {
@@ -305,7 +305,7 @@
           },
           {
             "internalType": "bool",
-            "name": "opened",
+            "name": "empty",
             "type": "bool"
           },
           {
@@ -398,7 +398,7 @@
           },
           {
             "internalType": "bool",
-            "name": "opened",
+            "name": "empty",
             "type": "bool"
           },
           {
@@ -484,7 +484,7 @@
           },
           {
             "internalType": "bool",
-            "name": "opened",
+            "name": "empty",
             "type": "bool"
           },
           {
@@ -570,7 +570,7 @@
           },
           {
             "internalType": "bool",
-            "name": "opened",
+            "name": "empty",
             "type": "bool"
           },
           {
