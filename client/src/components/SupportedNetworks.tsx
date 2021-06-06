@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import ethImage from "../assets/capsule-landing-token-ether.png";
+import bnbImage from "../assets/capsule-landing-token-bnb.png";
+import maticImage from "../assets/capsule-landing-token-matic.png";
 
 type NetworkType = {
   image: string;
@@ -21,12 +23,12 @@ const networks: NetworkType[] = [
     live: false,
   },
   {
-    image: ethImage,
+    image: maticImage,
     name: "MATIC",
-    live: false,
+    live: true,
   },
   {
-    image: ethImage,
+    image: bnbImage,
     name: "Binance Smart Chain",
     live: false,
   },
