@@ -91,7 +91,7 @@ describe("Capsule", () => {
     expect(capsule.periodSize).to.equal(1);
     expect(capsule.periodCount).to.equal(1);
     expect(capsule.claimedPeriods).to.equal(0);
-    expect(capsule.opened).to.equal(false);
+    expect(capsule.empty).to.equal(false);
     expect(capsule.value).to.equal(0);
     expect(capsule.tokens[0]).to.equal(tokenA.address);
     expect(capsule.amounts[0]).to.equal(BASE);
@@ -274,16 +274,16 @@ describe("Capsule", () => {
 
     await capsuleContract.openCapsule(testCapsule.id);
     testCapsule = await capsuleContract.getCapsule(testCapsule.id);
-    expect(testCapsule.opened).to.equal(true);
+    expect(testCapsule.empty).to.equal(true);
 
     const balanceAfter = Number(await tokenA.balanceOf(walletA.address));
     expect(balanceAfter).to.equal(balanceBefore + Number(BASE));
   });
 
-  it("Should not open already opened Capsule", async () => {
+  it("Should not open empty Capsule", async () => {
     await expect(
       capsuleContract.openCapsule(testCapsule.id)
-    ).to.be.revertedWith("Capsule has already been opened");
+    ).to.be.revertedWith("Capsule is empty");
   });
 
   it("Should create Staggered Capsule", async () => {
@@ -380,9 +380,9 @@ describe("Capsule", () => {
     expect(balanceAfter).to.equal(balanceBefore + Math.trunc(Number(BASE) / 5));
   });
 
-  it("Should have opened status", async () => {
+  it("Should have empty status", async () => {
     testCapsule = await capsuleContract.getCapsule(testCapsule.id);
-    expect(testCapsule.opened).to.be.true;
+    expect(testCapsule.empty).to.be.true;
   });
 
   it("Should create multi token Capsule", async () => {
@@ -714,6 +714,6 @@ describe("Capsule", () => {
   it("Should fail for changing beneficiary for open Capsule", async () => {
     await expect(
       capsuleContract.updateBeneficiary(testCapsule.id, walletA.address)
-    ).to.be.revertedWith("Capsule has already been opened");
+    ).to.be.revertedWith("Capsule is empty");
   });
 });
