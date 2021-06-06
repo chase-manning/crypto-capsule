@@ -7,7 +7,7 @@ type ContractCapsuleType = {
   periodCount: string;
   claimedPeriods: string;
   createdDate: string;
-  opened: boolean;
+  empty: boolean;
   value: string;
   tokens: string[];
   amounts: string[];

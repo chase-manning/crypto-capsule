@@ -148,7 +148,7 @@ export const responseToCapsule = (
     id: Number(capsule.id),
     beneficiary: capsule.beneficiary,
     grantor: capsule.grantor,
-    opened: capsule.opened,
+    empty: capsule.empty,
     createdDate: UnixToDate(Number.parseFloat(capsule.createdDate)),
     distributionDate: UnixToDate(Number.parseFloat(capsule.distributionDate)),
     periodType: getPeriodType(capsule.periodSize),

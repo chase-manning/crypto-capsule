@@ -12,7 +12,7 @@ type CapsuleType = {
   periodCount: number;
   claimedPeriods: number;
   createdDate: Date;
-  opened: boolean;
+  empty: boolean;
   assets: Asset[];
   addingAssetsAllowed: boolean;
 };

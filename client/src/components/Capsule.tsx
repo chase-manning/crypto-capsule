@@ -132,7 +132,7 @@ const Capsule = (props: Props): JSX.Element => {
 
   const open = async () => {
     await openCapsule(props.capsule.id);
-    props.capsule.opened = true;
+    props.capsule.empty = true;
   };
 
   const isOpen =
@@ -143,8 +143,8 @@ const Capsule = (props: Props): JSX.Element => {
     <StyledCapsule>
       <Block />
       <Content>
-        {isOpen && props.capsule.opened && <Image src={capsuleOpenSmall} />}
-        {isOpen && !props.capsule.opened && <Image src={capsuleReadySmall} />}
+        {isOpen && props.capsule.empty && <Image src={capsuleOpenSmall} />}
+        {isOpen && !props.capsule.empty && <Image src={capsuleReadySmall} />}
         {!isOpen && <Image src={capsuleLockedSmall} />}
         <CountdownContainer>
           <Countdown>
@@ -177,13 +177,13 @@ const Capsule = (props: Props): JSX.Element => {
             ))}
           </Crypto>
         </ValueContainer>
-        {props.isReceived && isOpen && !props.capsule.opened && (
+        {props.isReceived && isOpen && !props.capsule.empty && (
           <Button text="Open" click={() => open()} />
         )}
         {!props.isReceived && props.capsule.addingAssetsAllowed && !isOpen && (
           <Button text="Add Assets" click={() => setAddingAssets(true)} />
         )}
-        {props.isReceived && !props.capsule.opened && !isOpen && (
+        {props.isReceived && !props.capsule.empty && !isOpen && (
           <Button
             text="Update Beneficiary"
             click={() => setUpdatingBeneficiary(true)}

@@ -39,13 +39,13 @@ type Props = {
 const Capsules = (props: Props): JSX.Element => {
   const now = new Date();
   const ready = props.capsules.filter(
-    (cap: CapsuleType) => new Date(cap.distributionDate) < now && !cap.opened
+    (cap: CapsuleType) => new Date(cap.distributionDate) < now && !cap.empty
   );
   const upcoming = props.capsules.filter(
     (cap: CapsuleType) => new Date(cap.distributionDate) >= now
   );
   const opened = props.capsules.filter(
-    (cap: CapsuleType) => new Date(cap.distributionDate) < now && cap.opened
+    (cap: CapsuleType) => new Date(cap.distributionDate) < now && cap.empty
   );
 
   return (
@@ -64,7 +64,7 @@ const Capsules = (props: Props): JSX.Element => {
       )}
       {opened.length > 0 && (
         <>
-          <Title>Opened</Title>
+          <Title>Empty</Title>
           {GetCapsules(opened, props.isReceived, props.updateCapsules)}
         </>
       )}
