@@ -23,6 +23,11 @@ export const toWeiUnit = (eth: string): string => {
   return Web3.utils.toWei(eth);
 };
 
+export const getNetwork = async (): Promise<number> => {
+  if (!window.web3) return 1;
+  return window.web3.eth.net.getId();
+};
+
 export const toCents = (dollars: number, token: Token): string => {
   if (token.address === "ETH") return toWeiUnit(dollars.toString());
   const decimals = Web3.utils.toBN(token.decimals);
