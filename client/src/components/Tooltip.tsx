@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 const StyledTooltip = styled.div`
@@ -45,10 +45,14 @@ const Indicator = styled.div`
   z-index: 2;
 `;
 
+type PopupProps = {
+  top: string;
+};
+
 const Popup = styled.div`
-  position: absolute;
-  top: 200%;
-  left: 0;
+  position: fixed;
+  top: ${(props: PopupProps) => props.top};
+  left: calc(100vw / 2);
   transform: translateX(-50%);
   width: 500px;
   padding: 1.7rem;
@@ -65,15 +69,25 @@ type Props = {
 
 const Tooltip = (props: Props): JSX.Element => {
   const [open, setOpen] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   return (
-    <StyledTooltip>
+    <StyledTooltip ref={tooltipRef}>
       {open && <ExitEvent onClick={() => setOpen(false)} />}
       <HelpIcon onClick={() => setOpen(true)}>?</HelpIcon>
       {open && (
         <>
           <Indicator />
-          <Popup>{props.content}</Popup>
+          <Popup
+            top={`${
+              tooltipRef.current
+                ? tooltipRef.current?.getBoundingClientRect().bottom +
+                  tooltipRef.current?.getBoundingClientRect().height
+                : 0
+            }px`}
+          >
+            {props.content}
+          </Popup>
         </>
       )}
     </StyledTooltip>
