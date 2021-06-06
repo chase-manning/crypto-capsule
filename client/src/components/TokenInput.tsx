@@ -21,7 +21,7 @@ const Container = styled.div`
   width: 13rem;
   position: relative;
   margin-right: 3rem;
-  height: 4.2rem;
+  height: 4.8rem;
 `;
 
 const OpenButton = styled.button`
