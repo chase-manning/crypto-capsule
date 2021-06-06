@@ -1,16 +1,15 @@
 import rinkebyTokens from "../data/rinkebyTokens";
 import Token from "../types/Token";
-import { TEST_MODE } from "../utils/globals";
+import { getGlobals } from "../utils/globals";
 
 export const getTokens = async (): Promise<Token[]> => {
+  const globals = await getGlobals();
   let tokens: Token[] = [];
 
-  if (TEST_MODE) {
+  if (globals.TOKENS.length > 0) {
     tokens = [...rinkebyTokens];
   } else {
-    const response = await fetch(
-      "https://tokens.coingecko.com/uniswap/all.json"
-    );
+    const response = await fetch(globals.TOKENS_URL);
     const data = await response.json();
     tokens = data.tokens;
   }

@@ -1,7 +1,6 @@
 import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import BN from "bn.js";
-import GLOBALS from "../utils/globals";
 import capsuleAbi from "../contracts/CryptoCapsule.json";
 import tokenAbi from "../contracts/IERC20.json";
 import { toEthUnit } from "./web3Service";
@@ -9,6 +8,7 @@ import { dateToUnix, getPeriodType, UnixToDate } from "./dateHelper";
 import CapsuleType, { Asset } from "../types/CapsuleType";
 import ContractCapsuleType from "../types/ContractCapsuleType";
 import Token from "../types/Token";
+import { getGlobals } from "../utils/globals";
 
 // Shared
 export const isConnected = (): boolean => {
@@ -25,7 +25,8 @@ export const getAddress = async (): Promise<string> => {
 };
 
 export const getCapsuleContract = async (): Promise<Contract> => {
-  return new (window as any).web3.eth.Contract(capsuleAbi, GLOBALS.CAPSULE, {
+  const globals = await getGlobals();
+  return new (window as any).web3.eth.Contract(capsuleAbi, globals.CAPSULE, {
     from: await getAddress(),
   });
 };
@@ -172,18 +173,20 @@ export const ethBalance = async (): Promise<number> => {
 
 // Tokens
 export const approveToken = async (token: string): Promise<void> => {
+  const globals = await getGlobals();
   const tokenContract = await getTokenContract(token);
   await tokenContract.methods
-    .approve(GLOBALS.CAPSULE, new BN("9999999999999999999999999999"))
+    .approve(globals.CAPSULE, new BN("9999999999999999999999999999"))
     .send();
 };
 
 export const tokenApproved = async (token: string): Promise<boolean> => {
   if (token === "ETH") return true;
+  const globals = await getGlobals();
   const address = await getAddress();
   const tokenContract = await getTokenContract(token);
   const allowance = await tokenContract.methods
-    .allowance(address, GLOBALS.CAPSULE)
+    .allowance(address, globals.CAPSULE)
     .call();
   return new BN(allowance).gt(new BN("9999999999999999999999"));
 };

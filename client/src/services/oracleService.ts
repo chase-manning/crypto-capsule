@@ -1,7 +1,8 @@
 import { Contract } from "web3-eth-contract";
 import abi from "../data/aggregatorV3InterfaceABI.json";
 import CapsuleType, { Asset } from "../types/CapsuleType";
-import ORACLES, { OracleType } from "../data/oracles";
+import { OracleType } from "../data/oracles";
+import { getGlobals } from "../utils/globals";
 
 type RoundDataType = {
   roundId: number;
@@ -15,14 +16,15 @@ export const getOracleContract = async (oracle: string): Promise<Contract> => {
   return new (window as any).web3.eth.Contract(abi, oracle);
 };
 
-export const getOracle = (token: string): string => {
-  const oracles = ORACLES.filter((o: OracleType) => o.token === token);
+export const getOracle = async (token: string): Promise<string> => {
+  const globals = await getGlobals();
+  const oracles = globals.ORACLES.filter((o: OracleType) => o.token === token);
   if (oracles.length === 0) return "";
   return oracles[0].oracle;
 };
 
 export const getTokenPriceInUsd = async (token: string): Promise<number> => {
-  const oracle = getOracle(token);
+  const oracle = await getOracle(token);
   const oracleContract = await getOracleContract(oracle);
   const roundData: RoundDataType = await oracleContract.methods
     .latestRoundData()

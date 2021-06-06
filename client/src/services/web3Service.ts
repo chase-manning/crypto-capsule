@@ -24,7 +24,7 @@ export const toWeiUnit = (eth: string): string => {
 };
 
 export const getNetwork = async (): Promise<number> => {
-  if (!window.web3) return 1;
+  if (!window.web3 || !window.web3.eth) return 1;
   return window.web3.eth.net.getId();
 };
 

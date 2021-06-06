@@ -11,9 +11,9 @@ import {
 import { selectTokens } from "../state/tokenSlice";
 import { Asset } from "../types/CapsuleType";
 import Token from "../types/Token";
-import GLOBALS from "../utils/globals";
 import Assets from "./Assets";
 import Popup from "./Popup";
+import { getGlobals } from "../utils/globals";
 
 const StyledAddAssets = styled.div`
   width: 100%;
@@ -47,9 +47,10 @@ const AddAssets = (props: Props): JSX.Element => {
     tokens.filter((token: Token) => token.address === address)[0].symbol;
 
   const tokenApprove = async (address: string) => {
+    const globals = await getGlobals();
     const tokenContract = await getTokenContract(address);
     tokenContract.methods
-      .approve(GLOBALS.CAPSULE, new BN("9999999999999999999999999999"))
+      .approve(globals.CAPSULE, new BN("9999999999999999999999999999"))
       .send()
       .on("transactionHash", (hash: any) => {
         setLoading(true);

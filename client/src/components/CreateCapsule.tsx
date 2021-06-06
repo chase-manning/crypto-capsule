@@ -14,13 +14,13 @@ import { getPeriodSize, inputToDate } from "../services/dateHelper";
 import { selectTokens } from "../state/tokenSlice";
 import { Asset } from "../types/CapsuleType";
 import Token from "../types/Token";
-import GLOBALS from "../utils/globals";
 import Assets from "./Assets";
 import TextInput from "./TextInput";
 import Popup from "./Popup";
 import { ValidationError } from "../styles/ValidationError";
 import Selector from "./Selector";
 import Dropdown from "./Dropdown";
+import { getGlobals } from "../utils/globals";
 
 type Approval = {
   asset: Asset;
@@ -80,9 +80,10 @@ const CreateCapsule = (props: Props): JSX.Element => {
   };
 
   const tokenApprove = async (address: string) => {
+    const globals = await getGlobals();
     const tokenContract = await getTokenContract(address);
     tokenContract.methods
-      .approve(GLOBALS.CAPSULE, new BN("9999999999999999999999999999"))
+      .approve(globals.CAPSULE, new BN("9999999999999999999999999999"))
       .send()
       .on("transactionHash", (hash: any) => {
         setLoading(true);
