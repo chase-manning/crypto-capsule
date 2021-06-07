@@ -9,23 +9,18 @@ import {
   getAssetRealValue,
   getAssetSymbol,
   getCapsule,
-  openCapsule,
 } from "../services/contracthelper";
 import { selectAddress, setAddress } from "../state/userSlice";
 import CapsuleType, { Asset } from "../types/CapsuleType";
 
-import capsuleOpen from "../assets/capsule-open-large.png";
-import capsuleLocked from "../assets/capsule-locked-large.png";
-import capsuleReady from "../assets/capsule-ready-large.png";
 import noise from "../assets/noise.png";
 
 import Button from "./Button";
 import AddAssets from "./AddAssets";
 import UpdateBeneficiary from "./UpdateBeneficiary";
-import { getCapsuleUsdValue } from "../services/oracleService";
 import Block from "./Block";
-import Countdown from "./Countdown";
 import Loading from "./Loading";
+import CapsuleOverview from "./CapsuleOverview";
 
 const StyledCapsulePage = styled.div`
   position: relative;
@@ -114,24 +109,6 @@ const SubHeader = styled.div`
   width: 100%;
 `;
 
-const CapsuleImage = styled.img`
-  width: 40rem;
-  margin-bottom: 2rem;
-`;
-
-const Usd = styled.div`
-  font-size: 8rem;
-  margin-bottom: 2rem;
-  transform: rotate(-3deg);
-  color: var(--main);
-`;
-
-const ProgressContainer = styled.div`
-  width: 100%;
-  height: 6rem;
-  background-color: var(--primary);
-`;
-
 const AssetContainer = styled.div`
   width: 100%;
   display: flex;
@@ -169,15 +146,8 @@ const CapsulePage = (): JSX.Element => {
   const [capsule, setCapsule] = useState<CapsuleType | null>(null);
   const [addingAssets, setAddingAssets] = useState(false);
   const [updatingBeneficiary, setUpdatingBeneficiary] = useState(false);
-  const [usd, setUsd] = useState<string>("");
   const [assetValues, setAssetValues] = useState<AssetValue[]>([]);
   const [assetSymbols, setAssetSymbols] = useState<AssetSymbol[]>([]);
-
-  const open = async () => {
-    if (!capsule) return;
-    await openCapsule(capsule.id);
-    await updateCapsule();
-  };
 
   const isOpen = !capsule
     ? false
@@ -213,12 +183,6 @@ const CapsulePage = (): JSX.Element => {
     setAssetSymbols(_assetSymbols);
 
     setCapsule(_capsule);
-    getUsd(_capsule);
-  };
-
-  const getUsd = async (_capsule: CapsuleType) => {
-    const usdValue = await getCapsuleUsdValue(_capsule);
-    setUsd(`$${Number(usdValue).toFixed(0).toLocaleString()}`);
   };
 
   useEffect(() => {
@@ -236,26 +200,7 @@ const CapsulePage = (): JSX.Element => {
       <CapsulePageContent>
         {!capsule && <Loading />}
         {capsule && (
-          <BlockContainer>
-            <Block />
-            <BlockContent>
-              {usd && usd !== "$0" && <Usd>{usd}</Usd>}
-              <CapsuleImage
-                src={
-                  !isOpen
-                    ? capsuleLocked
-                    : capsule.empty
-                    ? capsuleOpen
-                    : capsuleReady
-                }
-              />
-              {!isOpen && <Countdown capsule={capsule} />}
-              {false && <ProgressContainer>meow</ProgressContainer>}
-              {capsule.beneficiary === address && isOpen && !capsule.empty && (
-                <Button primary text="Open" click={() => open()} />
-              )}
-            </BlockContent>
-          </BlockContainer>
+          <CapsuleOverview capsule={capsule} update={() => updateCapsule()} />
         )}
         {capsule && (
           <Details>
