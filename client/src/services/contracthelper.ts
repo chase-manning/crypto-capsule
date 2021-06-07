@@ -2,7 +2,7 @@ import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import BN from "bn.js";
 import capsuleAbi from "../contracts/CryptoCapsule.json";
-import tokenAbi from "../contracts/IERC20.json";
+import tokenAbi from "../contracts/ERC20.json";
 import { toEthUnit } from "./web3Service";
 import { dateToUnix, getPeriodType, UnixToDate } from "./dateHelper";
 import CapsuleType, { Asset } from "../types/CapsuleType";
@@ -201,4 +201,24 @@ export const tokenBalance = async (token: Token): Promise<number> => {
   const tokenContract = await getTokenContract(token.address);
   const cents = await tokenContract.methods.balanceOf(address).call();
   return cents / 10 ** token.decimals;
+};
+
+export const getAssetDecimals = async (asset: Asset): Promise<number> => {
+  if (asset.token.toLocaleLowerCase() === "eth") return 18;
+  const tokenContract = await getTokenContract(asset.token);
+  const decimals = await tokenContract.methods.decimals().call();
+  console.log("Got decimals");
+  console.log(decimals);
+  return decimals;
+};
+
+export const getAssetRealValue = async (asset: Asset): Promise<number> => {
+  if (asset.value === "0") return 0;
+  const decimals = await getAssetDecimals(asset);
+  const assetValue = new BN(asset.value);
+  const decimalMul = new BN(10).pow(new BN(decimals));
+  const realValue = assetValue.div(decimalMul);
+  console.log("got real value");
+  console.log(realValue.toNumber());
+  return realValue.toNumber();
 };

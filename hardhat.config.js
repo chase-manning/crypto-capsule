@@ -25,7 +25,7 @@ module.exports = {
     path: "./client/src/contracts",
     clear: true,
     flat: true,
-    only: ["Capsule.sol", "IERC20.sol"],
+    only: ["Capsule.sol", "token/ERC20.sol"],
   },
   gasReporter: {
     currency: "CHF",

@@ -7,6 +7,7 @@ import dateFormat from "dateformat";
 
 import {
   getAddress,
+  getAssetRealValue,
   getCapsule,
   openCapsule,
 } from "../services/contracthelper";
@@ -153,6 +154,11 @@ const TokenContainer = styled.div`
   flex-direction: column;
 `;
 
+type AssetValue = {
+  asset: string;
+  value: number;
+};
+
 const CapsulePage = (): JSX.Element => {
   const dispatch = useDispatch();
   const address = useSelector(selectAddress);
@@ -162,6 +168,7 @@ const CapsulePage = (): JSX.Element => {
   const [addingAssets, setAddingAssets] = useState(false);
   const [updatingBeneficiary, setUpdatingBeneficiary] = useState(false);
   const [usd, setUsd] = useState<string>("");
+  const [assetValues, setAssetValues] = useState<AssetValue[]>([]);
 
   const [now, setNow] = useState(new Date());
   const nowRef = useRef(now);
@@ -181,8 +188,21 @@ const CapsulePage = (): JSX.Element => {
     const address = await getAddress();
     dispatch(setAddress(address));
     const _capsule = await getCapsule(capsuleId);
-    setCapsule(_capsule);
     if (!_capsule) return;
+
+    const _assetValues: AssetValue[] = [];
+    const promises = _capsule?.assets.map(async (asset: Asset) => {
+      const realValue = await getAssetRealValue(asset);
+      _assetValues.push({
+        asset: asset.token,
+        value: realValue,
+      });
+    });
+    await Promise.all(promises);
+    console.log(_assetValues);
+    setAssetValues(_assetValues);
+
+    setCapsule(_capsule);
     getUsd(_capsule);
   };
 
@@ -319,7 +339,13 @@ const CapsulePage = (): JSX.Element => {
                         <SubHeader>{asset.token}</SubHeader>
                       )}
                     </TokenContainer>
-                    <SubHeaderMain>{asset.value}</SubHeaderMain>
+                    <SubHeaderMain>
+                      {
+                        assetValues.filter(
+                          (av: AssetValue) => av.asset === asset.token
+                        )[0].value
+                      }
+                    </SubHeaderMain>
                   </AssetContainer>
                 ))}
                 {capsule.grantor === address &&
