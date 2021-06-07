@@ -119,16 +119,16 @@ const Capsule = (props: Props): JSX.Element => {
                   : capsuleReadySmall
               }
             />
-            <Countdown>
-              {isOpen
-                ? "0 minutes, 0 seconds"
-                : countdown(
-                    new Date(),
-                    props.capsule.distributionDate,
-                    countdown.ALL,
-                    2
-                  ).toString()}
-            </Countdown>
+            {!isOpen && (
+              <Countdown>
+                {countdown(
+                  new Date(),
+                  props.capsule.distributionDate,
+                  countdown.ALL,
+                  2
+                ).toString()}
+              </Countdown>
+            )}
             <Crypto>
               {props.capsule.assets.map((asset: Asset) => (
                 <CyptoIconContainer key={asset.token}>
