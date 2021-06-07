@@ -30,14 +30,7 @@ export const getNetwork = async (): Promise<number> => {
 
 export const toCents = (dollars: number, token: Token): string => {
   if (token.address === "ETH") return toWeiUnit(dollars.toString());
-  const decimals = Web3.utils.toBN(token.decimals);
-  return (
-    Web3.utils
-      .toBN(dollars)
-      /* eslint-disable no-restricted-properties */
-      .mul(Web3.utils.toBN(10).pow(decimals))
-      .toString()
-  );
+  return Web3.utils.toBN(dollars * 10 ** token.decimals).toString();
 };
 
 export const toDollars = (cents: number, token: Token): number => {
