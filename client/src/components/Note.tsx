@@ -1,14 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Block from "./Block";
-
-const StyledNote = styled.div`
-  position: relative;
-  width: 60vw;
-  padding: 5rem;
-  padding-top: 3.3rem;
-  transform: rotate(-3deg);
-`;
+import BlockContent from "./BlockContent";
 
 const Content = styled.div`
   position: relative;
@@ -41,13 +33,15 @@ type Props = {
 
 const Note = (props: Props): JSX.Element => {
   return (
-    <StyledNote>
-      <Block />
-      <Content>
-        <Header>{props.header}</Header>
-        <Body>{props.body}</Body>
-      </Content>
-    </StyledNote>
+    <BlockContent
+      content={
+        <Content>
+          <Header>{props.header}</Header>
+          <Body>{props.body}</Body>
+        </Content>
+      }
+      width="60vw"
+    />
   );
 };
 
