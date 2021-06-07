@@ -147,11 +147,18 @@ const AssetContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 1rem 0;
 `;
 
 const TokenContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: 6rem;
+`;
+
+const TokenAddress = styled.div`
+  font-size: 2rem;
+  color: var(--sub);
 `;
 
 type AssetValue = {
@@ -263,7 +270,7 @@ const CapsulePage = (): JSX.Element => {
                   ).toString()}
                 </Countdown>
               )}
-              <ProgressContainer>meow</ProgressContainer>
+              {false && <ProgressContainer>meow</ProgressContainer>}
               {capsule.beneficiary === address && isOpen && !capsule.empty && (
                 <Button primary text="Open" click={() => open()} />
               )}
@@ -336,7 +343,7 @@ const CapsulePage = (): JSX.Element => {
                     <TokenContainer>
                       <SubHeaderMain>Meow</SubHeaderMain>
                       {asset.token !== "ETH" && (
-                        <SubHeader>{asset.token}</SubHeader>
+                        <TokenAddress>{asset.token}</TokenAddress>
                       )}
                     </TokenContainer>
                     <SubHeaderMain>
