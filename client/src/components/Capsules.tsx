@@ -10,11 +10,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const GetCapsules = (
-  capsuleList: CapsuleType[],
-  isReceived: boolean,
-  updateCapsules: () => void
-) =>
+const GetCapsules = (capsuleList: CapsuleType[]) =>
   capsuleList
     .sort(
       (a: CapsuleType, b: CapsuleType) =>
@@ -22,18 +18,11 @@ const GetCapsules = (
         new Date(b.distributionDate).getTime()
     )
     .map((capsule: CapsuleType, index: number) => (
-      <Capsule
-        key={index}
-        capsule={capsule}
-        isReceived={isReceived}
-        updateCapsules={() => updateCapsules()}
-      />
+      <Capsule key={index} capsule={capsule} />
     ));
 
 type Props = {
-  isReceived: boolean;
   capsules: CapsuleType[];
-  updateCapsules: () => void;
 };
 
 const Capsules = (props: Props): JSX.Element => {
@@ -53,19 +42,19 @@ const Capsules = (props: Props): JSX.Element => {
       {ready.length > 0 && (
         <>
           <Title>Ready</Title>
-          {GetCapsules(ready, props.isReceived, props.updateCapsules)}
+          {GetCapsules(ready)}
         </>
       )}
       {upcoming.length > 0 && (
         <>
           <Title>Upcoming</Title>
-          {GetCapsules(upcoming, props.isReceived, props.updateCapsules)}
+          {GetCapsules(upcoming)}
         </>
       )}
       {opened.length > 0 && (
         <>
           <Title>Empty</Title>
-          {GetCapsules(opened, props.isReceived, props.updateCapsules)}
+          {GetCapsules(opened)}
         </>
       )}
     </Container>

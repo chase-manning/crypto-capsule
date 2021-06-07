@@ -11,25 +11,15 @@ import capsuleReadySmall from "../assets/capsule-ready-small.png";
 
 import Button from "./Button";
 import CapsuleType, { Asset } from "../types/CapsuleType";
-import { openCapsule } from "../services/contracthelper";
 import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
-import Block from "./Block";
-import AddAssets from "./AddAssets";
-import UpdateBeneficiary from "./UpdateBeneficiary";
 import { getCapsuleUsdValue } from "../services/oracleService";
-
-const StyledCapsule = styled.div`
-  position: relative;
-  width: 100%;
-  margin: 2rem 0;
-`;
+import BlockContent from "./BlockContent";
 
 const Content = styled.div`
   position: relative;
   width: 100%;
-  height: 14rem;
-  padding: 3rem 4rem;
+  height: 8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -99,19 +89,8 @@ const CryptoIcon = styled.img`
   width: 2rem;
 `;
 
-const CapsuleDetailClickable = styled.button`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-`;
-
 type Props = {
-  isReceived: boolean;
   capsule: CapsuleType;
-  updateCapsules: () => void;
 };
 
 const Capsule = (props: Props): JSX.Element => {
@@ -119,8 +98,6 @@ const Capsule = (props: Props): JSX.Element => {
 
   const tokens = useSelector(selectTokens);
 
-  const [addingAssets, setAddingAssets] = useState(false);
-  const [updatingBeneficiary, setUpdatingBeneficiary] = useState(false);
   const [usd, setUsd] = useState("----");
 
   const [now, setNow] = useState(new Date());
@@ -143,88 +120,64 @@ const Capsule = (props: Props): JSX.Element => {
     getUsd();
   }, []);
 
-  const open = async () => {
-    await openCapsule(props.capsule.id);
-    props.capsule.empty = true;
-  };
-
   const isOpen =
     new Date(props.capsule.distributionDate).getTime() <
     nowRef.current.getTime();
 
   return (
-    <StyledCapsule>
-      <Block />
-      <Content>
-        <Image
-          src={
-            !isOpen
-              ? capsuleLockedSmall
-              : props.capsule.empty
-              ? capsuleOpenSmall
-              : capsuleReadySmall
-          }
-        />
-        <CountdownContainer>
-          <Countdown>
-            {isOpen
-              ? "0 hours, 0 minutes, 0 seconds"
-              : countdown(
-                  new Date(),
-                  props.capsule.distributionDate,
-                  countdown.ALL,
-                  3
-                ).toString()}
-          </Countdown>
-          <OpenDate>
-            {dateformat(props.capsule.distributionDate, "mm/dd/yyyy")}
-          </OpenDate>
-        </CountdownContainer>
-        <ValueContainer>
-          <Dollars>{`${usd}`}</Dollars>
-          <Crypto>
-            {props.capsule.assets.map((asset: Asset) => (
-              <CyptoIconContainer key={asset.token}>
-                <CryptoIcon
-                  src={
-                    tokens.filter(
-                      (token: Token) => token.address === asset.token
-                    )[0]?.logoURI
-                  }
-                />
-              </CyptoIconContainer>
-            ))}
-          </Crypto>
-        </ValueContainer>
-        <CapsuleDetailClickable
-          onClick={() => history.push(`/capsule/${props.capsule.id}`)}
-        />
-        {props.isReceived && isOpen && !props.capsule.empty && (
-          <Button text="Open" click={() => open()} />
-        )}
-        {!props.isReceived && props.capsule.addingAssetsAllowed && !isOpen && (
-          <Button text="Add Assets" click={() => setAddingAssets(true)} />
-        )}
-        {props.isReceived && !props.capsule.empty && !isOpen && (
-          <Button
-            text="Update Beneficiary"
-            click={() => setUpdatingBeneficiary(true)}
-          />
-        )}
-      </Content>
-      <AddAssets
-        capsuleId={props.capsule.id}
-        show={addingAssets}
-        close={() => setAddingAssets(false)}
-        updateCapsules={() => props.updateCapsules()}
+    <>
+      <BlockContent
+        content={
+          <Content>
+            <Image
+              src={
+                !isOpen
+                  ? capsuleLockedSmall
+                  : props.capsule.empty
+                  ? capsuleOpenSmall
+                  : capsuleReadySmall
+              }
+            />
+            <CountdownContainer>
+              <Countdown>
+                {isOpen
+                  ? "0 hours, 0 minutes, 0 seconds"
+                  : countdown(
+                      new Date(),
+                      props.capsule.distributionDate,
+                      countdown.ALL,
+                      3
+                    ).toString()}
+              </Countdown>
+              <OpenDate>
+                {dateformat(props.capsule.distributionDate, "mm/dd/yyyy")}
+              </OpenDate>
+            </CountdownContainer>
+            <ValueContainer>
+              <Dollars>{`${usd}`}</Dollars>
+              <Crypto>
+                {props.capsule.assets.map((asset: Asset) => (
+                  <CyptoIconContainer key={asset.token}>
+                    <CryptoIcon
+                      src={
+                        tokens.filter(
+                          (token: Token) => token.address === asset.token
+                        )[0]?.logoURI
+                      }
+                    />
+                  </CyptoIconContainer>
+                ))}
+              </Crypto>
+            </ValueContainer>
+            <Button
+              click={() => history.push(`/capsule/${props.capsule.id}`)}
+              text="View Capsule"
+            />
+          </Content>
+        }
+        marginBottom="6rem"
       />
-      <UpdateBeneficiary
-        show={updatingBeneficiary}
-        close={() => setUpdatingBeneficiary(false)}
-        capsuleId={props.capsule.id}
-        updateCapsules={() => props.updateCapsules()}
-      />
-    </StyledCapsule>
+    </>
   );
 };
 
