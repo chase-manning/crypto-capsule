@@ -41,6 +41,7 @@ const Note = (props: Props): JSX.Element => {
         </Content>
       }
       width="60vw"
+      large
     />
   );
 };
