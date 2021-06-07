@@ -203,13 +203,16 @@ export const tokenBalance = async (token: Token): Promise<number> => {
   return cents / 10 ** token.decimals;
 };
 
+export const getAssetSymbol = async (asset: Asset): Promise<string> => {
+  if (asset.token.toLocaleLowerCase() === "eth") return "ETH";
+  const tokenContract = await getTokenContract(asset.token);
+  return tokenContract.methods.symbol().call();
+};
+
 export const getAssetDecimals = async (asset: Asset): Promise<number> => {
   if (asset.token.toLocaleLowerCase() === "eth") return 18;
   const tokenContract = await getTokenContract(asset.token);
-  const decimals = await tokenContract.methods.decimals().call();
-  console.log("Got decimals");
-  console.log(decimals);
-  return decimals;
+  return tokenContract.methods.decimals().call();
 };
 
 export const getAssetRealValue = async (asset: Asset): Promise<number> => {
@@ -218,7 +221,5 @@ export const getAssetRealValue = async (asset: Asset): Promise<number> => {
   const assetValue = new BN(asset.value);
   const decimalMul = new BN(10).pow(new BN(decimals));
   const realValue = assetValue.div(decimalMul);
-  console.log("got real value");
-  console.log(realValue.toNumber());
   return realValue.toNumber();
 };
