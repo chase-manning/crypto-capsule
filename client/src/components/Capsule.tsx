@@ -156,9 +156,15 @@ const Capsule = (props: Props): JSX.Element => {
     <StyledCapsule>
       <Block />
       <Content>
-        {isOpen && props.capsule.empty && <Image src={capsuleOpenSmall} />}
-        {isOpen && !props.capsule.empty && <Image src={capsuleReadySmall} />}
-        {!isOpen && <Image src={capsuleLockedSmall} />}
+        <Image
+          src={
+            !isOpen
+              ? capsuleLockedSmall
+              : props.capsule.empty
+              ? capsuleOpenSmall
+              : capsuleReadySmall
+          }
+        />
         <CountdownContainer>
           <Countdown>
             {isOpen
