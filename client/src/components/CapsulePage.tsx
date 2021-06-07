@@ -25,6 +25,7 @@ import UpdateBeneficiary from "./UpdateBeneficiary";
 import { getCapsuleUsdValue } from "../services/oracleService";
 import Block from "./Block";
 import Countdown from "./Countdown";
+import Loading from "./Loading";
 
 const StyledCapsulePage = styled.div`
   position: relative;
@@ -65,11 +66,6 @@ const CapsulePageContent = styled.div`
   min-height: 77vh;
   align-items: center;
   justify-content: space-evenly;
-`;
-
-const Loading = styled.div`
-  color: var(--main);
-  font-size: 2rem;
 `;
 
 const Details = styled.div`
@@ -238,14 +234,7 @@ const CapsulePage = (): JSX.Element => {
       <Noise />
       <Gradient />
       <CapsulePageContent>
-        {!capsule && (
-          <BlockContainer>
-            <Block />
-            <BlockContent>
-              <Loading>Loading...</Loading>
-            </BlockContent>
-          </BlockContainer>
-        )}
+        {!capsule && <Loading />}
         {capsule && (
           <BlockContainer>
             <Block />
