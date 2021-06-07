@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getReceivedCapsules } from "../services/contracthelper";
 import CapsuleType from "../types/CapsuleType";
 import Capsules from "./Capsules";
+import Loading from "./Loading";
 import NoCapsules from "./NoCapsules";
 
 const StyledReceivedPage = styled.div`
@@ -12,11 +13,6 @@ const StyledReceivedPage = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 77vh;
-`;
-
-const Loading = styled.div`
-  color: var(--main);
-  font-size: 2rem;
 `;
 
 const ReceivedPage = (): JSX.Element => {
@@ -40,7 +36,7 @@ const ReceivedPage = (): JSX.Element => {
 
   return (
     <StyledReceivedPage>
-      {loading && <Loading>Loading...</Loading>}
+      {loading && <Loading />}
       {!loading && capsules.length === 0 && (
         <NoCapsules isReceived updateCapsules={() => updateCapsules()} />
       )}
