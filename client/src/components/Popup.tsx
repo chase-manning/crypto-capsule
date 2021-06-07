@@ -107,7 +107,12 @@ const Popup: React.FC<Props> = (props) => {
 
   return (
     <StyledPopup>
-      <Background onClick={() => props.close()} />
+      <Background
+        onClick={() => {
+          if (props.loading) return;
+          props.close();
+        }}
+      />
       <Container>
         <Block />
         <Content>
