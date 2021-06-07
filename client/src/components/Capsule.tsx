@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import dateformat from "dateformat";
 import countdown from "countdown";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -18,15 +17,22 @@ import BlockContent from "./BlockContent";
 
 const Content = styled.div`
   position: relative;
-  width: 100%;
-  height: 8rem;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  width: 27rem;
+`;
+
+const Dollars = styled.div`
+  color: var(--main);
+  font-size: 4rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: right;
 `;
 
 const Image = styled.img`
-  height: 120%;
+  height: 15rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,44 +42,18 @@ const Image = styled.img`
   transform: translateX(-1rem);
 `;
 
-const CountdownContainer = styled.div`
-  flex: 1;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 0 30px;
-`;
-
 const Countdown = styled.div`
   color: var(--main);
-  font-size: 30px;
+  font-size: 3rem;
   font-weight: 500;
-`;
-
-const OpenDate = styled.div`
-  color: var(--sub);
-  font-size: 16px;
-`;
-
-const ValueContainer = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 0 30px;
-`;
-
-const Dollars = styled.div`
-  color: var(--main);
-  font-size: 30px;
-  font-weight: 500;
-  text-align: right;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 `;
 
 const Crypto = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 3rem;
 `;
 
 const CyptoIconContainer = styled.div`
@@ -129,6 +109,7 @@ const Capsule = (props: Props): JSX.Element => {
       <BlockContent
         content={
           <Content>
+            <Dollars>{`${usd}`}</Dollars>
             <Image
               src={
                 !isOpen
@@ -138,37 +119,29 @@ const Capsule = (props: Props): JSX.Element => {
                   : capsuleReadySmall
               }
             />
-            <CountdownContainer>
-              <Countdown>
-                {isOpen
-                  ? "0 hours, 0 minutes, 0 seconds"
-                  : countdown(
-                      new Date(),
-                      props.capsule.distributionDate,
-                      countdown.ALL,
-                      3
-                    ).toString()}
-              </Countdown>
-              <OpenDate>
-                {dateformat(props.capsule.distributionDate, "mm/dd/yyyy")}
-              </OpenDate>
-            </CountdownContainer>
-            <ValueContainer>
-              <Dollars>{`${usd}`}</Dollars>
-              <Crypto>
-                {props.capsule.assets.map((asset: Asset) => (
-                  <CyptoIconContainer key={asset.token}>
-                    <CryptoIcon
-                      src={
-                        tokens.filter(
-                          (token: Token) => token.address === asset.token
-                        )[0]?.logoURI
-                      }
-                    />
-                  </CyptoIconContainer>
-                ))}
-              </Crypto>
-            </ValueContainer>
+            <Countdown>
+              {isOpen
+                ? "0 minutes, 0 seconds"
+                : countdown(
+                    new Date(),
+                    props.capsule.distributionDate,
+                    countdown.ALL,
+                    2
+                  ).toString()}
+            </Countdown>
+            <Crypto>
+              {props.capsule.assets.map((asset: Asset) => (
+                <CyptoIconContainer key={asset.token}>
+                  <CryptoIcon
+                    src={
+                      tokens.filter(
+                        (token: Token) => token.address === asset.token
+                      )[0]?.logoURI
+                    }
+                  />
+                </CyptoIconContainer>
+              ))}
+            </Crypto>
             <Button
               click={() => history.push(`/capsule/${props.capsule.id}`)}
               text="View Capsule"
