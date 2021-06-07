@@ -4,9 +4,11 @@ import CapsuleType from "../types/CapsuleType";
 import Capsule from "./Capsule";
 
 const Container = styled.div`
-  width: 60%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  width: 80vw;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 3rem;
+  justify-items: center;
 `;
 
 type Props = {
