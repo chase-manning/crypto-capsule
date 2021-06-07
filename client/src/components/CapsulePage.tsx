@@ -8,6 +8,7 @@ import dateFormat from "dateformat";
 import {
   getAddress,
   getAssetRealValue,
+  getAssetSymbol,
   getCapsule,
   openCapsule,
 } from "../services/contracthelper";
@@ -166,6 +167,11 @@ type AssetValue = {
   value: number;
 };
 
+type AssetSymbol = {
+  asset: string;
+  symbol: string;
+};
+
 const CapsulePage = (): JSX.Element => {
   const dispatch = useDispatch();
   const address = useSelector(selectAddress);
@@ -176,6 +182,7 @@ const CapsulePage = (): JSX.Element => {
   const [updatingBeneficiary, setUpdatingBeneficiary] = useState(false);
   const [usd, setUsd] = useState<string>("");
   const [assetValues, setAssetValues] = useState<AssetValue[]>([]);
+  const [assetSymbols, setAssetSymbols] = useState<AssetSymbol[]>([]);
 
   const [now, setNow] = useState(new Date());
   const nowRef = useRef(now);
@@ -198,16 +205,27 @@ const CapsulePage = (): JSX.Element => {
     if (!_capsule) return;
 
     const _assetValues: AssetValue[] = [];
-    const promises = _capsule?.assets.map(async (asset: Asset) => {
+    const valuePromises = _capsule?.assets.map(async (asset: Asset) => {
       const realValue = await getAssetRealValue(asset);
       _assetValues.push({
         asset: asset.token,
         value: realValue,
       });
     });
-    await Promise.all(promises);
-    console.log(_assetValues);
+
+    const _assetSymbols: AssetSymbol[] = [];
+    const symbolPromises = _capsule?.assets.map(async (asset: Asset) => {
+      const _symbol = await getAssetSymbol(asset);
+      _assetSymbols.push({
+        asset: asset.token,
+        symbol: _symbol,
+      });
+    });
+
+    await Promise.all(valuePromises);
     setAssetValues(_assetValues);
+    await Promise.all(symbolPromises);
+    setAssetSymbols(_assetSymbols);
 
     setCapsule(_capsule);
     getUsd(_capsule);
@@ -341,7 +359,13 @@ const CapsulePage = (): JSX.Element => {
                 {capsule.assets.map((asset: Asset) => (
                   <AssetContainer>
                     <TokenContainer>
-                      <SubHeaderMain>Meow</SubHeaderMain>
+                      <SubHeaderMain>
+                        {
+                          assetSymbols.filter(
+                            (as: AssetSymbol) => as.asset === asset.token
+                          )[0].symbol
+                        }
+                      </SubHeaderMain>
                       {asset.token !== "ETH" && (
                         <TokenAddress>{asset.token}</TokenAddress>
                       )}
