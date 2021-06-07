@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import countdown from "countdown";
 import dateFormat from "dateformat";
 
 import {
@@ -178,10 +177,6 @@ const CapsulePage = (): JSX.Element => {
   const [assetValues, setAssetValues] = useState<AssetValue[]>([]);
   const [assetSymbols, setAssetSymbols] = useState<AssetSymbol[]>([]);
 
-  const [now, setNow] = useState(new Date());
-  const nowRef = useRef(now);
-  nowRef.current = now;
-
   const open = async () => {
     if (!capsule) return;
     await openCapsule(capsule.id);
@@ -190,7 +185,7 @@ const CapsulePage = (): JSX.Element => {
 
   const isOpen = !capsule
     ? false
-    : new Date(capsule.distributionDate).getTime() < nowRef.current.getTime();
+    : new Date(capsule.distributionDate).getTime() < new Date().getTime();
 
   const updateCapsule = async () => {
     const address = await getAddress();
@@ -225,19 +220,12 @@ const CapsulePage = (): JSX.Element => {
     getUsd(_capsule);
   };
 
-  const tick = () => {
-    setNow(
-      new Date(nowRef.current.setSeconds(nowRef.current.getSeconds() + 1))
-    );
-  };
-
   const getUsd = async (_capsule: CapsuleType) => {
     const usdValue = await getCapsuleUsdValue(_capsule);
     setUsd(`$${Number(usdValue).toFixed(0).toLocaleString()}`);
   };
 
   useEffect(() => {
-    setInterval(() => tick(), 1000);
     updateCapsule();
 
     (window as any).ethereum.on("chainChanged", async () => {
