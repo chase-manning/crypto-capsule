@@ -35,5 +35,5 @@ export const toCents = (dollars: number, token: Token): string => {
 
 export const toDollars = (cents: number, token: Token): number => {
   if (token.address === "ETH") return cents;
-  return cents / Math.pow(10, token.decimals);
+  return cents / 10 ** token.decimals;
 };
