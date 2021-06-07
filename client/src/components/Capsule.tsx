@@ -3,6 +3,8 @@ import styled from "styled-components";
 import dateformat from "dateformat";
 import countdown from "countdown";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+
 import capsuleOpenSmall from "../assets/capsule-open-small.png";
 import capsuleLockedSmall from "../assets/capsule-locked-small.png";
 import capsuleReadySmall from "../assets/capsule-ready-small.png";
@@ -97,6 +99,15 @@ const CryptoIcon = styled.img`
   width: 2rem;
 `;
 
+const CapsuleDetailClickable = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+`;
+
 type Props = {
   isReceived: boolean;
   capsule: CapsuleType;
@@ -104,6 +115,8 @@ type Props = {
 };
 
 const Capsule = (props: Props): JSX.Element => {
+  const history = useHistory();
+
   const tokens = useSelector(selectTokens);
 
   const [addingAssets, setAddingAssets] = useState(false);
@@ -177,6 +190,9 @@ const Capsule = (props: Props): JSX.Element => {
             ))}
           </Crypto>
         </ValueContainer>
+        <CapsuleDetailClickable
+          onClick={() => history.push(`/capsule/${props.capsule.id}`)}
+        />
         {props.isReceived && isOpen && !props.capsule.empty && (
           <Button text="Open" click={() => open()} />
         )}
