@@ -99,6 +99,7 @@ type Props = {
   buttonDisabled?: boolean;
   secondButtonText?: string;
   secondButtonAction?: () => void;
+  loading?: boolean;
 };
 
 const Popup: React.FC<Props> = (props) => {
@@ -119,16 +120,18 @@ const Popup: React.FC<Props> = (props) => {
               {props.buttonText && (
                 <Button
                   disabled={props.buttonDisabled}
-                  text={props.buttonText}
+                  text={props.loading ? "Loading..." : props.buttonText}
                   click={() => {
+                    if (props.loading) return;
                     if (props.buttonAction) props.buttonAction();
                   }}
                 />
               )}
               {props.secondButtonText && (
                 <Button
-                  text={props.secondButtonText}
+                  text={props.loading ? "Loading..." : props.secondButtonText}
                   click={() => {
+                    if (props.loading) return;
                     if (props.secondButtonAction) props.secondButtonAction();
                   }}
                 />
