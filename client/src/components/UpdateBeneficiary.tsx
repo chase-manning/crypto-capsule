@@ -44,10 +44,11 @@ const UpdateBeneficiary = (props: Props): JSX.Element => {
       show={props.show}
       close={() => props.close()}
       header="Update Beneficiary"
-      buttonText={loading ? "Loading" : "Update"}
+      buttonText="Update"
       buttonAction={() => {
-        if (!loading) click();
+        click();
       }}
+      loading={loading}
       content={
         <StyledUpdateBeneficiary>
           <TextInput
