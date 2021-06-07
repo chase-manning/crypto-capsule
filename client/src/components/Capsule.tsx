@@ -47,7 +47,7 @@ const Image = styled.img`
 const Crypto = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   margin-top: 1rem;
 `;
 

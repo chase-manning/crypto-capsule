@@ -21,6 +21,13 @@ const StyledBlockContent = styled.div`
 const Content = styled.div`
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  button {
+    margin-top: 2rem;
+  }
 `;
 
 type Props = {
