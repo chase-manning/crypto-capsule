@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import styled from "styled-components";
-import dateFormat from "dateformat";
 
 import {
   getAddress,
@@ -17,10 +16,10 @@ import noise from "../assets/noise.png";
 
 import Button from "./Button";
 import AddAssets from "./AddAssets";
-import UpdateBeneficiary from "./UpdateBeneficiary";
 import Block from "./Block";
 import Loading from "./Loading";
 import CapsuleOverview from "./CapsuleOverview";
+import CapsuleDetails from "./CapsuleDetails";
 
 const StyledCapsulePage = styled.div`
   position: relative;
@@ -102,13 +101,6 @@ const SubHeaderMain = styled.span`
   margin-right: 1rem;
 `;
 
-const SubHeader = styled.div`
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--sub);
-  width: 100%;
-`;
-
 const AssetContainer = styled.div`
   width: 100%;
   display: flex;
@@ -145,7 +137,6 @@ const CapsulePage = (): JSX.Element => {
   const { capsuleId } = useParams<any>();
   const [capsule, setCapsule] = useState<CapsuleType | null>(null);
   const [addingAssets, setAddingAssets] = useState(false);
-  const [updatingBeneficiary, setUpdatingBeneficiary] = useState(false);
   const [assetValues, setAssetValues] = useState<AssetValue[]>([]);
   const [assetSymbols, setAssetSymbols] = useState<AssetSymbol[]>([]);
 
@@ -160,7 +151,7 @@ const CapsulePage = (): JSX.Element => {
     if (!_capsule) return;
 
     const _assetValues: AssetValue[] = [];
-    const valuePromises = _capsule?.assets.map(async (asset: Asset) => {
+    const valuePromises = _capsule.assets.map(async (asset: Asset) => {
       const realValue = await getAssetRealValue(asset);
       _assetValues.push({
         asset: asset.token,
@@ -169,7 +160,7 @@ const CapsulePage = (): JSX.Element => {
     });
 
     const _assetSymbols: AssetSymbol[] = [];
-    const symbolPromises = _capsule?.assets.map(async (asset: Asset) => {
+    const symbolPromises = _capsule.assets.map(async (asset: Asset) => {
       const _symbol = await getAssetSymbol(asset);
       _assetSymbols.push({
         asset: asset.token,
@@ -204,61 +195,7 @@ const CapsulePage = (): JSX.Element => {
         )}
         {capsule && (
           <Details>
-            <BlockContainer>
-              <Block />
-              <BlockContent>
-                <Header>Capsule Details</Header>
-                <SubHeader>
-                  <SubHeaderMain>Grantor:</SubHeaderMain>
-                  {capsule.grantor}
-                </SubHeader>
-                <SubHeader>
-                  <SubHeaderMain>Beneficiary:</SubHeaderMain>
-                  {capsule.beneficiary}
-                </SubHeader>
-                <SubHeader>
-                  <SubHeaderMain>Created Date:</SubHeaderMain>
-                  {dateFormat(capsule.createdDate, "dS mmm yyyy")}
-                </SubHeader>
-                <SubHeader>
-                  <SubHeaderMain>Distribution Type:</SubHeaderMain>
-                  {capsule.periodCount === 1 ? "Immediate" : "Staggered"}
-                </SubHeader>
-                <SubHeader>
-                  <SubHeaderMain>{`Distribution${
-                    capsule.periodCount === 1 ? "" : " Start"
-                  } Date:`}</SubHeaderMain>
-                  {dateFormat(capsule.distributionDate, "dS mmm yyyy")}
-                </SubHeader>
-                {capsule.periodCount !== 1 && (
-                  <>
-                    <SubHeader>
-                      <SubHeaderMain>Distribution Frequncy:</SubHeaderMain>
-                      {capsule.periodType}
-                    </SubHeader>
-                    <SubHeader>
-                      <SubHeaderMain>Distribution Periods:</SubHeaderMain>
-                      {capsule.periodCount}
-                    </SubHeader>
-                    <SubHeader>
-                      <SubHeaderMain>Claimed Periods:</SubHeaderMain>
-                      {capsule.claimedPeriods}
-                    </SubHeader>
-                  </>
-                )}
-                <SubHeader>
-                  <SubHeaderMain>Adding Assets Allowed:</SubHeaderMain>
-                  {capsule.addingAssetsAllowed ? "Yes" : "No"}
-                </SubHeader>
-                {capsule.beneficiary === address && !capsule.empty && (
-                  <Button
-                    primary
-                    text="Update Beneficiary"
-                    click={() => setUpdatingBeneficiary(true)}
-                  />
-                )}
-              </BlockContent>
-            </BlockContainer>
+            <CapsuleDetails capsule={capsule} update={() => updateCapsule()} />
             <BlockContainer>
               <Block />
               <BlockContent>
@@ -304,14 +241,6 @@ const CapsulePage = (): JSX.Element => {
             capsuleId={capsule.id}
             show={addingAssets}
             close={() => setAddingAssets(false)}
-            updateCapsules={() => updateCapsule()}
-          />
-        )}
-        {capsule && (
-          <UpdateBeneficiary
-            capsuleId={capsule.id}
-            show={updatingBeneficiary}
-            close={() => setUpdatingBeneficiary(false)}
             updateCapsules={() => updateCapsule()}
           />
         )}
