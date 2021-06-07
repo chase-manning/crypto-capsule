@@ -267,17 +267,15 @@ const CreateCapsule = (props: Props): JSX.Element => {
           </Content>
         }
         buttonText={
-          loading
-            ? "Loading"
-            : unapproved.length === 0
+          unapproved.length === 0
             ? "Create"
             : `Approve ${addressSymbol(unapproved[0].asset.token)}`
         }
         buttonAction={() => {
-          if (loading) return;
           if (unapproved.length === 0) create();
           else tokenApprove(unapproved[0].asset.token);
         }}
+        loading={loading}
         buttonDisabled={!isValid()}
       />
       <Popup
