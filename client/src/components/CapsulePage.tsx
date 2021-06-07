@@ -11,7 +11,7 @@ import {
   openCapsule,
 } from "../services/contracthelper";
 import { selectAddress, setAddress } from "../state/userSlice";
-import CapsuleType from "../types/CapsuleType";
+import CapsuleType, { Asset } from "../types/CapsuleType";
 
 import capsuleOpen from "../assets/capsule-open-large.png";
 import capsuleLocked from "../assets/capsule-locked-large.png";
@@ -79,6 +79,7 @@ const Details = styled.div`
 const BlockContainer = styled.div`
   position: relative;
   transform: rotate(-4deg);
+  margin: 3rem 0;
 `;
 
 const BlockContent = styled.div`
@@ -138,6 +139,18 @@ const ProgressContainer = styled.div`
   width: 100%;
   height: 6rem;
   background-color: var(--primary);
+`;
+
+const AssetContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const TokenContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const CapsulePage = (): JSX.Element => {
@@ -234,15 +247,6 @@ const CapsulePage = (): JSX.Element => {
               {capsule.beneficiary === address && isOpen && !capsule.empty && (
                 <Button primary text="Open" click={() => open()} />
               )}
-              {capsule.grantor === address &&
-                capsule.addingAssetsAllowed &&
-                !isOpen && (
-                  <Button
-                    primary
-                    text="Add Assets"
-                    click={() => setAddingAssets(true)}
-                  />
-                )}
             </BlockContent>
           </BlockContainer>
         )}
@@ -301,6 +305,32 @@ const CapsulePage = (): JSX.Element => {
                     click={() => setUpdatingBeneficiary(true)}
                   />
                 )}
+              </BlockContent>
+            </BlockContainer>
+            <BlockContainer>
+              <Block />
+              <BlockContent>
+                <Header>Capsule Assets</Header>
+                {capsule.assets.map((asset: Asset) => (
+                  <AssetContainer>
+                    <TokenContainer>
+                      <SubHeaderMain>Meow</SubHeaderMain>
+                      {asset.token !== "ETH" && (
+                        <SubHeader>{asset.token}</SubHeader>
+                      )}
+                    </TokenContainer>
+                    <SubHeaderMain>{asset.value}</SubHeaderMain>
+                  </AssetContainer>
+                ))}
+                {capsule.grantor === address &&
+                  capsule.addingAssetsAllowed &&
+                  !isOpen && (
+                    <Button
+                      primary
+                      text="Add Assets"
+                      click={() => setAddingAssets(true)}
+                    />
+                  )}
               </BlockContent>
             </BlockContainer>
           </Details>
