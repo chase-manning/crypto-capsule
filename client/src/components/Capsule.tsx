@@ -14,6 +14,7 @@ import { selectTokens } from "../state/tokenSlice";
 import Token from "../types/Token";
 import { getCapsuleUsdValue } from "../services/oracleService";
 import BlockContent from "./BlockContent";
+import Countdown from "./Countdown";
 
 const Content = styled.div`
   position: relative;
@@ -40,13 +41,6 @@ const Image = styled.img`
   color: var(--main);
   text-transform: uppercase;
   transform: translateX(-1rem);
-`;
-
-const Countdown = styled.div`
-  color: var(--main);
-  font-size: 3rem;
-  font-weight: 500;
-  margin-top: 1rem;
   margin-bottom: 1rem;
 `;
 
@@ -54,6 +48,7 @@ const Crypto = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 3rem;
+  margin-top: 1rem;
 `;
 
 const CyptoIconContainer = styled.div`
@@ -80,29 +75,17 @@ const Capsule = (props: Props): JSX.Element => {
 
   const [usd, setUsd] = useState("----");
 
-  const [now, setNow] = useState(new Date());
-  const nowRef = useRef(now);
-  nowRef.current = now;
-
-  const tick = () => {
-    setNow(
-      new Date(nowRef.current.setSeconds(nowRef.current.getSeconds() + 1))
-    );
-  };
-
   const getUsd = async () => {
     const usdValue = await getCapsuleUsdValue(props.capsule);
     setUsd(`$${Number(usdValue).toFixed(0).toLocaleString()}`);
   };
 
   useEffect(() => {
-    setInterval(() => tick(), 1000);
     getUsd();
   }, []);
 
   const isOpen =
-    new Date(props.capsule.distributionDate).getTime() <
-    nowRef.current.getTime();
+    new Date(props.capsule.distributionDate).getTime() < new Date().getTime();
 
   return (
     <>
@@ -119,16 +102,7 @@ const Capsule = (props: Props): JSX.Element => {
                   : capsuleReadySmall
               }
             />
-            {!isOpen && (
-              <Countdown>
-                {countdown(
-                  new Date(),
-                  props.capsule.distributionDate,
-                  countdown.ALL,
-                  2
-                ).toString()}
-              </Countdown>
-            )}
+            {!isOpen && <Countdown capsule={props.capsule} short />}
             <Crypto>
               {props.capsule.assets.map((asset: Asset) => (
                 <CyptoIconContainer key={asset.token}>
