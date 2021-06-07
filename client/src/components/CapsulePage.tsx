@@ -160,7 +160,14 @@ const CapsulePage = (): JSX.Element => {
 
   return (
     <StyledCapsulePage>
-      {!capsule && <Loading>Loading...</Loading>}
+      {!capsule && (
+        <BlockContainer>
+          <Block />
+          <BlockContent>
+            <Loading>Loading...</Loading>
+          </BlockContent>
+        </BlockContainer>
+      )}
       {capsule && (
         <BlockContainer>
           <Block />
