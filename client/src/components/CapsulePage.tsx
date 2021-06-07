@@ -95,7 +95,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const CapsulePage = () => {
+const CapsulePage = (): JSX.Element => {
   const dispatch = useDispatch();
   const address = useSelector(selectAddress);
 
