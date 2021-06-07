@@ -3,11 +3,16 @@ import styled from "styled-components";
 import countdown from "countdown";
 import CapsuleType from "../types/CapsuleType";
 
+type CountdownProps = {
+  short?: boolean;
+};
+
 const StyledCountdown = styled.div`
-  font-size: 6rem;
-  margin-bottom: 3rem;
-  transform: rotate(-3deg);
+  font-size: ${(props: CountdownProps) => (props.short ? "3rem" : "6rem")};
+  transform: ${(props: CountdownProps) =>
+    props.short ? "none" : "rotate(-3deg)"};
   color: var(--main);
+  margin-bottom: ${(props: CountdownProps) => (props.short ? "0" : "2rem")};
 `;
 
 type Props = {
@@ -31,7 +36,7 @@ const Countdown = (props: Props): JSX.Element => {
   }, []);
 
   return (
-    <StyledCountdown>
+    <StyledCountdown short={props.short}>
       {countdown(
         new Date(),
         props.capsule.distributionDate,
