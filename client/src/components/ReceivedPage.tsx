@@ -33,7 +33,7 @@ const ReceivedPage = (): JSX.Element => {
   useEffect(() => {
     updateCapsules();
 
-    (window as any).ethereum.on("networkChanged", async () => {
+    (window as any).ethereum.on("chainChanged", async () => {
       await updateCapsules();
     });
   }, []);
