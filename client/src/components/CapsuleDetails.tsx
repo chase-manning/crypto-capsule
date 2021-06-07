@@ -45,6 +45,7 @@ const CapsuleDetails = (props: Props): JSX.Element => {
   return (
     <>
       <BlockContent
+        marginBottom="6rem"
         content={
           <>
             <Header>Capsule Details</Header>
