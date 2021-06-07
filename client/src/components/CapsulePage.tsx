@@ -16,6 +16,8 @@ import CapsuleType from "../types/CapsuleType";
 import capsuleOpen from "../assets/capsule-open-large.png";
 import capsuleLocked from "../assets/capsule-locked-large.png";
 import capsuleReady from "../assets/capsule-ready-large.png";
+import noise from "../assets/noise.png";
+
 import Button from "./Button";
 import AddAssets from "./AddAssets";
 import UpdateBeneficiary from "./UpdateBeneficiary";
@@ -23,6 +25,39 @@ import { getCapsuleUsdValue } from "../services/oracleService";
 import Block from "./Block";
 
 const StyledCapsulePage = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const Gradient = styled.div`
+  position: absolute;
+  top: -13rem;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 13rem + 11rem);
+  background: linear-gradient(
+    90deg,
+    var(--bg),
+    var(--sub),
+    var(--bg),
+    var(--bg)
+  );
+  opacity: 0.5;
+`;
+
+const Noise = styled.div`
+  position: absolute;
+  top: -13rem;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 13rem + 11rem);
+  background-image: url(${noise});
+  background-size: 5px 5px;
+  opacity: 1;
+`;
+
+const CapsulePageContent = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   min-height: 77vh;
@@ -160,129 +195,133 @@ const CapsulePage = (): JSX.Element => {
 
   return (
     <StyledCapsulePage>
-      {!capsule && (
-        <BlockContainer>
-          <Block />
-          <BlockContent>
-            <Loading>Loading...</Loading>
-          </BlockContent>
-        </BlockContainer>
-      )}
-      {capsule && (
-        <BlockContainer>
-          <Block />
-          <BlockContent>
-            {usd && usd !== "$0" && <Usd>{usd}</Usd>}
-            <CapsuleImage
-              src={
-                !isOpen
-                  ? capsuleLocked
-                  : capsule.empty
-                  ? capsuleOpen
-                  : capsuleReady
-              }
-            />
-            {!isOpen && (
-              <Countdown>
-                {countdown(
-                  new Date(),
-                  capsule.distributionDate,
-                  countdown.ALL,
-                  3
-                ).toString()}
-              </Countdown>
-            )}
-            <ProgressContainer>meow</ProgressContainer>
-            {capsule.beneficiary === address && isOpen && !capsule.empty && (
-              <Button primary text="Open" click={() => open()} />
-            )}
-            {capsule.grantor === address &&
-              capsule.addingAssetsAllowed &&
-              !isOpen && (
-                <Button
-                  primary
-                  text="Add Assets"
-                  click={() => setAddingAssets(true)}
-                />
-              )}
-          </BlockContent>
-        </BlockContainer>
-      )}
-      {capsule && (
-        <Details>
+      <Noise />
+      <Gradient />
+      <CapsulePageContent>
+        {!capsule && (
           <BlockContainer>
             <Block />
             <BlockContent>
-              <Header>Capsule Details</Header>
-              <SubHeader>
-                <SubHeaderMain>Grantor:</SubHeaderMain>
-                {capsule.grantor}
-              </SubHeader>
-              <SubHeader>
-                <SubHeaderMain>Beneficiary:</SubHeaderMain>
-                {capsule.beneficiary}
-              </SubHeader>
-              <SubHeader>
-                <SubHeaderMain>Created Date:</SubHeaderMain>
-                {dateFormat(capsule.createdDate, "dS mmm yyyy")}
-              </SubHeader>
-              <SubHeader>
-                <SubHeaderMain>Distribution Type:</SubHeaderMain>
-                {capsule.periodCount === 1 ? "Immediate" : "Staggered"}
-              </SubHeader>
-              <SubHeader>
-                <SubHeaderMain>{`Distribution${
-                  capsule.periodCount === 1 ? "" : " Start"
-                } Date:`}</SubHeaderMain>
-                {dateFormat(capsule.distributionDate, "dS mmm yyyy")}
-              </SubHeader>
-              {capsule.periodCount !== 1 && (
-                <>
-                  <SubHeader>
-                    <SubHeaderMain>Distribution Frequncy:</SubHeaderMain>
-                    {capsule.periodType}
-                  </SubHeader>
-                  <SubHeader>
-                    <SubHeaderMain>Distribution Periods:</SubHeaderMain>
-                    {capsule.periodCount}
-                  </SubHeader>
-                  <SubHeader>
-                    <SubHeaderMain>Claimed Periods:</SubHeaderMain>
-                    {capsule.claimedPeriods}
-                  </SubHeader>
-                </>
-              )}
-              <SubHeader>
-                <SubHeaderMain>Adding Assets Allowed:</SubHeaderMain>
-                {capsule.addingAssetsAllowed ? "Yes" : "No"}
-              </SubHeader>
-              {capsule.beneficiary === address && !capsule.empty && (
-                <Button
-                  primary
-                  text="Update Beneficiary"
-                  click={() => setUpdatingBeneficiary(true)}
-                />
-              )}
+              <Loading>Loading...</Loading>
             </BlockContent>
           </BlockContainer>
-        </Details>
-      )}
-      {capsule && (
-        <AddAssets
-          capsuleId={capsule.id}
-          show={addingAssets}
-          close={() => setAddingAssets(false)}
-          updateCapsules={() => updateCapsule()}
-        />
-      )}
-      {capsule && (
-        <UpdateBeneficiary
-          capsuleId={capsule.id}
-          show={updatingBeneficiary}
-          close={() => setUpdatingBeneficiary(false)}
-          updateCapsules={() => updateCapsule()}
-        />
-      )}
+        )}
+        {capsule && (
+          <BlockContainer>
+            <Block />
+            <BlockContent>
+              {usd && usd !== "$0" && <Usd>{usd}</Usd>}
+              <CapsuleImage
+                src={
+                  !isOpen
+                    ? capsuleLocked
+                    : capsule.empty
+                    ? capsuleOpen
+                    : capsuleReady
+                }
+              />
+              {!isOpen && (
+                <Countdown>
+                  {countdown(
+                    new Date(),
+                    capsule.distributionDate,
+                    countdown.ALL,
+                    3
+                  ).toString()}
+                </Countdown>
+              )}
+              <ProgressContainer>meow</ProgressContainer>
+              {capsule.beneficiary === address && isOpen && !capsule.empty && (
+                <Button primary text="Open" click={() => open()} />
+              )}
+              {capsule.grantor === address &&
+                capsule.addingAssetsAllowed &&
+                !isOpen && (
+                  <Button
+                    primary
+                    text="Add Assets"
+                    click={() => setAddingAssets(true)}
+                  />
+                )}
+            </BlockContent>
+          </BlockContainer>
+        )}
+        {capsule && (
+          <Details>
+            <BlockContainer>
+              <Block />
+              <BlockContent>
+                <Header>Capsule Details</Header>
+                <SubHeader>
+                  <SubHeaderMain>Grantor:</SubHeaderMain>
+                  {capsule.grantor}
+                </SubHeader>
+                <SubHeader>
+                  <SubHeaderMain>Beneficiary:</SubHeaderMain>
+                  {capsule.beneficiary}
+                </SubHeader>
+                <SubHeader>
+                  <SubHeaderMain>Created Date:</SubHeaderMain>
+                  {dateFormat(capsule.createdDate, "dS mmm yyyy")}
+                </SubHeader>
+                <SubHeader>
+                  <SubHeaderMain>Distribution Type:</SubHeaderMain>
+                  {capsule.periodCount === 1 ? "Immediate" : "Staggered"}
+                </SubHeader>
+                <SubHeader>
+                  <SubHeaderMain>{`Distribution${
+                    capsule.periodCount === 1 ? "" : " Start"
+                  } Date:`}</SubHeaderMain>
+                  {dateFormat(capsule.distributionDate, "dS mmm yyyy")}
+                </SubHeader>
+                {capsule.periodCount !== 1 && (
+                  <>
+                    <SubHeader>
+                      <SubHeaderMain>Distribution Frequncy:</SubHeaderMain>
+                      {capsule.periodType}
+                    </SubHeader>
+                    <SubHeader>
+                      <SubHeaderMain>Distribution Periods:</SubHeaderMain>
+                      {capsule.periodCount}
+                    </SubHeader>
+                    <SubHeader>
+                      <SubHeaderMain>Claimed Periods:</SubHeaderMain>
+                      {capsule.claimedPeriods}
+                    </SubHeader>
+                  </>
+                )}
+                <SubHeader>
+                  <SubHeaderMain>Adding Assets Allowed:</SubHeaderMain>
+                  {capsule.addingAssetsAllowed ? "Yes" : "No"}
+                </SubHeader>
+                {capsule.beneficiary === address && !capsule.empty && (
+                  <Button
+                    primary
+                    text="Update Beneficiary"
+                    click={() => setUpdatingBeneficiary(true)}
+                  />
+                )}
+              </BlockContent>
+            </BlockContainer>
+          </Details>
+        )}
+        {capsule && (
+          <AddAssets
+            capsuleId={capsule.id}
+            show={addingAssets}
+            close={() => setAddingAssets(false)}
+            updateCapsules={() => updateCapsule()}
+          />
+        )}
+        {capsule && (
+          <UpdateBeneficiary
+            capsuleId={capsule.id}
+            show={updatingBeneficiary}
+            close={() => setUpdatingBeneficiary(false)}
+            updateCapsules={() => updateCapsule()}
+          />
+        )}
+      </CapsulePageContent>
     </StyledCapsulePage>
   );
 };

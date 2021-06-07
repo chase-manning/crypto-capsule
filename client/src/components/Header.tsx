@@ -36,6 +36,7 @@ const StyledHeader = styled.div`
 const NavContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
+  z-index: 1;
 `;
 
 const Header = (): JSX.Element => {

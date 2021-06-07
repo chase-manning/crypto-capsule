@@ -1,8 +1,13 @@
 import React from "react";
+import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAddress, setAddress } from "../state/userSlice";
 import Button from "./Button";
 import { getAddress } from "../services/contracthelper";
+
+const StyledConnector = styled.div`
+  z-index: 1;
+`;
 
 const Connector = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -19,10 +24,12 @@ const Connector = (): JSX.Element => {
   };
 
   return (
-    <Button
-      text={address ? formattedAddress() : "Connect"}
-      click={() => connect()}
-    />
+    <StyledConnector>
+      <Button
+        text={address ? formattedAddress() : "Connect"}
+        click={() => connect()}
+      />
+    </StyledConnector>
   );
 };
 

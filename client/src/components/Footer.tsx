@@ -28,7 +28,8 @@ const buttons: ButtonType[][] = [
 
 const StyledFooter = styled.div`
   width: 100%;
-  padding: 35px 60px;
+  height: 11rem;
+  padding: 3.5rem 6rem;
   display: flex;
   justify-content: space-between;
   position: relative;
