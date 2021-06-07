@@ -25,6 +25,7 @@ import AddAssets from "./AddAssets";
 import UpdateBeneficiary from "./UpdateBeneficiary";
 import { getCapsuleUsdValue } from "../services/oracleService";
 import Block from "./Block";
+import Countdown from "./Countdown";
 
 const StyledCapsulePage = styled.div`
   position: relative;
@@ -126,13 +127,6 @@ const CapsuleImage = styled.img`
 const Usd = styled.div`
   font-size: 8rem;
   margin-bottom: 2rem;
-  transform: rotate(-3deg);
-  color: var(--main);
-`;
-
-const Countdown = styled.div`
-  font-size: 6rem;
-  margin-bottom: 3rem;
   transform: rotate(-3deg);
   color: var(--main);
 `;
@@ -278,16 +272,7 @@ const CapsulePage = (): JSX.Element => {
                     : capsuleReady
                 }
               />
-              {!isOpen && (
-                <Countdown>
-                  {countdown(
-                    new Date(),
-                    capsule.distributionDate,
-                    countdown.ALL,
-                    3
-                  ).toString()}
-                </Countdown>
-              )}
+              {!isOpen && <Countdown capsule={capsule} />}
               {false && <ProgressContainer>meow</ProgressContainer>}
               {capsule.beneficiary === address && isOpen && !capsule.empty && (
                 <Button primary text="Open" click={() => open()} />
