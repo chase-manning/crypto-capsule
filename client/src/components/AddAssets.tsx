@@ -91,17 +91,15 @@ const AddAssets = (props: Props): JSX.Element => {
       close={props.close}
       header="Add Assets"
       buttonText={
-        loading
-          ? "Loading"
-          : unapproved.length === 0
+        unapproved.length === 0
           ? "Add Assets"
           : `Approve ${addressSymbol(unapproved[0].asset.token)}`
       }
       buttonAction={() => {
-        if (loading) return;
         if (unapproved.length === 0) click();
         else tokenApprove(unapproved[0].asset.token);
       }}
+      loading={loading}
       content={
         <StyledAddAssets>
           <Assets
