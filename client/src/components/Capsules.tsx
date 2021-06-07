@@ -6,9 +6,10 @@ import Capsule from "./Capsule";
 const Container = styled.div`
   display: grid;
   width: 80vw;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(36rem, 1fr));
   grid-gap: 3rem;
   justify-items: center;
+  align-items: center;
 `;
 
 type Props = {
