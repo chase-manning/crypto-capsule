@@ -109,7 +109,7 @@ const Capsule = (props: Props): JSX.Element => {
       <BlockContent
         content={
           <Content>
-            <Dollars>{`${usd}`}</Dollars>
+            {usd !== "$0" && <Dollars>{`${usd}`}</Dollars>}
             <Image
               src={
                 !isOpen
