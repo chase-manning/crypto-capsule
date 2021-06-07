@@ -189,7 +189,7 @@ const Capsule = (props: Props): JSX.Element => {
                   src={
                     tokens.filter(
                       (token: Token) => token.address === asset.token
-                    )[0].logoURI
+                    )[0]?.logoURI
                   }
                 />
               </CyptoIconContainer>
