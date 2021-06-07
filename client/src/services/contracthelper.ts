@@ -218,8 +218,5 @@ export const getAssetDecimals = async (asset: Asset): Promise<number> => {
 export const getAssetRealValue = async (asset: Asset): Promise<number> => {
   if (asset.value === "0") return 0;
   const decimals = await getAssetDecimals(asset);
-  const assetValue = new BN(asset.value);
-  const decimalMul = new BN(10).pow(new BN(decimals));
-  const realValue = assetValue.div(decimalMul);
-  return realValue.toNumber();
+  return Number(asset.value) / 10 ** decimals;
 };
