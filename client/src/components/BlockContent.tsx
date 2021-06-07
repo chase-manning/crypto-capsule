@@ -5,16 +5,17 @@ import Block from "./Block";
 type BlockContentProps = {
   width?: string;
   marginBottom?: string;
+  large?: boolean;
 };
 
 const StyledBlockContent = styled.div`
   position: relative;
   width: ${(props: BlockContentProps) => (props.width ? props.width : "auto")};
-  padding: 5rem;
+  padding: ${(props: BlockContentProps) => (props.large ? "5rem" : "3rem")};
   padding-top: 3.3rem;
   transform: rotate(-3deg);
   margin-bottom: ${(props: BlockContentProps) =>
-    props.marginBottom ? props.marginBottom : "0"}:;
+    props.marginBottom ? props.marginBottom : "0"};
 `;
 
 const Content = styled.div`
@@ -26,11 +27,16 @@ type Props = {
   content: JSX.Element;
   width?: string;
   marginBottom?: string;
+  large?: boolean;
 };
 
 const BlockContent = (props: Props): JSX.Element => {
   return (
-    <StyledBlockContent width={props.width} marginBottom={props.marginBottom}>
+    <StyledBlockContent
+      width={props.width}
+      marginBottom={props.marginBottom}
+      large={props.large}
+    >
       <Block />
       <Content>{props.content}</Content>
     </StyledBlockContent>
