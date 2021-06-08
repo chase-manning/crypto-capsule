@@ -102,7 +102,7 @@ const Capsule = (props: Props): JSX.Element => {
                   : capsuleReadySmall
               }
             />
-            {!canBeOpened && <Countdown capsule={props.capsule} short />}
+            <Countdown capsule={props.capsule} short />
             <Crypto>
               {props.capsule.assets.map((asset: Asset) => (
                 <CyptoIconContainer key={asset.token}>
