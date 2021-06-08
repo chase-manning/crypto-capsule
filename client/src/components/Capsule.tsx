@@ -122,7 +122,7 @@ const Capsule = (props: Props): JSX.Element => {
             />
           </Content>
         }
-        marginBottom="6rem"
+        marginBottom="2rem"
       />
     </>
   );
