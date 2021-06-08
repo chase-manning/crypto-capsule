@@ -74,7 +74,7 @@ const Capsule = (props: Props): JSX.Element => {
 
   const tokens = useSelector(selectTokens);
 
-  const [usd, setUsd] = useState("----");
+  const [usd, setUsd] = useState("$0");
 
   const canBeOpened = getCanBeOpened(props.capsule);
 
