@@ -1,4 +1,5 @@
 import BN from "bn.js";
+import CapsuleType from "../types/CapsuleType";
 
 export const inputToDate = (input: string): Date => {
   const items = input.split("/");
@@ -37,4 +38,19 @@ export const getPeriodSize = (periodType: string): number => {
   if (periodType === "monthly") return MONTHS;
   if (periodType === "annually") return YEARS;
   return 1;
+};
+
+export const getNextOpenDate = (capsule: CapsuleType): Date => {
+  return new Date(
+    capsule.distributionDate.getTime() +
+      capsule.claimedPeriods * getPeriodSize(capsule.periodType) * 1000
+  );
+};
+
+export const getCanBeOpened = (capsule: CapsuleType): boolean => {
+  return (
+    capsule.distributionDate.getTime() +
+      capsule.claimedPeriods * getPeriodSize(capsule.periodType) * 1000 <
+    new Date().getTime()
+  );
 };
