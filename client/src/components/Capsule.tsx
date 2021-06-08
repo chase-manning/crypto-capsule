@@ -15,7 +15,7 @@ import Token from "../types/Token";
 import { getCapsuleUsdValue } from "../services/oracleService";
 import BlockContent from "./BlockContent";
 import Countdown from "./Countdown";
-import { getPeriodSize } from "../services/dateHelper";
+import { getCanBeOpened } from "../services/dateHelper";
 
 const Content = styled.div`
   position: relative;
@@ -76,6 +76,8 @@ const Capsule = (props: Props): JSX.Element => {
 
   const [usd, setUsd] = useState("----");
 
+  const canBeOpened = getCanBeOpened(props.capsule);
+
   const getUsd = async () => {
     const usdValue = await getCapsuleUsdValue(props.capsule);
     setUsd(`$${Number(usdValue).toFixed(0).toLocaleString()}`);
@@ -84,13 +86,6 @@ const Capsule = (props: Props): JSX.Element => {
   useEffect(() => {
     getUsd();
   }, []);
-
-  const canBeOpened =
-    props.capsule.distributionDate.getTime() +
-      props.capsule.claimedPeriods *
-        getPeriodSize(props.capsule.periodType) *
-        1000 <
-    new Date().getTime();
 
   return (
     <>
