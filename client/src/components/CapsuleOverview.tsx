@@ -74,7 +74,7 @@ const CapsuleOverview = (props: Props): JSX.Element => {
                 : capsuleReady
             }
           />
-          {!canBeOpened && <Countdown capsule={props.capsule} />}
+          <Countdown capsule={props.capsule} />
           {false && <ProgressContainer>meow</ProgressContainer>}
           {props.capsule.beneficiary === address &&
             canBeOpened &&
