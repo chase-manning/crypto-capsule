@@ -14,7 +14,7 @@ import Button from "./Button";
 import { getCapsuleUsdValue } from "../services/oracleService";
 import Countdown from "./Countdown";
 import BlockContent from "./BlockContent";
-import { getPeriodSize } from "../services/dateHelper";
+import { getCanBeOpened } from "../services/dateHelper";
 
 const CapsuleImage = styled.img`
   width: 40rem;
@@ -44,17 +44,12 @@ const CapsuleOverview = (props: Props): JSX.Element => {
 
   const [usd, setUsd] = useState<string>("");
 
+  const canBeOpened = getCanBeOpened(props.capsule);
+
   const open = async () => {
     await openCapsule(props.capsule.id);
     props.update();
   };
-
-  const canBeOpened =
-    props.capsule.distributionDate.getTime() +
-      props.capsule.claimedPeriods *
-        getPeriodSize(props.capsule.periodType) *
-        1000 <
-    new Date().getTime();
 
   const getUsd = async (_capsule: CapsuleType) => {
     const usdValue = await getCapsuleUsdValue(_capsule);
