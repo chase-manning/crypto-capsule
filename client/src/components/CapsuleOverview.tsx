@@ -14,6 +14,7 @@ import Button from "./Button";
 import { getCapsuleUsdValue } from "../services/oracleService";
 import Countdown from "./Countdown";
 import BlockContent from "./BlockContent";
+import { getPeriodSize } from "../services/dateHelper";
 
 const CapsuleImage = styled.img`
   width: 40rem;
@@ -48,9 +49,12 @@ const CapsuleOverview = (props: Props): JSX.Element => {
     props.update();
   };
 
-  const isOpen = !props.capsule
-    ? false
-    : new Date(props.capsule.distributionDate).getTime() < new Date().getTime();
+  const canBeOpened =
+    props.capsule.distributionDate.getTime() +
+      props.capsule.claimedPeriods *
+        getPeriodSize(props.capsule.periodType) *
+        1000 <
+    new Date().getTime();
 
   const getUsd = async (_capsule: CapsuleType) => {
     const usdValue = await getCapsuleUsdValue(_capsule);
@@ -68,17 +72,17 @@ const CapsuleOverview = (props: Props): JSX.Element => {
           {usd && usd !== "$0" && <Usd>{usd}</Usd>}
           <CapsuleImage
             src={
-              !isOpen
-                ? capsuleLocked
-                : props.capsule.empty
+              props.capsule.empty
                 ? capsuleOpen
+                : !canBeOpened
+                ? capsuleLocked
                 : capsuleReady
             }
           />
-          {!isOpen && <Countdown capsule={props.capsule} />}
+          {!canBeOpened && <Countdown capsule={props.capsule} />}
           {false && <ProgressContainer>meow</ProgressContainer>}
           {props.capsule.beneficiary === address &&
-            isOpen &&
+            canBeOpened &&
             !props.capsule.empty && (
               <Button primary text="Open" click={() => open()} />
             )}
