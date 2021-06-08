@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import countdown from "countdown";
 import CapsuleType from "../types/CapsuleType";
+import { getCanBeOpened, getNextOpenDate } from "../services/dateHelper";
 
 type CountdownProps = {
   short?: boolean;
@@ -25,6 +26,9 @@ const Countdown = (props: Props): JSX.Element => {
   const nowRef = useRef(now);
   nowRef.current = now;
 
+  const canBeOpened = getCanBeOpened(props.capsule);
+  const nextOpen = getNextOpenDate(props.capsule);
+
   const tick = () => {
     setNow(
       new Date(nowRef.current.setSeconds(nowRef.current.getSeconds() + 1))
@@ -37,12 +41,16 @@ const Countdown = (props: Props): JSX.Element => {
 
   return (
     <StyledCountdown short={props.short}>
-      {countdown(
-        new Date(),
-        props.capsule.distributionDate,
-        countdown.ALL,
-        props.short ? 2 : 3
-      ).toString()}
+      {props.capsule.empty
+        ? "Capsule is Empty"
+        : canBeOpened
+        ? "Ready to Open"
+        : countdown(
+            new Date(),
+            nextOpen,
+            countdown.ALL,
+            props.short ? 2 : 3
+          ).toString()}
     </StyledCountdown>
   );
 };
