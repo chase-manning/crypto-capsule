@@ -11,6 +11,7 @@ const Container = styled.div`
   grid-gap: 3rem;
   justify-items: center;
   align-items: center;
+  margin: 4rem 0;
 `;
 
 type Props = {
