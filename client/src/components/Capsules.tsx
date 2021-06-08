@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { getNextOpenDate } from "../services/dateHelper";
 import CapsuleType from "../types/CapsuleType";
 import Capsule from "./Capsule";
 
@@ -22,7 +23,7 @@ const Capsules = (props: Props): JSX.Element => {
       {props.capsules
         .sort(
           (a: CapsuleType, b: CapsuleType) =>
-            a.distributionDate.getTime() - b.distributionDate.getTime()
+            getNextOpenDate(a).getTime() - getNextOpenDate(b).getTime()
         )
         .sort(
           (a: CapsuleType, b: CapsuleType) =>
