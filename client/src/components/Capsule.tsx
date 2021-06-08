@@ -15,6 +15,7 @@ import Token from "../types/Token";
 import { getCapsuleUsdValue } from "../services/oracleService";
 import BlockContent from "./BlockContent";
 import Countdown from "./Countdown";
+import { getPeriodSize } from "../services/dateHelper";
 
 const Content = styled.div`
   position: relative;
@@ -84,8 +85,12 @@ const Capsule = (props: Props): JSX.Element => {
     getUsd();
   }, []);
 
-  const isOpen =
-    new Date(props.capsule.distributionDate).getTime() < new Date().getTime();
+  const canBeOpened =
+    props.capsule.distributionDate.getTime() +
+      props.capsule.claimedPeriods *
+        getPeriodSize(props.capsule.periodType) *
+        1000 <
+    new Date().getTime();
 
   return (
     <>
@@ -95,14 +100,14 @@ const Capsule = (props: Props): JSX.Element => {
             {usd !== "$0" && <Dollars>{`${usd}`}</Dollars>}
             <Image
               src={
-                !isOpen
-                  ? capsuleLockedSmall
-                  : props.capsule.empty
+                props.capsule.empty
                   ? capsuleOpenSmall
+                  : !canBeOpened
+                  ? capsuleLockedSmall
                   : capsuleReadySmall
               }
             />
-            {!isOpen && <Countdown capsule={props.capsule} short />}
+            {!canBeOpened && <Countdown capsule={props.capsule} short />}
             <Crypto>
               {props.capsule.assets.map((asset: Asset) => (
                 <CyptoIconContainer key={asset.token}>
