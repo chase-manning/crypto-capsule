@@ -88,6 +88,13 @@ const CapsuleOverview = (props: Props): JSX.Element => {
                   ? capsuleLocked
                   : capsuleReady
               }
+              alt={
+                props.capsule.empty
+                  ? "Capsule Empty Image"
+                  : !canBeOpened
+                  ? "Capsule Locked Image"
+                  : "Capsule Ready Image"
+              }
             />
             <Countdown capsule={props.capsule} />
             {false && <ProgressContainer>meow</ProgressContainer>}
