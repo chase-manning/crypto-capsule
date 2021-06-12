@@ -24,6 +24,10 @@ module.exports = {
       url: "https://arb-mainnet.g.alchemy.com/v2/" + secrets.alchemyKey,
       accounts: [secrets.walletPrivateKey],
     },
+    ethereum: {
+      url: "https://eth-mainnet.alchemyapi.io/v2/" + secrets.alchemyKey,
+      accounts: [secrets.walletPrivateKey],
+    },
   },
   abiExporter: {
     path: "./client/src/contracts",
