@@ -204,45 +204,83 @@ export const ethOracles: OracleType[] = [
     oracle: "0x0f59666EDE214281e956cb3b2D0d69415AfF4A01",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0x221657776846890989a759ba2973e427dff5c9bb",
+    oracle: "0xF9FCC6E1186Acf6529B1c1949453f51B4B6eEE67",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+    oracle: "0xDC3EA94CD0AC27d9A86C180091e7f78C683d3699",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0xe4883bcb919386bb5f48ef59b7c31c1d93a51a57",
+    oracle: "0x065B8808087C2d7A3C104E276C80Fe6Fc1B47f1c",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0xbe9375c6a420d2eeb258962efb95551a5b722803",
+    oracle: "0x00a773bD2cE922F866BB43ab876009fb959d7C29",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+    oracle: "0xCc70F09A6CC17553b2E31954cD36E4A2d89501f7",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0x8ce9137d39326ad0cd6491fb5cc0cba0e089b6a9",
+    oracle: "0xFb0CfD6c19e25DB4a08D8a204a387cEa48Cc138f",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0x4c19596f5aaff459fa38b0f7ed92f11ae6543784",
+    oracle: "0x26929b85fE284EeAB939831002e1928183a10fb1",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+    oracle: "0x553303d460EE0afB37EdFf9bE42922D8FF63220e",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    oracle: "0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
   },
   {
-    token: "",
-    oracle: "",
+    token: "0x1c48f86ae57291f7686349f12601910bd8d470bb",
+    oracle: "0xfAC81Ea9Dd29D8E9b212acd6edBEb6dE38Cb43Af",
+  },
+  {
+    token: "0x674c6ad92fd080e4004b2312b45f796a192d27a0",
+    oracle: "0x7a8544894F7FD0C69cFcBE2b4b2E277B0b9a4355",
+  },
+  {
+    token: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    oracle: "0x3E7d1eAB13ad0104d2750B8863b489D65364e32D",
+  },
+  {
+    token: "0x1cf4592ebffd730c7dc92c1bdffdfc3b9efcf29a",
+    oracle: "0x9a79fdCd0E326dF6Fa34EA13c05d3106610798E9",
+  },
+  {
+    token: "0x6a22e5e94388464181578aa7a6b869e00fe27846",
+    oracle: "0x379589227b15F1a12195D3f2d90bBc9F31f95235",
+  },
+  {
+    token: "0x261efcdd24cea98652b9700800a13dfbca4103ff",
+    oracle: "0x214eD9Da11D2fbe465a6fc601a91E62EbEc1a0D6",
+  },
+  {
+    token: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+    oracle: "0xA027702dbb89fbd58938e4324ac03B58d812b0E1",
+  },
+  {
+    token: "0xe41d2489571d322189246dafa5ebde1f4699f498",
+    oracle: "0x2885d15b8Af22648b98B122b22FDF4D2a56c6023",
+  },
+  {
+    token: "0xeabacd844a196d7faf3ce596edebf9900341b420",
+    oracle: "0x283D433435cFCAbf00263beEF6A362b7cc5ed9f2",
+  },
+  {
+    token: "0xe1afe1fd76fd88f78cbf599ea1846231b8ba3b6b",
+    oracle: "0xa8E875F94138B0C5b51d1e1d5dE35bbDdd28EA87",
+  },
+  {
+    token: "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+    oracle: "0xad35Bd71b9aFE6e4bDc266B345c198eaDEf9Ad94",
   },
 ];
-
-// https://docs.chain.link/docs/ethereum-addresses/
