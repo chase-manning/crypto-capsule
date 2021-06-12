@@ -25,6 +25,7 @@ export const getOracle = async (token: string): Promise<string> => {
 
 export const getTokenPriceInUsd = async (token: string): Promise<number> => {
   const oracle = await getOracle(token);
+  if (!oracle) return 0;
   const oracleContract = await getOracleContract(oracle);
   const roundData: RoundDataType = await oracleContract.methods
     .latestRoundData()
