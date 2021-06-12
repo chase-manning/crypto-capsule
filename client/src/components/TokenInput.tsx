@@ -150,7 +150,10 @@ const TokenInput = (props: Props): JSX.Element => {
   return (
     <StyledTokenInput>
       <Container ref={tokenContainerRef}>
-        <Image src={props.token.logoURI} />
+        <Image
+          src={props.token.logoURI}
+          alt={`${props.token.symbol} Token Image`}
+        />
         <Name>{props.token.symbol}</Name>
         <Arrow>{">"}</Arrow>
         <OpenButton onClick={() => setOpen(true)} />
