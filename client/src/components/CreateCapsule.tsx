@@ -130,6 +130,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
     );
 
     gtag("event", "created");
+    gtag("event", "conversion");
     setComplete(true);
   };
 
