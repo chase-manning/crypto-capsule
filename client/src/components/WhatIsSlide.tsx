@@ -10,6 +10,10 @@ const StyledWhatIsSlide = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 600px) {
+    padding: 2rem;
+  }
 `;
 
 const Gradient = styled.div`
