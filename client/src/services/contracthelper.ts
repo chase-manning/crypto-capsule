@@ -14,6 +14,7 @@ import { getGlobals } from "../utils/globals";
 export const isConnected = (): boolean => {
   return (window as any).web3.eth;
 };
+
 export const getAddress = async (): Promise<string> => {
   if ((window as any).ethereum) {
     (window as any).web3 = new Web3((window as any).ethereum);

@@ -20,6 +20,10 @@ module.exports = {
       url: "https://eth-rinkeby.alchemyapi.io/v2/" + secrets.alchemyKey,
       accounts: [secrets.walletPrivateKey],
     },
+    arbitrum: {
+      url: "https://arb-mainnet.g.alchemy.com/v2/" + secrets.alchemyKey,
+      accounts: [secrets.walletPrivateKey],
+    },
   },
   abiExporter: {
     path: "./client/src/contracts",

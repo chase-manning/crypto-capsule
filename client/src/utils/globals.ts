@@ -26,9 +26,17 @@ const ETH_GLOBALS: GlobalsType = {
   ORACLES: ethOracles,
 };
 
+const ARBITRUM_GLOBALS: GlobalsType = {
+  CAPSULE: "0x5b884817588a037a2668135031ebe2a36ca2957c",
+  TOKENS: [],
+  TOKENS_URL: "https://tokens.coingecko.com/uniswap/all.json",
+  ORACLES: ethOracles,
+};
+
 export const getGlobals = async (): Promise<GlobalsType> => {
   const networkId = await getNetwork();
   if (networkId === 4) return RINKEBY_GLOBALS;
+  if (networkId === 42161) return ARBITRUM_GLOBALS;
   // if (networkId === 56) return BSC_GLOBALS;
   return ETH_GLOBALS;
 };
