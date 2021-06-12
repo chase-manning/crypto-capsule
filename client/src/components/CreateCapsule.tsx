@@ -3,6 +3,7 @@ import BN from "bn.js";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { gtag } from "@deptno/gtag";
 import lockedCapsule from "../assets/capsule-locked-large.png";
 
 import {
@@ -128,6 +129,7 @@ const CreateCapsule = (props: Props): JSX.Element => {
       addingAssetsAllowed === "yes"
     );
 
+    gtag("event", "created");
     setComplete(true);
   };
 
