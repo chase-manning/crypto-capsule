@@ -44,6 +44,10 @@ const StyledSupportedNetworks = styled.div`
   position: relative;
   width: 100%;
   padding: 6rem;
+
+  @media (max-width: 600px) {
+    padding: 4rem 2rem;
+  }
 `;
 
 const Header = styled.h2`
@@ -53,6 +57,10 @@ const Header = styled.h2`
   text-align: center;
   margin-bottom: 6rem;
   transform: rotate(-3deg);
+
+  @media (max-width: 600px) {
+    font-size: 4rem;
+  }
 `;
 
 const Networks = styled.div`
@@ -60,6 +68,10 @@ const Networks = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const NetworkContainer = styled.div`
@@ -67,12 +79,20 @@ const NetworkContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 600px) {
+    margin-bottom: 6rem;
+  }
 `;
 
 const NetworkImage = styled.img`
   height: 10vw;
   user-drag: none;
   user-select: none;
+
+  @media (max-width: 600px) {
+    height: 50vw;
+  }
 `;
 
 const NetworkName = styled.p`
@@ -82,6 +102,10 @@ const NetworkName = styled.p`
   width: 100%;
   text-align: center;
   margin-top: 3rem;
+
+  @media (max-width: 600px) {
+    margin-top: 2rem;
+  }
 `;
 
 const ComingSoonContainer = styled.div`
