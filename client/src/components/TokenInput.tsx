@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ethBalance, tokenBalance } from "../services/contracthelper";
 import { toCents } from "../services/web3Service";
@@ -100,6 +100,8 @@ type Props = {
 };
 
 const TokenInput = (props: Props): JSX.Element => {
+  const tokenContainerRef = useRef<HTMLDivElement>(null);
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("0");
   const [balance, setBalance] = useState(0);
@@ -147,7 +149,7 @@ const TokenInput = (props: Props): JSX.Element => {
 
   return (
     <StyledTokenInput>
-      <Container>
+      <Container ref={tokenContainerRef}>
         <Image src={props.token.logoURI} />
         <Name>{props.token.symbol}</Name>
         <Arrow>{">"}</Arrow>
@@ -160,6 +162,7 @@ const TokenInput = (props: Props): JSX.Element => {
             updateBalance(token);
             setOpen(false);
           }}
+          parent={tokenContainerRef.current}
         />
       </Container>
       <InputContainer>

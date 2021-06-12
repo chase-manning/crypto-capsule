@@ -13,10 +13,15 @@ const StyledTokenSelector = styled.div`
   display: ${(props: DisplayProps) => (props.show ? "flex" : "none")};
 `;
 
+type ContainerProps = {
+  top: number;
+  left: number;
+};
+
 const Container = styled.div`
-  position: absolute;
-  top: -1px;
-  left: -1px;
+  position: fixed;
+  top: ${(props: ContainerProps) => `calc(${props.top}px - 1px)`};
+  left: ${(props: ContainerProps) => `calc(${props.left}px - 1px)`};
   width: 25rem;
   padding: 1.7rem;
   border-radius: 1rem;
@@ -75,6 +80,7 @@ type Props = {
   open: boolean;
   token: Token;
   setToken: (token: Token) => void;
+  parent: HTMLDivElement | null;
 };
 
 const TokenSelector = (props: Props): JSX.Element => {
@@ -84,7 +90,10 @@ const TokenSelector = (props: Props): JSX.Element => {
   return (
     <StyledTokenSelector show={props.open}>
       <ExitEvent onClick={() => props.setToken(props.token)} />
-      <Container>
+      <Container
+        top={props.parent ? props.parent.getBoundingClientRect().top : 0}
+        left={props.parent ? props.parent.getBoundingClientRect().left : 0}
+      >
         <Input
           placeholder="Search name"
           value={search}
