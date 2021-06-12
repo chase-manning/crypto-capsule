@@ -82,7 +82,7 @@ const CapsuleAssets = (props: Props): JSX.Element => {
 
     const _assetSymbols: AssetSymbol[] = [];
     const symbolPromises = props.capsule.assets.map(async (asset: Asset) => {
-      const _symbol = await getAssetSymbol(asset);
+      const _symbol = await getAssetSymbol(asset.token);
       _assetSymbols.push({
         asset: asset.token,
         symbol: _symbol,

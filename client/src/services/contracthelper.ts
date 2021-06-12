@@ -204,20 +204,29 @@ export const tokenBalance = async (token: Token): Promise<number> => {
   return cents / 10 ** token.decimals;
 };
 
-export const getAssetSymbol = async (asset: Asset): Promise<string> => {
-  if (asset.token.toLocaleLowerCase() === "eth") return "ETH";
-  const tokenContract = await getTokenContract(asset.token);
+export const getAssetSymbol = async (token: string): Promise<string> => {
+  if (token.toLocaleLowerCase() === "eth") return "ETH";
+  const tokenContract = await getTokenContract(token);
   return tokenContract.methods.symbol().call();
 };
 
-export const getAssetDecimals = async (asset: Asset): Promise<number> => {
-  if (asset.token.toLocaleLowerCase() === "eth") return 18;
-  const tokenContract = await getTokenContract(asset.token);
+export const getAssetDecimals = async (token: string): Promise<number> => {
+  if (token.toLocaleLowerCase() === "eth") return 18;
+  const tokenContract = await getTokenContract(token);
   return tokenContract.methods.decimals().call();
 };
 
 export const getAssetRealValue = async (asset: Asset): Promise<number> => {
   if (asset.value === "0") return 0;
-  const decimals = await getAssetDecimals(asset);
+  const decimals = await getAssetDecimals(asset.token);
   return Number(asset.value) / 10 ** decimals;
+};
+
+export const getAssetLongValue = async (
+  value: number,
+  token: string
+): Promise<string> => {
+  if (value === 0) return "0";
+  const decimals = await getAssetDecimals(token);
+  return Math.round(value * 10 ** decimals).toString();
 };
