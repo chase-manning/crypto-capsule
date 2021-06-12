@@ -118,7 +118,7 @@ const Popup: React.FC<Props> = (props) => {
         <Block />
         <Content>
           {props.header && <Header>{props.header}</Header>}
-          {props.image && <Image src={props.image} />}
+          {props.image && <Image src={props.image} alt="Popup Image" />}
           {props.body && <Body>{props.body}</Body>}
           {props.content && props.content}
           {(props.buttonText || props.secondButtonText) && (
