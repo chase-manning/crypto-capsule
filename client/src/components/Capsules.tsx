@@ -12,6 +12,10 @@ const Container = styled.div`
   justify-items: center;
   align-items: center;
   margin: 4rem 0;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 type Props = {
