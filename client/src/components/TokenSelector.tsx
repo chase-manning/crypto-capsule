@@ -114,7 +114,10 @@ const TokenSelector = (props: Props): JSX.Element => {
                 key={token.address}
                 onClick={() => props.setToken(token)}
               >
-                <Image src={token.logoURI} />
+                <Image
+                  src={token.logoURI}
+                  alt={`${props.token.symbol} Token Image`}
+                />
                 <Name>{token.name}</Name>
               </TokenContainer>
             ))}
