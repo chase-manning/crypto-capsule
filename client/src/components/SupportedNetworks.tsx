@@ -16,7 +16,7 @@ const networks: NetworkType[] = [
   {
     image: ethImage,
     name: "Ethereum Mainet",
-    live: false,
+    live: true,
   },
   {
     image: arbitrumImage,
