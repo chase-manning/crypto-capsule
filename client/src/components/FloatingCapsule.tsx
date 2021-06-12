@@ -13,6 +13,12 @@ const StyledFloatingCapsule = styled.div`
   position: relative;
   width: 56vw;
   height: 30vw;
+
+  @media (max-width: 600px) {
+    width: 100vw;
+    height: 50vw;
+    margin: 3rem 0;
+  }
 `;
 
 const mainAnimation = keyframes`
