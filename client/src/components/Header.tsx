@@ -46,7 +46,7 @@ const NavContainer = styled.div`
   z-index: 1;
 
   @media (max-width: 600px) {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
 `;
 
