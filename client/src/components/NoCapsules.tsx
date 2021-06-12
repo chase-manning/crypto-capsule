@@ -55,7 +55,7 @@ const NoCapsules = (props: Props): JSX.Element => {
           ? `No ${props.isReceived ? "Received" : "Sent"} Capsules`
           : "Wallet Not Connected"}
       </Text>
-      <Image src={noCapsulesImage} />
+      <Image src={noCapsulesImage} alt="Empty Capsule Image" />
       <ButtonContainter>
         <Button
           text={address ? "Create Capsule" : "Connect"}
