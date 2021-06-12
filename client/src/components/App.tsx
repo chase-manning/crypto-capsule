@@ -24,9 +24,17 @@ const StyledApp = styled.div`
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const init = async () => {
+  const updateTokens = async () => {
     const tokens = await getTokens();
     dispatch(setTokens(tokens));
+  };
+
+  const init = async () => {
+    updateTokens();
+
+    (window as any).ethereum.on("chainChanged", async () => {
+      await updateTokens();
+    });
   };
 
   useEffect(() => {
