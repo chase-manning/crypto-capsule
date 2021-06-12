@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getAddress } from "../services/contracthelper";
+import { getTokens } from "../services/tokenService";
+import { setTokens } from "../state/tokenSlice";
 import { selectAddress, setAddress } from "../state/userSlice";
 import Button from "./Button";
 import CreateCapsule from "./CreateCapsule";
@@ -94,6 +96,8 @@ const Landing = (): JSX.Element => {
   const connect = async () => {
     const _address = await getAddress();
     dispatch(setAddress(_address));
+    const tokens = await getTokens();
+    dispatch(setTokens(tokens));
   };
 
   return (

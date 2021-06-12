@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAddress, setAddress } from "../state/userSlice";
 import Button from "./Button";
 import { getAddress } from "../services/contracthelper";
+import { getTokens } from "../services/tokenService";
+import { setTokens } from "../state/tokenSlice";
 
 const StyledConnector = styled.div`
   z-index: 1;
@@ -16,6 +18,8 @@ const Connector = (): JSX.Element => {
   const connect = async () => {
     const _address = await getAddress();
     dispatch(setAddress(_address));
+    const tokens = await getTokens();
+    dispatch(setTokens(tokens));
   };
 
   const formattedAddress = () => {
