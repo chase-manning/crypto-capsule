@@ -20,7 +20,7 @@ const RINKEBY_GLOBALS: GlobalsType = {
 };
 
 const ETH_GLOBALS: GlobalsType = {
-  CAPSULE: "0x653C428093EDa1BE5d634e3F229585856002B4d4",
+  CAPSULE: "0xA22Bc271AEC3970e8d3Ce0048e2Fc97B0440416F",
   TOKENS: [],
   TOKENS_URL: "https://tokens.coingecko.com/uniswap/all.json",
   ORACLES: ethOracles,
