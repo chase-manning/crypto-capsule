@@ -61,6 +61,10 @@ const Popup = styled.div`
   color: var(--main);
   font-size: 2.1rem;
   z-index: 2;
+
+  @media (max-width: 600px) {
+    width: 90vw;
+  }
 `;
 
 type Props = {
