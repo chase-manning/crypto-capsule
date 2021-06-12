@@ -8,8 +8,6 @@ import SentPage from "./SentPage";
 import HomePage from "./HomePage";
 import { getTokens } from "../services/tokenService";
 import { setTokens } from "../state/tokenSlice";
-import { getAddress } from "../services/contracthelper";
-import { setAddress } from "../state/userSlice";
 import Header from "./Header";
 import Footer from "./Footer";
 import CapsulePage from "./CapsulePage";
