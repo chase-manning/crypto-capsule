@@ -146,7 +146,7 @@ const SupportedNetworks = (): JSX.Element => {
       <Networks>
         {networks.map((n: NetworkType) => (
           <NetworkContainer>
-            <NetworkImage src={n.image} />
+            <NetworkImage src={n.image} alt={`${n.name} Network Image`} />
             <NetworkName>{n.name}</NetworkName>
             {!n.live && (
               <ComingSoonContainer>
