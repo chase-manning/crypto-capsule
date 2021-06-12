@@ -16,9 +16,19 @@ import Countdown from "./Countdown";
 import BlockContent from "./BlockContent";
 import { getCanBeOpened } from "../services/dateHelper";
 
+const StyledCapsuleOverview = styled.div`
+  @media (max-width: 600px) {
+    margin-bottom: 6rem;
+  }
+`;
+
 const CapsuleImage = styled.img`
   width: 40rem;
   margin-bottom: 2rem;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const Usd = styled.div`
@@ -26,6 +36,10 @@ const Usd = styled.div`
   margin-bottom: 2rem;
   transform: rotate(-3deg);
   color: var(--main);
+
+  @media (max-width: 600px) {
+    font-size: 6rem;
+  }
 `;
 
 const ProgressContainer = styled.div`
@@ -61,29 +75,31 @@ const CapsuleOverview = (props: Props): JSX.Element => {
   }, [props.capsule]);
 
   return (
-    <BlockContent
-      content={
-        <>
-          {usd && usd !== "$0" && <Usd>{usd}</Usd>}
-          <CapsuleImage
-            src={
-              props.capsule.empty
-                ? capsuleOpen
-                : !canBeOpened
-                ? capsuleLocked
-                : capsuleReady
-            }
-          />
-          <Countdown capsule={props.capsule} />
-          {false && <ProgressContainer>meow</ProgressContainer>}
-          {props.capsule.beneficiary === address &&
-            canBeOpened &&
-            !props.capsule.empty && (
-              <Button primary text="Open" click={() => open()} />
-            )}
-        </>
-      }
-    />
+    <StyledCapsuleOverview>
+      <BlockContent
+        content={
+          <>
+            {usd && usd !== "$0" && <Usd>{usd}</Usd>}
+            <CapsuleImage
+              src={
+                props.capsule.empty
+                  ? capsuleOpen
+                  : !canBeOpened
+                  ? capsuleLocked
+                  : capsuleReady
+              }
+            />
+            <Countdown capsule={props.capsule} />
+            {false && <ProgressContainer>meow</ProgressContainer>}
+            {props.capsule.beneficiary === address &&
+              canBeOpened &&
+              !props.capsule.empty && (
+                <Button primary text="Open" click={() => open()} />
+              )}
+          </>
+        }
+      />
+    </StyledCapsuleOverview>
   );
 };
 
