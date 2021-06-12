@@ -50,7 +50,7 @@ contract CryptoCapsule is Ownable{
         require(_tokens.length == _values.length, "Tokens and Values must be same length");
         require(_periodSize >= 1, "Period Size must greater than or equal to 1");
         require(_periodCount >= 1, "Period Count must greater than or equal to 1");
-        require(_tokens.length <= 10, "Assets exceed maximum of 10 per capsule"); // Test
+        require(_tokens.length <= 10, "Assets exceed maximum of 10 per capsule");
 
         for (uint256 i = 0; i < _tokens.length; i++) {
             require(_values[i] > 0, "Token value must be greater than 0");
@@ -134,7 +134,7 @@ contract CryptoCapsule is Ownable{
                 capsules[capsuleId].amounts.push(_values[i]);
             }
         }
-        require(capsules[capsuleId].tokens.length <= 10, "Assets exceed maximum of 10 per capsule"); // Test
+        require(capsules[capsuleId].tokens.length <= 10, "Assets exceed maximum of 10 per capsule");
 
         capsules[capsuleId].value += msg.value; 
 
