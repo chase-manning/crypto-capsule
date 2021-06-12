@@ -101,6 +101,13 @@ const Capsule = (props: Props): JSX.Element => {
                   ? capsuleLockedSmall
                   : capsuleReadySmall
               }
+              alt={
+                props.capsule.empty
+                  ? "Capsule Empty Image"
+                  : !canBeOpened
+                  ? "Capsule Locked Image"
+                  : "Capsule Ready Image"
+              }
             />
             <Countdown capsule={props.capsule} short />
             <Crypto>
@@ -112,6 +119,11 @@ const Capsule = (props: Props): JSX.Element => {
                         (token: Token) => token.address === asset.token
                       )[0]?.logoURI
                     }
+                    alt={`${
+                      tokens.filter(
+                        (token: Token) => token.address === asset.token
+                      )[0]?.symbol
+                    } Token Image`}
                   />
                 </CyptoIconContainer>
               ))}
