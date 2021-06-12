@@ -7,9 +7,9 @@ It is built using React for the Front End and Solidity for the Back End.
 It is currently deployed on Ethereum, Rinkeby and Arbitrum, with more Networks on the way.  
 This is a community project so please feel free to reach out and help contribute.
 
-## Development
+## 💻 Development
 
-* Install (or [Node](https://nodejs.org/)).
+* Install [Node](https://nodejs.org/)
 * Then run the following commands:
 ```
 # Clone the project to download its contents
