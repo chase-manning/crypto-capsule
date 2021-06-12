@@ -52,6 +52,10 @@ const StyledWhyUseSlide = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  @media (max-width: 600px) {
+    height: 50rem;
+  }
 `;
 
 const Gradient = styled.div`
