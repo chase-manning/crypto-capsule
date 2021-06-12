@@ -33,6 +33,11 @@ const StyledFooter = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
+
+  @media (max-width: 600px) {
+    padding: 2rem;
+    height: 8rem;
+  }
 `;
 
 const Section = styled.div`
