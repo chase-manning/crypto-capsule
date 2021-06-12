@@ -16,6 +16,12 @@ const StyledBlockContent = styled.div`
   transform: rotate(-3deg);
   margin-bottom: ${(props: BlockContentProps) =>
     props.marginBottom ? props.marginBottom : "0"};
+
+  @media (max-width: 600px) {
+    width: calc(100vw - 4rem);
+    transform: rotate(0);
+    padding: 2rem;
+  }
 `;
 
 const Content = styled.div`
