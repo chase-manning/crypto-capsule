@@ -115,22 +115,28 @@ const TokenInput = (props: Props): JSX.Element => {
     }
   };
 
-  const setToken = (token: Token, valueString: string) => {
+  const setToken = (
+    token: Token,
+    valueString: string,
+    isTokenChange: boolean
+  ) => {
     setError("");
-    let number = "0";
-    try {
-      number = toCents(Number.parseFloat(valueString), token);
-    } catch {
-      setError("Not a valid number");
-      return;
-    }
-    if (Number.parseFloat(number) === 0) {
-      setError("Value must be greater than 0");
-      return;
-    }
-    if (Number.parseFloat(valueString) > balance) {
-      setError("Value must be less than or equal to balance");
-      return;
+    if (!isTokenChange) {
+      let number = "0";
+      try {
+        number = toCents(Number.parseFloat(valueString), token);
+      } catch {
+        setError("Not a valid number");
+        return;
+      }
+      if (Number.parseFloat(number) === 0) {
+        setError("Value must be greater than 0");
+        return;
+      }
+      if (Number.parseFloat(valueString) > balance) {
+        setError("Value must be less than or equal to balance");
+        return;
+      }
     }
     props.setToken(token, toCents(Number.parseFloat(valueString), token));
   };
@@ -150,7 +156,7 @@ const TokenInput = (props: Props): JSX.Element => {
           open={open}
           token={props.token}
           setToken={(token: Token) => {
-            setToken(token, value);
+            setToken(token, value, true);
             updateBalance(token);
             setOpen(false);
           }}
@@ -162,7 +168,7 @@ const TokenInput = (props: Props): JSX.Element => {
           value={value}
           setValue={(v: string) => {
             setValue(v);
-            setToken(props.token, v);
+            setToken(props.token, v, false);
           }}
         />
         <MaxButton onClick={() => setValue(balance.toString())}>max</MaxButton>
