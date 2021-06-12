@@ -150,12 +150,21 @@ const FloatingCapsule = (): JSX.Element => {
   return (
     <StyledFloatingCapsule>
       <MainContainer>
-        <Main src={capsuleLandingMain} />
-        <TokenCapsuleCoin src={capsuleLandingTokenCapsuleCoin} />
-        <TokenEther src={capsuleLandingTokenEther} />
-        <TokenBitcoin src={capsuleLandingTokenBitcoin} />
-        <TokenTether src={capsuleLandingTokenTether} />
-        <TokenChainlink src={capsuleLandingTokenChainlink} />
+        <Main src={capsuleLandingMain} alt="Open Capsule Image" />
+        <TokenCapsuleCoin
+          src={capsuleLandingTokenCapsuleCoin}
+          alt="Capsule Coin Token"
+        />
+        <TokenEther src={capsuleLandingTokenEther} alt="Ether Token" />
+        <TokenBitcoin
+          src={capsuleLandingTokenBitcoin}
+          alt="Wrapped Bitcoin Token"
+        />
+        <TokenTether src={capsuleLandingTokenTether} alt="Tether Token" />
+        <TokenChainlink
+          src={capsuleLandingTokenChainlink}
+          alt="Chainlink Token"
+        />
       </MainContainer>
       <Shadow src={capsuleLandingShadow} />
     </StyledFloatingCapsule>
