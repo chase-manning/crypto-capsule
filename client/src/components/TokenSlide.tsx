@@ -18,7 +18,7 @@ const tokens = [
 const StyledTokenSlide = styled.div`
   position: relative;
   width: 100%;
-  height: 40rem;
+  height: 20vw;
   display: flex;
   align-items: center;
   justify-content: center;
