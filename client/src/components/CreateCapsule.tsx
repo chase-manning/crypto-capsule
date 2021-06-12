@@ -7,6 +7,7 @@ import lockedCapsule from "../assets/capsule-locked-large.png";
 
 import {
   createCapsule,
+  getAssetLongValue,
   getTokenContract,
   tokenApproved,
 } from "../services/contracthelper";
@@ -103,13 +104,27 @@ const CreateCapsule = (props: Props): JSX.Element => {
 
     setLoading(true);
 
+    const _assets: Asset[] = [];
+
+    const promises: Promise<void>[] = assets.map(async (asset: Asset) => {
+      _assets.push({
+        token: asset.token,
+        value: await getAssetLongValue(
+          Number.parseFloat(asset.value),
+          asset.token
+        ),
+      });
+    });
+
+    await Promise.all(promises);
+
     const date = inputToDate(distributionDate);
     await createCapsule(
       beneficiary,
       date,
       getPeriodSize(distributionFrequency),
       periodType === "immediate" ? 1 : Number(distributionPeriods),
-      assets,
+      _assets,
       addingAssetsAllowed === "yes"
     );
 

@@ -140,7 +140,7 @@ const TokenInput = (props: Props): JSX.Element => {
         return;
       }
     }
-    props.setToken(token, toCents(Number.parseFloat(valueString), token));
+    props.setToken(token, valueString);
   };
 
   useEffect(() => {
