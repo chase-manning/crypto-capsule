@@ -30,13 +30,24 @@ const StyledHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 60px;
+  padding: 0 6rem;
+
+  @media (max-width: 600px) {
+    padding: 0 2rem;
+    height: auto;
+    margin-top: 3rem;
+    flex-direction: column;
+  }
 `;
 
 const NavContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
   z-index: 1;
+
+  @media (max-width: 600px) {
+    margin-bottom: 2rem;
+  }
 `;
 
 const Header = (): JSX.Element => {
