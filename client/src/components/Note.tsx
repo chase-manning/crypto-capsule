@@ -17,6 +17,10 @@ const Header = styled.h2`
   width: 100%;
   text-align: center;
   margin-bottom: 3rem;
+
+  @media (max-width: 600px) {
+    font-size: 4rem;
+  }
 `;
 
 const Body = styled.p`
@@ -24,6 +28,10 @@ const Body = styled.p`
   font-size: 3rem;
   font-weight: 500;
   width: 100%;
+
+  @media (max-width: 600px) {
+    font-size: 2rem;
+  }
 `;
 
 type Props = {
