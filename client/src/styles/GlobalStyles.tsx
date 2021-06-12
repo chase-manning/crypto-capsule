@@ -11,9 +11,6 @@ const GlobalStyle = createGlobalStyle`
         --dark: #5268A1;
         --bg: #F8F2F2;
         --danger: #ef5252;
-
-        --mobile: 600px;
-        --tablet: 1025px;
     }
 
     * {
