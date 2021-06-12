@@ -10,18 +10,23 @@ type ButtonType = {
 const buttons: ButtonType[][] = [
   [
     {
-      label: "Twitter",
-      link: "xxx",
+      label: "GitHub",
+      link: "https://github.com/chase-manning/crypto-capsule",
+    },
+    {
+      label: "Contract",
+      link:
+        "https://etherscan.io/address/0xA22Bc271AEC3970e8d3Ce0048e2Fc97B0440416F",
     },
   ],
   [
     {
-      label: "Discord",
+      label: "Twitter",
       link: "xxx",
     },
     {
-      label: "GitHub",
-      link: "https://github.com/chase-manning/crypto-capsule",
+      label: "Discord",
+      link: "xxx",
     },
   ],
 ];
