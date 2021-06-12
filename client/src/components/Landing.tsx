@@ -22,12 +22,24 @@ const Header = styled.h1`
   transform: rotate(-10deg) translateY(-8rem);
   height: 13rem;
   margin-left: 10rem;
+
+  @media (max-width: 600px) {
+    font-size: 7rem;
+    margin-left: 0;
+    text-align: center;
+    transform: rotate(-10deg) translateY(0);
+    margin-top: 3rem;
+  }
 `;
 
 const Content = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  @media (max-width: 600px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 const Left = styled.div`
@@ -38,6 +50,12 @@ const Left = styled.div`
   margin-left: 4rem;
   margin-top: 20rem;
   transform: rotate(-4deg);
+
+  @media (max-width: 600px) {
+    width: 100%;
+    margin-top: 0;
+    margin-left: 0;
+  }
 `;
 
 const SubHeader = styled.div`
@@ -48,11 +66,23 @@ const SubHeader = styled.div`
   line-height: 1.4;
   margin-bottom: 7rem;
   margin-left: 10rem;
+
+  @media (max-width: 600px) {
+    margin-top: 0;
+    margin-left: 0;
+    width: 90%;
+    margin-left: 2rem;
+    margin-bottom: 6rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   margin-bottom: 13rem;
   transform: rotate(2deg);
+
+  @media (max-width: 600px) {
+    margin-bottom: 3rem;
+  }
 `;
 
 const Landing = (): JSX.Element => {
