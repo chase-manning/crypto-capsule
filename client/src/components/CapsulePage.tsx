@@ -53,6 +53,11 @@ const CapsulePageContent = styled.div`
   min-height: 77vh;
   align-items: center;
   justify-content: space-evenly;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    margin: 6rem 0;
+  }
 `;
 
 const Details = styled.div`
