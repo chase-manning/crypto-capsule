@@ -46,7 +46,7 @@ const sections: SectionContent[] = [
 const StyledWhyUseSlide = styled.div`
   position: relative;
   width: 100%;
-  height: 55rem;
+  height: calc(1050px - (100vw - 600px) / 2.6);
   display: flex;
   flex-direction: column;
   justify-content: center;
