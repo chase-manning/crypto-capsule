@@ -21,6 +21,10 @@ const buttons: ButtonType[][] = [
   ],
   [
     {
+      label: "Twitter",
+      link: "https://twitter.com/crypto_capsule",
+    },
+    {
       label: "Discord",
       link: "https://discord.gg/K3svXV2y",
     },
