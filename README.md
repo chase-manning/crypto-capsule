@@ -16,8 +16,11 @@ This is a community project so please feel free to reach out and help contribute
 > cd projects/
 > git clone https://github.com/chase-manning/crypto-capsule.git
 
+# Navigate to the client directory
+> cd crypto-capsule
+> cd client
+
 # Make Node install the project's dependencies into node_modules/
-> cd crypto-capsule/
 > npm install
 
 # Startup the project
