@@ -21,7 +21,7 @@ const networks: NetworkType[] = [
   {
     image: arbitrumImage,
     name: "Arbitrum",
-    live: false,
+    live: true,
   },
   {
     image: maticImage,
