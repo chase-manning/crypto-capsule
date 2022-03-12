@@ -19,16 +19,6 @@ const buttons: ButtonType[][] = [
         "https://etherscan.io/address/0xA22Bc271AEC3970e8d3Ce0048e2Fc97B0440416F",
     },
   ],
-  [
-    {
-      label: "Twitter",
-      link: "https://twitter.com/crypto_capsule",
-    },
-    {
-      label: "Discord",
-      link: "https://discord.gg/K3svXV2y",
-    },
-  ],
 ];
 
 const StyledFooter = styled.div`
